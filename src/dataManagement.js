@@ -37,4 +37,4 @@ const data = {
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
   }
 }
-export { data };
+export default data ;

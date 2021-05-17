@@ -1,8 +1,9 @@
 import Project from "./Project";
 import Task from "./Task";
 // import { data, project } from "./dataManagement";
-import { data } from "./dataManagement";
+import data from "./dataManagement";
 import makeNewEl from "./makeNewEl";
+import { v4 as uuidv4 } from 'uuid';
 
 const populateProjects = allProjectData => {
   for (const project of allProjectData) {
@@ -63,7 +64,7 @@ const addProjToDOM = newProj => {
   const newProjEl = createProjectEl(newProj);
   content.appendChild(newProjEl);
   newProjEl.querySelector(".project__add-task-btn").addEventListener("click", function(e) {
-    const newTask = new Task("1", "New Task!!!", "blue");
+    const newTask = new Task(uuidv4(), "New Task!!!", "blue");
     addTaskToProj(newTask, e.target.closest(".project"));
     // console.log(newTask);
   }, false);
@@ -86,7 +87,7 @@ const addTaskToProj = (newTask, projectEl) => {
 
 const newProjBtn = document.getElementById("new-project-btn");
 newProjBtn.addEventListener("click", function() {
-  const newProjId = "2;"
+  const newProjId = uuidv4();
   const newProj = new Project(newProjId, "New project");
   addProjToDOM(newProj);
   data.addProj(newProj);
