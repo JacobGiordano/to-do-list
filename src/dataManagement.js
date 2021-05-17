@@ -1,46 +1,40 @@
-import Project from "./Project";
-import Task from "./Task";
-
 const data = {
-  checkData() {
-    const storedData = this.getData();
-    storedData === null ? this.setDefaultData() : null;
-    return storedData;
-  },
   getData() {
-    const storedData = JSON.parse(localStorage.getItem("to-do-data"));
-    console.log(storedData);
+    const storedData = JSON.parse(localStorage.getItem("to-do-data") || "[]");
+    // console.log(storedData);
     return storedData;
   },
   setData(newData) {
     let storedData = this.getData();
+    storedData !== null ? localStorage.setItem("to-do-data", JSON.stringify(newData)) : localStorage.setItem("to-do-data", JSON.stringify([]));
+    storedData = this.getData();
+    return storedData;
+  },
+  addProj(newData) {
+    let storedData = this.getData();
     storedData !== null ? storedData.push(newData) : storedData = newData;
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
+    storedData = this.getData();
     return storedData;
-  },
-  setDefaultData() {
-    let projArray = [];
-    const defaultProject = new Project(1, "Default Project");
-    const defaultTask = new Task(1, "Default Task", "red");
-    defaultProject.tasks.push(defaultTask);
-    projArray.push(defaultProject);
-    this.setData(projArray);
-    const storedData = this.getData();
-    return storedData;
-  }
-}
-
-const project = {
-  addNewProject(projectObj) {
-    const updatedData = data.setData(projectObj);
-    return updatedData;
   },
   findProjectByID(projectId) {
-    const storedData = JSON.parse(data.getData());
-    const foundProject = storedData.filter(project => project.id === projectId);
-    projectId.length > 0 ? console.log(foundProject) : console.log("No project found");
+    const storedData = data.getData();
+    let foundProject = storedData.filter(project => project.id.toString() === projectId);
+    // console.log(foundProject);
+    foundProject = foundProject[0];
+    // projectId.length !== 0 ? console.log(foundProject) : console.error("No project found");
     return foundProject;
+  },
+  findIndexOfProject(projectId) {
+    const storedData = data.getData();
+    let foundIndex = storedData.findIndex(project => project.id === projectId);
+    return foundIndex;
+  },
+  addTask(newTask, projObj) {
+    const storedData = this.getData();
+    const foundIndex = this.findIndexOfProject(projObj.id);
+    storedData[foundIndex].tasks.push(newTask);
+    localStorage.setItem("to-do-data", JSON.stringify(storedData));
   }
 }
-
-export { data, project };
+export { data };

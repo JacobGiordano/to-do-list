@@ -49,11 +49,38 @@ table {
 
 :root {
 	--dark-gray: #424242;
+	--white: #ffffff;
+	--black: #000000;
+	--red: #ff3d3d;
+	--yellow: #fff128;
+	--blue: #00a2ff;
+	--green: #4aff96;
+	--orange: #ffa033;
+	--pink: #ff58d5;
+	--purple: #a03aff;
+	--gray: #999999;
 }
 
-.content {
-  display: block;
-	font-size: 16px;
+.body {
+	margin: 0 1rem;
+}
+
+input {
+	padding: .25rem;
+}
+
+input:not(input[type="checkbox"]):focus, input:not(input[type="checkbox"]):hover {
+	outline: none;
+	border-bottom: 1px solid #8b8b8b;
+}
+
+input:not(input[type="checkbox"]):focus-visible {
+	outline: unset;
+}
+
+.header, .content {
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
 .header {
@@ -61,11 +88,89 @@ table {
 	border-bottom: 1px solid var(--dark-gray);
 	width: 100%;
 	height: 2rem;
-	padding: 0 .5rem;
+	margin-bottom: 1rem;
+	justify-content: space-between;
 	align-items: center;
 }
 
-.content, .header {
-	max-width: 1200px;
-	margin: 0 auto;
+.content {
+  display: block;
+	width: 100%;
+	font-size: 16px;
+}
+
+.project {
+	display: block;
+	border: 1px solid #cecece;
+	border-radius: .25rem;
+	margin-bottom: 1rem;
+	padding: 1rem;
+}
+
+.project__title, .task__text-input {
+	border: none;
+	border-bottom: 1px solid var(--white);
+}
+
+.task {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+input.task__checkbox, button.task__color-priority {
+	cursor: pointer;
+}
+
+input.task__checkbox {
+	height: 20px;
+	width: 16px;
+}
+
+button.task__color-priority {
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	border-radius: 100%;
+	border: 1px solid #424242;
+}
+
+.task__color-priority.priority-white {
+	background: var(--white);
+}
+
+.task__color-priority.priority-black {
+	background: var(--black);
+}
+
+.task__color-priority.priority-red {
+	background: var(--red);
+}
+
+.task__color-priority.priority-yellow {
+	background: var(--yellow);
+}
+
+.task__color-priority.priority-blue {
+	background: var(--blue);
+}
+
+.task__color-priority.priority-green {
+	background: var(--green);
+}
+
+.task__color-priority.priority-orange {
+	background: var(--orange);
+}
+
+.task__color-priority.priority-pink {
+	background: var(--pink);
+}
+
+.task__color-priority.priority-purple {
+	background: var(--purple);
+}
+
+.task__color-priority.priority-gray {
+	background: var(--gray);
 }

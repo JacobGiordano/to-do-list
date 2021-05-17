@@ -8,11 +8,17 @@
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <header class="header">
-  <h1>To-Do List</h1>
+  <div id="header-left" class="header-left">
+    <h1>To-Do List</h1>
+  </div>
+  <div class="header-right" id="header-right">
+    <button id="new-project-btn" class="new-project-btn" type="button">New Project</button>
+    <button id="clear-list-btn" class="clear-list-btn" type="button">Clear List</button>
+  </div>
 </header>
-<body id="body">
-  <div id="content"></div>
-  <button id="new-project-btn" class="new-project-btn" type="button">New Project</button>
+<body id="body" class="body">
+  <div id="content" class="content">
+  </div>
   <script src="/dist/main.js"></script>
 </body>
 </html>

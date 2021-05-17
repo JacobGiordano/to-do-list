@@ -1,7 +1,8 @@
-function Task (newTaskId, newTaskText, newTaskColor) {
+function Task (newTaskId, newTaskText) {
   this.id = newTaskId,
   this.text = newTaskText,
-  this.color = newTaskColor,
+  this.color = "white",
+  this.notes = ""
   this.data_type = "task"
 }
 
