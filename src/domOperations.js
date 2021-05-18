@@ -1,6 +1,5 @@
 import Project from "./Project";
 import Task from "./Task";
-// import { data, project } from "./dataManagement";
 import data from "./dataManagement";
 import makeNewEl from "./makeNewEl";
 import { v4 as uuidv4 } from 'uuid';
@@ -21,7 +20,8 @@ const createProjectEl = newProj => {
     "data-project-name": newProj.name
   });
   const projectName = makeNewEl("input", "project__title", "New Project", {
-    "type": "text"
+    "type": "text",
+    "placeholder": "Project name"
   });
   const newTaskBtn = makeNewEl("button", "project__add-task-btn", "Add Task", {
     "type": "button"
@@ -39,32 +39,75 @@ const createTaskEl = newTask => {
   const task = makeNewEl("div", "task", "", {
     "data-task-id": newTask.id
   });
+  const topWrapper = makeNewEl("div", "task__top-wrapper", "", "");
   const checkBox = makeNewEl("input", "task__checkbox", "", {
     "type": "checkbox"
   });
   const colorPriority = makeNewEl("button", `task__color-priority priority-${newTask.color}`, "", {
-    "type": "button"
+    "type": "button",
+    "data-color": newTask.color
   });
   const input = makeNewEl("input", "task__text-input", "", {
     "type": "text",
     "placeholder": "New Task"
   });
+  const dueDate = makeNewEl("input", "task__due-date", "", {
+    "type": "date"
+  });
   const deleteBtn = makeNewEl("button", "task__delete-btn", "delete", {
     "type": "button"
   });
+  const bottomWrapper = makeNewEl("div", "task__bottom-wrapper", "", "");
+  const notes = makeNewEl("textarea", "task__notes", "", {
+    "placeholder": "Notes"
+  });
 
-  task.appendChild(checkBox);
-  task.appendChild(colorPriority);
-  task.appendChild(input);
-  task.appendChild(deleteBtn);
+  topWrapper.appendChild(checkBox);
+  topWrapper.appendChild(colorPriority);
+  topWrapper.appendChild(input);
+  topWrapper.appendChild(dueDate);
+  topWrapper.appendChild(deleteBtn);
+  bottomWrapper.appendChild(notes);
+  task.appendChild(topWrapper);
+  task.appendChild(bottomWrapper);
+
+  // ADD EVENT LISTENERS HERE
+  const addChangeListenerArray = [checkBox, colorPriority, dueDate];
+  const addKeyUpListenerArray = [input, notes];
+  for (const element of addChangeListenerArray) {
+    element.addEventListener("change", function(e) {
+      handleKeyUp(e)
+    }, false);
+  }
+  for (const element of addKeyUpListenerArray) {
+    element.addEventListener("keyup", function(e) {
+      handleKeyUp(e)
+    }, false);
+  }
+
   return task;
 }
+
+let timer;
+const timeoutVal = 1000;
+const handleKeyUp = e => {
+  window.clearTimeout(timer);
+  timer = window.setTimeout(() => {
+    const clickedEl = e.target;
+    // console.log(clickedEl);
+    const elParentTask = e.target.closest(".task");
+    // console.log(elParentTask);
+    const parentProjectId = clickedEl.closest(".project").getAttribute("data-project-id");
+    // console.log(parentProjectId);
+    data.updateTask(elParentTask, parentProjectId);
+  }, timeoutVal);
+};
 
 const addProjToDOM = newProj => {
   const newProjEl = createProjectEl(newProj);
   content.appendChild(newProjEl);
   newProjEl.querySelector(".project__add-task-btn").addEventListener("click", function(e) {
-    const newTask = new Task(uuidv4(), "New Task!!!", "blue");
+    const newTask = new Task(uuidv4());
     addTaskToProj(newTask, e.target.closest(".project"));
     // console.log(newTask);
   }, false);

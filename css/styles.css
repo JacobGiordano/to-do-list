@@ -114,8 +114,13 @@ input:not(input[type="checkbox"]):focus-visible {
 
 .task {
 	display: flex;
-	align-items: center;
+	flex-direction: column;
 	margin-bottom: 1rem;
+}
+
+.task__top-wrapper, .task__bottom-wrapper {
+	display: flex;
+	align-items: center;
 }
 
 input.task__checkbox, button.task__color-priority {
@@ -125,6 +130,7 @@ input.task__checkbox, button.task__color-priority {
 input.task__checkbox {
 	height: 20px;
 	width: 16px;
+	margin-left: 0;
 }
 
 button.task__color-priority {

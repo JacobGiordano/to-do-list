@@ -1,8 +1,11 @@
-function Task (newTaskId, newTaskText) {
+function Task (newTaskId) {
   this.id = newTaskId,
-  this.text = newTaskText,
+  this.text = "",
+  this.notes = "",
+  this.due_date = "",
+  this.checked = false,
   this.color = "white",
-  this.notes = ""
+  this.status = "",
   this.data_type = "task"
 }
 
