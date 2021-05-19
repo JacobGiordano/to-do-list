@@ -1,7 +1,4 @@
 import data from "./dataManagement";
-import { populateProjects } from "./domOperations";
+import projUI from "./projectUI";
 
-const body = document.getElementById("body");
-const content = document.getElementById("content");
-
-populateProjects(data.getData());
+projUI.populateProjects(data.getData());
