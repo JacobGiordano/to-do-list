@@ -1,6 +1,5 @@
 import makeNewEl from "./makeNewEl";
-import data from "./dataManagement";
-import ui from "./UI";
+import data from "./data";
 
 const taskUI = {
   createTaskEl(newTask) {
@@ -48,12 +47,12 @@ const taskUI = {
     const addKeyUpListenerArray = [input, notes];
     for (const element of addChangeListenerArray) {
       element.addEventListener("change", function(e) {
-        ui.handleKeyUp(e);
+        taskUI.handleTaskKeyUp(e);
       }, false);
     }
     for (const element of addKeyUpListenerArray) {
       element.addEventListener("keyup", function(e) {
-        ui.handleKeyUp(e);
+        taskUI.handleTaskKeyUp(e);
       }, false);
     }
   
@@ -70,7 +69,22 @@ const taskUI = {
     // console.log(`Project ID = ${projId}`);
     const foundProject = data.findProjectByID(projId);
     data.addTask(newTask, foundProject);
+  },
+  handleTaskKeyUp(e) {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      const clickedEl = e.target;
+      // console.log(clickedEl);
+      const elParentTask = e.target.closest(".task");
+      // console.log(elParentTask);
+      const parentProjectId = clickedEl.closest(".project").getAttribute("data-project-id");
+      // console.log(parentProjectId);
+      data.updateTask(elParentTask, parentProjectId);
+    }, timeoutVal);
   }
 };
+
+let timer;
+const timeoutVal = 1000;
 
 export default taskUI;

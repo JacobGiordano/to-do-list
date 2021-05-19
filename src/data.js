@@ -41,7 +41,7 @@ const data = {
   updateTask(changedTask, projObjId) {
     const storedData = this.getData();
     const projIndex = this.findIndexOfProject(projObjId);
-    console.log(changedTask.id);
+    // console.log(changedTask.id);
     const taskIndex = this.findIndexOfTask(changedTask.getAttribute("data-task-id"), storedData[projIndex].tasks);
     const foundTask = storedData[projIndex].tasks[taskIndex];
     console.log(foundTask);
@@ -53,6 +53,12 @@ const data = {
     foundTask.color = changedTask.querySelector(".task__color-priority").getAttribute("data-color");
     foundTask.status = changedTask.classList;
 
+    localStorage.setItem("to-do-data", JSON.stringify(storedData));
+  },
+  updateProjectName(projectTitle, projectId) {
+    const storedData = this.getData();
+    const projIndex = this.findIndexOfProject(projectId);
+    storedData[projIndex].title = projectTitle;
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
   }
 }

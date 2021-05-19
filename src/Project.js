@@ -1,6 +1,6 @@
-function Project (newProjId, newProjName) {
+function Project (newProjId) {
   this.id = newProjId,
-  this.name = newProjName,
+  this.title = "",
   this.tasks = [],
   this.data_type = "project"
 }

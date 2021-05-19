@@ -1,6 +1,8 @@
 import makeNewEl from "./makeNewEl";
 import taskUI from "./taskUI";
 import Task from "./Task";
+import data from "./data";
+import ui from "./UI";
 import { v4 as uuidv4 } from 'uuid';
 
 const projUI = {
@@ -26,11 +28,11 @@ const projUI = {
     // console.log(newProj);
     let projectEl = makeNewEl("div", "project", "", {
       "data-project-id": newProj.id,
-      "data-project-name": newProj.name
+      "data-project-title": newProj.title
     });
-    const projectName = makeNewEl("input", "project__title", "New Project", {
+    const projectTitle = makeNewEl("input", "project__title", newProj.title, {
       "type": "text",
-      "placeholder": "Project name"
+      "placeholder": "Project title"
     });
     const newTaskBtn = makeNewEl("button", "project__add-task-btn", "Add Task", {
       "type": "button"
@@ -38,11 +40,31 @@ const projUI = {
     const deleteProjectBtn = makeNewEl("button", "project__delete-project-btn", "Delete Project", {
       "type": "button"
     });
-    projectEl.appendChild(projectName);
+    projectEl.appendChild(projectTitle);
     projectEl.appendChild(newTaskBtn);
     projectEl.appendChild(deleteProjectBtn);
+
+    // ADD PROJECT EVENT LISTENERS
+    projectTitle.addEventListener("keyup", function(e) {
+      projUI.handleProjKeyUp(e);
+    }, false);
+
     return projectEl;
+  },
+  handleProjKeyUp(e) {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      const projectTitleEl = e.target;
+      // console.log(projectTitle);
+      const parentProjectId = projectTitleEl.closest(".project").getAttribute("data-project-id");
+      const projectTitle = projectTitleEl.value;
+      // console.log(parentProjectId);
+        data.updateProjectName(projectTitle, parentProjectId);
+    }, timeoutVal);
   }
 };
+
+let timer;
+const timeoutVal = 1000;
 
 export default projUI;
