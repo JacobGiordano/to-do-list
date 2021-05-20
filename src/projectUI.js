@@ -48,8 +48,20 @@ const projUI = {
     projectTitle.addEventListener("keyup", function(e) {
       projUI.handleProjKeyUp(e);
     }, false);
+    deleteProjectBtn.addEventListener("click", function(e) {
+      projUI.handleProjDeleteClick(e);
+    }, false);
 
     return projectEl;
+  },
+  handleProjDeleteClick(e) {
+    if (confirm("Delete project?")) {
+      const projectEl = e.target.closest(".project");
+      const projectElId = projectEl.getAttribute("data-project-id");
+      
+      data.deleteProjData(projectElId);
+      projectEl.remove();
+    }
   },
   handleProjKeyUp(e) {
     window.clearTimeout(timer);
@@ -59,12 +71,12 @@ const projUI = {
       const parentProjectId = projectTitleEl.closest(".project").getAttribute("data-project-id");
       const projectTitle = projectTitleEl.value;
       // console.log(parentProjectId);
-        data.updateProjectName(projectTitle, parentProjectId);
+        data.updateProjectDataTitle(projectTitle, parentProjectId);
     }, timeoutVal);
   }
 };
 
 let timer;
-const timeoutVal = 1000;
+const timeoutVal = 750;
 
 export default projUI;

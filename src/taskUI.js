@@ -55,6 +55,9 @@ const taskUI = {
         taskUI.handleTaskKeyUp(e);
       }, false);
     }
+    deleteBtn.addEventListener("click", function(e) {
+      taskUI.handleTaskDeleteClick(e);
+    }, false);
   
     return task;
   },
@@ -67,8 +70,8 @@ const taskUI = {
     projectEl.appendChild(newTaskEl);
     const projId = projectEl.getAttribute("data-project-id");
     // console.log(`Project ID = ${projId}`);
-    const foundProject = data.findProjectByID(projId);
-    data.addTask(newTask, foundProject);
+    const foundProject = data.findProjectDataByID(projId);
+    data.addTaskData(newTask, foundProject);
   },
   handleTaskKeyUp(e) {
     window.clearTimeout(timer);
@@ -79,12 +82,24 @@ const taskUI = {
       // console.log(elParentTask);
       const parentProjectId = clickedEl.closest(".project").getAttribute("data-project-id");
       // console.log(parentProjectId);
-      data.updateTask(elParentTask, parentProjectId);
+      data.updateTaskData(elParentTask, parentProjectId);
     }, timeoutVal);
+  },
+  handleTaskDeleteClick(e) {
+    if (confirm("Delete task?")) {
+      const clickedEl = e.target;
+      const taskEl = e.target.closest(".task");
+      const taskId = taskEl.getAttribute("data-task-id");
+      const projectEl = clickedEl.closest(".project");
+      const projectElId = projectEl.getAttribute("data-project-id");
+      
+      data.deleteTaskData(taskId, projectElId);
+      taskEl.remove();
+    }
   }
 };
 
 let timer;
-const timeoutVal = 1000;
+const timeoutVal = 750;
 
 export default taskUI;

@@ -10,39 +10,51 @@ const data = {
     storedData = this.getData();
     return storedData;
   },
-  addProj(newData) {
+  addProjData(newData) {
     let storedData = this.getData();
     storedData !== null ? storedData.push(newData) : storedData = newData;
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
     storedData = this.getData();
     return storedData;
   },
-  findProjectByID(projectId) {
+  updateProjectDataTitle(projectTitle, projectId) {
+    const storedData = this.getData();
+    const projIndex = this.findIndexOfProjectData(projectId);
+    storedData[projIndex].title = projectTitle;
+    localStorage.setItem("to-do-data", JSON.stringify(storedData));
+  },
+  deleteProjData(projectId){
+    const storedData = this.getData();
+    const projIndex = this.findIndexOfProjectData(projectId);
+    storedData.splice(projIndex, 1);
+    localStorage.setItem("to-do-data", JSON.stringify(storedData));
+  },
+  findProjectDataByID(projectId) {
     const storedData = data.getData();
     let foundProject = storedData.filter(project => project.id.toString() === projectId);
     foundProject = foundProject[0];
     return foundProject;
   },
-  findIndexOfProject(projectId) {
+  findIndexOfProjectData(projectId) {
     const storedData = data.getData();
     let foundIndex = storedData.findIndex(project => project.id === projectId);
     return foundIndex;
   },
-  findIndexOfTask(taskId, taskArray) {
+  findIndexOfTaskData(taskId, taskArray) {
     let foundIndex = taskArray.findIndex(task => task.id === taskId);
     return foundIndex;
   },
-  addTask(newTask, projObj) {
+  addTaskData(newTask, projObj) {
     const storedData = this.getData();
-    const foundIndex = this.findIndexOfProject(projObj.id);
+    const foundIndex = this.findIndexOfProjectData(projObj.id);
     storedData[foundIndex].tasks.push(newTask);
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
   },
-  updateTask(changedTask, projObjId) {
+  updateTaskData(changedTask, projObjId) {
     const storedData = this.getData();
-    const projIndex = this.findIndexOfProject(projObjId);
+    const projIndex = this.findIndexOfProjectData(projObjId);
     // console.log(changedTask.id);
-    const taskIndex = this.findIndexOfTask(changedTask.getAttribute("data-task-id"), storedData[projIndex].tasks);
+    const taskIndex = this.findIndexOfTaskData(changedTask.getAttribute("data-task-id"), storedData[projIndex].tasks);
     const foundTask = storedData[projIndex].tasks[taskIndex];
     console.log(foundTask);
 
@@ -55,10 +67,11 @@ const data = {
 
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
   },
-  updateProjectName(projectTitle, projectId) {
+  deleteTaskData(taskId, projectId){
     const storedData = this.getData();
-    const projIndex = this.findIndexOfProject(projectId);
-    storedData[projIndex].title = projectTitle;
+    const projIndex = this.findIndexOfProjectData(projectId);
+    const taskIndex = this.findIndexOfTaskData(taskId, storedData[projIndex].tasks);
+    storedData[projIndex].tasks.splice(taskIndex, 1);
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
   }
 }

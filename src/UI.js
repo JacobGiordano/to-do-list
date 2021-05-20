@@ -19,11 +19,11 @@ newProjBtn.addEventListener("click", function() {
   const newProjId = uuidv4();
   const newProj = new Project(newProjId);
   projUI.addProjToDOM(newProj);
-  data.addProj(newProj);
+  data.addProjData(newProj);
 }, false);
 
 clearListBtn.addEventListener("click", function() {
-  clearList(content);
+  ui.clearList(content);
 }, false);
 
 
