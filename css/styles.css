@@ -48,17 +48,16 @@ table {
 }
 
 :root {
+	--light-gray: #616161;
 	--dark-gray: #424242;
 	--white: #ffffff;
 	--black: #000000;
-	--red: #ff3d3d;
-	--yellow: #fff128;
-	--blue: #00a2ff;
-	--green: #4aff96;
-	--orange: #ffa033;
-	--pink: #ff58d5;
-	--purple: #a03aff;
-	--gray: #999999;
+	--red: #f44336;
+	--light-red: #ffebee;
+	--green: #00a260;
+	--light-green: #e8f5e9;
+	--orange: #f57c00;
+	--light-orange: #fbe9e7;
 }
 
 .body {
@@ -123,7 +122,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	align-items: center;
 }
 
-input.task__checkbox, button.task__color-priority {
+input.task__checkbox, button.task__priority {
 	cursor: pointer;
 }
 
@@ -133,50 +132,32 @@ input.task__checkbox {
 	margin-left: 0;
 }
 
-button.task__color-priority {
+button.task__priority {
 	display: inline-block;
-	height: 16px;
-	width: 16px;
-	border-radius: 100%;
-	border: 1px solid #424242;
+	border-radius: 5rem;
+	width: 80px;
 }
 
-.task__color-priority.priority-white {
+.task__priority.priority-set {
 	background: var(--white);
+	border: 1px solid var(--light-gray);
+	color: var(--light-gray);
 }
 
-.task__color-priority.priority-black {
-	background: var(--black);
+.task__priority.priority-low {
+	background: var(--light-green);
+	border: 1px solid var(--green);
+	color: var(--green);
 }
 
-.task__color-priority.priority-red {
-	background: var(--red);
+.task__priority.priority-medium {
+	background: var(--light-orange);
+	border: 1px solid var(--orange);
+	color: var(--orange);
 }
 
-.task__color-priority.priority-yellow {
-	background: var(--yellow);
-}
-
-.task__color-priority.priority-blue {
-	background: var(--blue);
-}
-
-.task__color-priority.priority-green {
-	background: var(--green);
-}
-
-.task__color-priority.priority-orange {
-	background: var(--orange);
-}
-
-.task__color-priority.priority-pink {
-	background: var(--pink);
-}
-
-.task__color-priority.priority-purple {
-	background: var(--purple);
-}
-
-.task__color-priority.priority-gray {
-	background: var(--gray);
+.task__priority.priority-high {
+	background: var(--light-red);
+	border: 1px solid var(--red);
+	color: var(--red);
 }

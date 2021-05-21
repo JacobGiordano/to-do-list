@@ -62,7 +62,7 @@ const data = {
     foundTask.notes = changedTask.querySelector(".task__notes").value;
     foundTask.due_date = changedTask.querySelector(".task__due-date").value;
     foundTask.checked = changedTask.querySelector(".task__checkbox").checked;
-    foundTask.color = changedTask.querySelector(".task__color-priority").getAttribute("data-color");
+    foundTask.priority = changedTask.querySelector(".task__priority").getAttribute("data-priority");
     foundTask.status = changedTask.classList;
 
     localStorage.setItem("to-do-data", JSON.stringify(storedData));

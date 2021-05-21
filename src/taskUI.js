@@ -11,9 +11,11 @@ const taskUI = {
       "type": "checkbox"
     });
     checkBox.checked = newTask.checked;
-    const colorPriority = makeNewEl("button", `task__color-priority priority-${newTask.color}`, "", {
+    const priorityText = newTask.priority.charAt(0).toUpperCase() + newTask.priority.slice(1);
+    const buttonText = newTask.priority === "set" ? `${priorityText} Priority` : priorityText;
+    const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, buttonText, {
       "type": "button",
-      "data-color": newTask.color
+      "data-priority": newTask.priority
     });
     const input = makeNewEl("input", "task__text-input", "", {
       "type": "text",
@@ -34,7 +36,7 @@ const taskUI = {
     notes.value = newTask.notes;
   
     topWrapper.appendChild(checkBox);
-    topWrapper.appendChild(colorPriority);
+    topWrapper.appendChild(priority);
     topWrapper.appendChild(input);
     topWrapper.appendChild(dueDate);
     topWrapper.appendChild(deleteBtn);
@@ -43,7 +45,7 @@ const taskUI = {
     task.appendChild(bottomWrapper);
   
     // ADD TASK EVENT LISTENERS
-    const addChangeListenerArray = [checkBox, colorPriority, dueDate];
+    const addChangeListenerArray = [checkBox, dueDate];
     const addKeyUpListenerArray = [input, notes];
     for (const element of addChangeListenerArray) {
       element.addEventListener("change", function(e) {
@@ -57,6 +59,9 @@ const taskUI = {
     }
     deleteBtn.addEventListener("click", function(e) {
       taskUI.handleTaskDeleteClick(e);
+    }, false);
+    priority.addEventListener("click", function(e) {
+      taskUI.handleTaskPriorityClick(e);
     }, false);
   
     return task;
@@ -96,6 +101,38 @@ const taskUI = {
       data.deleteTaskData(taskId, projectElId);
       taskEl.remove();
     }
+  },
+  handleTaskPriorityClick(e) {
+    const clickedEl = e.target;
+    const clickedElClasses = clickedEl.classList;
+    let priorityLevel;
+    if (clickedElClasses.contains("priority-set")) {
+      clickedEl.classList.add("priority-low");
+      clickedEl.classList.remove("priority-set");
+      priorityLevel = "low";
+    } else if (clickedElClasses.contains("priority-low")) {
+      clickedEl.classList.add("priority-medium");
+      clickedEl.classList.remove("priority-low");
+      priorityLevel = "medium";
+    } else if (clickedElClasses.contains("priority-medium")) {
+      clickedEl.classList.add("priority-high");
+      clickedEl.classList.remove("priority-medium");
+      priorityLevel = "high";
+    } else if (clickedElClasses.contains("priority-high")) {
+      clickedEl.classList.add("priority-set");
+      clickedEl.classList.remove("priority-high");
+      priorityLevel = "set";
+    }
+
+    let buttonText = priorityLevel === "set" ? `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)} Priority` : `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)}`;
+    clickedEl.textContent = buttonText;
+    clickedEl.setAttribute("data-priority", priorityLevel);
+
+    const taskEl = e.target.closest(".task");
+    const projectEl = clickedEl.closest(".project");
+    const projectElId = projectEl.getAttribute("data-project-id");
+    
+    data.updateTaskData(taskEl, projectElId);
   }
 };
 

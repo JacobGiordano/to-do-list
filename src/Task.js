@@ -4,7 +4,7 @@ function Task (newTaskId) {
   this.notes = "",
   this.due_date = "",
   this.checked = false,
-  this.color = "white",
+  this.priority = "set",
   this.status = "",
   this.data_type = "task"
 }

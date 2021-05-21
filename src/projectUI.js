@@ -32,7 +32,7 @@ const projUI = {
     });
     const projectTitle = makeNewEl("input", "project__title", newProj.title, {
       "type": "text",
-      "placeholder": "Project title"
+      "placeholder": "Project Title"
     });
     const newTaskBtn = makeNewEl("button", "project__add-task-btn", "Add Task", {
       "type": "button"
