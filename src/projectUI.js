@@ -12,6 +12,8 @@ const projUI = {
       for (const task of project.tasks) {
         taskUI.addTaskToProjDOM(task, newProjEl);
       }
+      newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
+      newProjEl.querySelector(".project__total-task-count").textContent = project.tasks.length;
     }
   },
   addProjToDOM(newProj) {
@@ -30,19 +32,33 @@ const projUI = {
       "data-project-id": newProj.id,
       "data-project-title": newProj.title
     });
+    const projHeader = makeNewEl("div", "project__header", "", "");
     const projectTitle = makeNewEl("input", "project__title", newProj.title, {
       "type": "text",
       "placeholder": "Project Title"
     });
+    const projHeaderRight = makeNewEl("div", "project__btn-wrapper", "", "");
+    const completedCounter = makeNewEl("div", "project__completed-counter", "", "");
+    const completedCount = makeNewEl("span", "project__completed-count", "0", "");
+    const completedDivider = makeNewEl("span", "project__completed-count-divider", " of ", "");
+    const completedText = makeNewEl("span", "project__completed-text", " completed", "");
+    const taskTotal = makeNewEl("span", "project__total-task-count", "0", "");
     const newTaskBtn = makeNewEl("button", "project__add-task-btn", "Add Task", {
       "type": "button"
     });
     const deleteProjectBtn = makeNewEl("button", "project__delete-project-btn", "Delete Project", {
       "type": "button"
     });
-    projectEl.appendChild(projectTitle);
-    projectEl.appendChild(newTaskBtn);
-    projectEl.appendChild(deleteProjectBtn);
+    projHeader.appendChild(projectTitle);
+    completedCounter.appendChild(completedCount);
+    completedCounter.appendChild(completedDivider);
+    completedCounter.appendChild(taskTotal);
+    completedCounter.appendChild(completedText);
+    projHeaderRight.appendChild(completedCounter);
+    projHeaderRight.appendChild(newTaskBtn);
+    projHeaderRight.appendChild(deleteProjectBtn);
+    projHeader.appendChild(projHeaderRight);
+    projectEl.appendChild(projHeader);
 
     // ADD PROJECT EVENT LISTENERS
     projectTitle.addEventListener("keyup", function(e) {
@@ -53,6 +69,12 @@ const projUI = {
     }, false);
 
     return projectEl;
+  },
+  updateCompletedTaskTotals(parentProj, numOfTotalTasks, numOfCompletedTasks) {
+    const completedNumEl = parentProj.querySelector(".project__completed-count");
+    const totalTaslNumEl = parentProj.querySelector(".project__total-task-count");
+    completedNumEl.textContent = numOfCompletedTasks;
+    totalTaslNumEl.textContent = numOfTotalTasks;
   },
   handleProjDeleteClick(e) {
     if (confirm("Delete project?")) {

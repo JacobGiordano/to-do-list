@@ -1,5 +1,6 @@
 import makeNewEl from "./makeNewEl";
 import data from "./data";
+import projUI from "./projectUI";
 
 const taskUI = {
   createTaskEl(newTask) {
@@ -45,7 +46,7 @@ const taskUI = {
     task.appendChild(bottomWrapper);
   
     // ADD TASK EVENT LISTENERS
-    const addChangeListenerArray = [checkBox, dueDate];
+    const addChangeListenerArray = [dueDate];
     const addKeyUpListenerArray = [input, notes];
     for (const element of addChangeListenerArray) {
       element.addEventListener("change", function(e) {
@@ -57,6 +58,10 @@ const taskUI = {
         taskUI.handleTaskKeyUp(e);
       }, false);
     }
+    checkBox.addEventListener("click", function(e) {
+      taskUI.updateCompletedTasks(e.target.closest(".project"));
+      taskUI.handleTaskKeyUp(e);
+    });
     deleteBtn.addEventListener("click", function(e) {
       taskUI.handleTaskDeleteClick(e);
     }, false);
@@ -71,12 +76,24 @@ const taskUI = {
     projectEl.appendChild(newTaskEl);
   },
   addTaskToProj(newTask, projectEl) {
-    const newTaskEl = this.createTaskEl(newTask);
-    projectEl.appendChild(newTaskEl);
+    this.addTaskToProjDOM(newTask, projectEl);
     const projId = projectEl.getAttribute("data-project-id");
     // console.log(`Project ID = ${projId}`);
     const foundProject = data.findProjectDataByID(projId);
     data.addTaskData(newTask, foundProject);
+    this.updateCompletedTasks(projectEl);
+  },
+  updateCompletedTasks(projectEl) {
+    const allTasks = projectEl.querySelectorAll(".task");
+    const numOfTasks = allTasks.length;
+    // console.log(`Total number of tasks: ${numOfTasks}`);
+    const completedTasks = [];
+    for (let task of allTasks) {
+      task.querySelector(".task__checkbox").checked === true ? completedTasks.push(task) : null;
+    }
+    const countOfCompleted = completedTasks.length;
+    // console.log(`Number of completed tasks: ${countOfCompleted}`);
+    projUI.updateCompletedTaskTotals(projectEl, numOfTasks, countOfCompleted);
   },
   handleTaskKeyUp(e) {
     window.clearTimeout(timer);
@@ -100,6 +117,7 @@ const taskUI = {
       
       data.deleteTaskData(taskId, projectElId);
       taskEl.remove();
+      this.updateCompletedTasks(projectEl);
     }
   },
   handleTaskPriorityClick(e) {

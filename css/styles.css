@@ -99,16 +99,33 @@ input:not(input[type="checkbox"]):focus-visible {
 }
 
 .project {
-	display: block;
+	display: flex;
 	border: 1px solid #cecece;
 	border-radius: .25rem;
 	margin-bottom: 1rem;
 	padding: 1rem;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.project__header {
+	display: flex;
+	margin-bottom: 1rem;
+	justify-content: space-between;
+}
+
+.project__btn-wrapper {
+	display: flex;
+	align-items: center;
 }
 
 .project__title, .task__text-input {
 	border: none;
 	border-bottom: 1px solid var(--white);
+}
+
+.project__title {
+	width: 30%;
 }
 
 .task {
