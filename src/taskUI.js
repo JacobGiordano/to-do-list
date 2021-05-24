@@ -31,9 +31,6 @@ const taskUI = {
     const notesBtn = makeNewEl("button", "notes-btn", "notes", {
       "type": "button"
     });
-    const visibilityBtn = makeNewEl("button", "task__visibility-btn", "visibility", {
-      "type": "button"
-    });
     const deleteBtn = makeNewEl("button", "task__delete-btn", "delete", {
       "type": "button"
     });
@@ -49,7 +46,6 @@ const taskUI = {
     topWrapper.appendChild(input);
     topWrapper.appendChild(dueDate);
     topWrapper.appendChild(notesBtn);
-    topWrapper.appendChild(visibilityBtn);
     topWrapper.appendChild(deleteBtn);
     bottomWrapper.appendChild(notes);
     task.appendChild(topWrapper);
@@ -77,9 +73,6 @@ const taskUI = {
       taskUI.handleTaskKeyUp(e);
     });
     notesBtn.addEventListener("click", function(e) {
-      taskUI.handleTaskKeyUp(e);
-    }, false);
-    visibilityBtn.addEventListener("click", function(e) {
       taskUI.handleTaskKeyUp(e);
     }, false);
     deleteBtn.addEventListener("click", function(e) {
