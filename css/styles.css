@@ -48,7 +48,8 @@ table {
 }
 
 :root {
-	--light-gray: #616161;
+	--light-gray: #cecece;
+	--medium-gray: #616161;
 	--dark-gray: #424242;
 	--white: #ffffff;
 	--black: #000000;
@@ -58,6 +59,8 @@ table {
 	--light-green: #e8f5e9;
 	--orange: #f57c00;
 	--light-orange: #fbe9e7;
+
+	--border-radius: .25rem;
 }
 
 .body {
@@ -100,8 +103,8 @@ input:not(input[type="checkbox"]):focus-visible {
 
 .project {
 	display: flex;
-	border: 1px solid #cecece;
-	border-radius: .25rem;
+	border: 1px solid var(--light-gray);
+	border-radius: var(--border-radius);
 	margin-bottom: 1rem;
 	padding: 1rem;
 	flex-direction: column;
@@ -132,6 +135,18 @@ input:not(input[type="checkbox"]):focus-visible {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 1rem;
+	padding: .5rem;
+	border: 1px solid var(--white);
+	border-radius: var(--border-radius);
+	transition: all ease-in-out 100ms;
+}
+
+.task.completed .task__text-input {
+	text-decoration: line-through;
+}
+
+.task:hover, .task:focus {
+	border: 1px solid var(--light-gray);
 }
 
 .task__top-wrapper, .task__bottom-wrapper {
@@ -139,26 +154,30 @@ input:not(input[type="checkbox"]):focus-visible {
 	align-items: center;
 }
 
-input.task__checkbox, button.task__priority {
+.task__checkbox, .task__priority {
 	cursor: pointer;
 }
 
-input.task__checkbox {
+.task__checkbox {
 	height: 20px;
 	width: 16px;
 	margin-left: 0;
 }
 
-button.task__priority {
+.task__priority {
 	display: inline-block;
 	border-radius: 5rem;
 	width: 80px;
 }
 
+.task .notes-btn.no-notes {
+	opacity: .5;
+}
+
 .task__priority.priority-set {
 	background: var(--white);
-	border: 1px solid var(--light-gray);
-	color: var(--light-gray);
+	border: 1px solid var(--medium-gray);
+	color: var(--medium-gray);
 }
 
 .task__priority.priority-low {

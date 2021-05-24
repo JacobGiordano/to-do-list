@@ -12,6 +12,7 @@ const taskUI = {
       "type": "checkbox"
     });
     checkBox.checked = newTask.checked;
+    checkBox.checked ? task.classList.add("completed") : null;
     const priorityText = newTask.priority.charAt(0).toUpperCase() + newTask.priority.slice(1);
     const buttonText = newTask.priority === "set" ? `${priorityText} Priority` : priorityText;
     const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, buttonText, {
@@ -27,6 +28,12 @@ const taskUI = {
       "type": "date"
     });
     dueDate.value = newTask.due_date;
+    const notesBtn = makeNewEl("button", "notes-btn", "notes", {
+      "type": "button"
+    });
+    const visibilityBtn = makeNewEl("button", "task__visibility-btn", "visibility", {
+      "type": "button"
+    });
     const deleteBtn = makeNewEl("button", "task__delete-btn", "delete", {
       "type": "button"
     });
@@ -35,11 +42,14 @@ const taskUI = {
       "placeholder": "Notes"
     });
     notes.value = newTask.notes;
+    notes.value === "" ? notesBtn.classList.add("no-notes") : notesBtn.classList.add("has-notes");
   
     topWrapper.appendChild(checkBox);
     topWrapper.appendChild(priority);
     topWrapper.appendChild(input);
     topWrapper.appendChild(dueDate);
+    topWrapper.appendChild(notesBtn);
+    topWrapper.appendChild(visibilityBtn);
     topWrapper.appendChild(deleteBtn);
     bottomWrapper.appendChild(notes);
     task.appendChild(topWrapper);
@@ -48,6 +58,7 @@ const taskUI = {
     // ADD TASK EVENT LISTENERS
     const addChangeListenerArray = [dueDate];
     const addKeyUpListenerArray = [input, notes];
+
     for (const element of addChangeListenerArray) {
       element.addEventListener("change", function(e) {
         taskUI.handleTaskKeyUp(e);
@@ -55,13 +66,22 @@ const taskUI = {
     }
     for (const element of addKeyUpListenerArray) {
       element.addEventListener("keyup", function(e) {
+        e.target.classList.contains("task__notes") ? taskUI.updateNotesBtn(e) : null;
         taskUI.handleTaskKeyUp(e);
       }, false);
     }
     checkBox.addEventListener("click", function(e) {
-      taskUI.updateCompletedTasks(e.target.closest(".project"));
+      const clickedCheckBox = e.target;
+      taskUI.updateCompletedTasks(clickedCheckBox.closest(".project"));
+      clickedCheckBox.checked ? clickedCheckBox.closest(".task").classList.add("completed") : clickedCheckBox.closest(".task").classList.remove("completed");
       taskUI.handleTaskKeyUp(e);
     });
+    notesBtn.addEventListener("click", function(e) {
+      taskUI.handleTaskKeyUp(e);
+    }, false);
+    visibilityBtn.addEventListener("click", function(e) {
+      taskUI.handleTaskKeyUp(e);
+    }, false);
     deleteBtn.addEventListener("click", function(e) {
       taskUI.handleTaskDeleteClick(e);
     }, false);
@@ -151,6 +171,15 @@ const taskUI = {
     const projectElId = projectEl.getAttribute("data-project-id");
     
     data.updateTaskData(taskEl, projectElId);
+  },
+  updateNotesBtn(e) {
+    if (e.target.classList.contains("task__notes") && e.target.value.trim() !== "") {
+      e.target.closest(".task").querySelector(".notes-btn").classList.remove("no-notes");
+      e.target.closest(".task").querySelector(".notes-btn").classList.add("has-notes");
+    } else {
+      e.target.closest(".task").querySelector(".notes-btn").classList.remove("has-notes");
+      e.target.closest(".task").querySelector(".notes-btn").classList.add("no-notes");
+    }
   }
 };
 
