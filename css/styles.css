@@ -138,7 +138,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	padding: .5rem;
 	border: 1px solid var(--white);
 	border-radius: var(--border-radius);
-	transition: all ease-in-out 100ms;
+	transition: all ease-in-out .1s;
 }
 
 .task.completed .task__text-input {
@@ -152,6 +152,20 @@ input:not(input[type="checkbox"]):focus-visible {
 .task__top-wrapper, .task__bottom-wrapper {
 	display: flex;
 	align-items: center;
+}
+
+.task__bottom-wrapper {
+	transition: all ease-in-out .5s;
+}
+
+.task__bottom-wrapper.collapsed {
+	overflow: hidden;
+	max-height: 0;
+}
+
+.task__bottom-wrapper.expanded {
+	overflow: auto;
+	max-height: 2.25rem;
 }
 
 .task__checkbox, .task__priority {
