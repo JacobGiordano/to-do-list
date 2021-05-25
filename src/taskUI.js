@@ -77,14 +77,7 @@ const taskUI = {
       console.log("CLICKD");
       const clickedBtn = e.target;
       const bottomWrapper = clickedBtn.closest(".task").querySelector(".task__bottom-wrapper");
-      // if (bottomWrapper.classList.contains("expanded")) {
-      //   bottomWrapper.classList.add("collapsed");
-      //   bottomWrapper.classList.remove("expanded");
-      // } else {
-      //   bottomWrapper.classList.add("expanded");
-      //   bottomWrapper.classList.remove("collapsed");
-      // }
-      ui.expandToggle(bottomWrapper);
+      taskUI.expandTaskNotesToggle(bottomWrapper);
       taskUI.handleTaskKeyUp(e);
     }, false);
     deleteBtn.addEventListener("click", function(e) {
@@ -185,6 +178,32 @@ const taskUI = {
       e.target.closest(".task").querySelector(".notes-btn").classList.remove("has-notes");
       e.target.closest(".task").querySelector(".notes-btn").classList.add("no-notes");
     }
+  },
+  expandTaskNotes(element) {
+    const getHeight = () => {
+      const height = `${element.scrollHeight}px`;
+      return height;
+    };
+
+    const height = getHeight();
+    element.classList.add("expanded");
+    element.style.height = height;
+
+    window.setTimeout(() => {
+      element.style.height = "";
+    }, 100);
+  },
+  collapseTaskNotes(element) {
+    element.style.height = `${element.scrollHeight}px`;
+    window.setTimeout(() => {
+      element.style.height = "0";
+    }, 100);
+    window.setTimeout(() => {
+      element.classList.remove("expanded");
+    }, 100);
+  },
+  expandTaskNotesToggle(element) {
+    element.classList.contains("expanded") ? this.collapseTaskNotes(element) : this.expandTaskNotes(element);
   }
 };
 

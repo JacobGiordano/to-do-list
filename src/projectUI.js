@@ -43,6 +43,9 @@ const projUI = {
     const completedDivider = makeNewEl("span", "project__completed-count-divider", " of ", "");
     const completedText = makeNewEl("span", "project__completed-text", " completed", "");
     const taskTotal = makeNewEl("span", "project__total-task-count", "0", "");
+    const expandToggle = makeNewEl("button", "project__expand-toggle-btn", "Expand Toggle", {
+      "type": "button"
+    });
     const newTaskBtn = makeNewEl("button", "project__add-task-btn", "Add Task", {
       "type": "button"
     });
@@ -55,16 +58,20 @@ const projUI = {
     completedCounter.appendChild(taskTotal);
     completedCounter.appendChild(completedText);
     projHeaderRight.appendChild(completedCounter);
+    projHeaderRight.appendChild(expandToggle);
     projHeaderRight.appendChild(newTaskBtn);
     projHeaderRight.appendChild(deleteProjectBtn);
     projHeader.appendChild(projHeaderRight);
     projectEl.appendChild(projHeader);
 
     // ADD PROJECT EVENT LISTENERS
-    projectTitle.addEventListener("keyup", function(e) {
+    projectTitle.addEventListener("keyup", e => {
       projUI.handleProjKeyUp(e);
     }, false);
-    deleteProjectBtn.addEventListener("click", function(e) {
+    expandToggle.addEventListener("click", e => {
+      projUI.expandProjToggle(e.target.closest(".project"));
+    })
+    deleteProjectBtn.addEventListener("click", e => {
       projUI.handleProjDeleteClick(e);
     }, false);
 
@@ -95,6 +102,32 @@ const projUI = {
       // console.log(parentProjectId);
         data.updateProjectDataTitle(projectTitle, parentProjectId);
     }, timeoutVal);
+  },
+  expandProj(element) {
+    const getHeight = () => {
+      const height = `${element.scrollHeight}px`;
+      return height;
+    };
+
+    const height = getHeight();
+    element.classList.add("expanded");
+    element.style.height = height;
+
+    window.setTimeout(() => {
+      element.style.height = "";
+    }, 100);
+  },
+  collapseProj(element) {
+    element.style.height = `${element.scrollHeight}px`;
+    window.setTimeout(() => {
+      element.style.height = "1.5rem";
+    }, 100);
+    window.setTimeout(() => {
+      element.classList.remove("expanded");
+    }, 100);
+  },
+  expandProjToggle(element) {
+    element.classList.contains("expanded") ? this.collapseProj(element) : this.expandProj(element);
   }
 };
 
