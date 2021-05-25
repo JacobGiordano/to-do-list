@@ -155,10 +155,16 @@ input:not(input[type="checkbox"]):focus-visible {
 }
 
 .task__bottom-wrapper {
-	transition: all ease-in-out .5s;
+	height: 0;
+	overflow: hidden;
+	transition: all ease-in-out .1s;
 }
 
-.task__bottom-wrapper.collapsed {
+.task__bottom-wrapper.expanded {
+	height: auto;
+}
+
+/* .task__bottom-wrapper.collapsed {
 	overflow: hidden;
 	max-height: 0;
 }
@@ -166,7 +172,7 @@ input:not(input[type="checkbox"]):focus-visible {
 .task__bottom-wrapper.expanded {
 	overflow: auto;
 	max-height: 2.25rem;
-}
+} */
 
 .task__checkbox, .task__priority {
 	cursor: pointer;

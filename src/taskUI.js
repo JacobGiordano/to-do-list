@@ -1,6 +1,7 @@
 import makeNewEl from "./makeNewEl";
 import data from "./data";
 import projUI from "./projectUI";
+import ui from "./UI";
 
 const taskUI = {
   createTaskEl(newTask) {
@@ -34,7 +35,7 @@ const taskUI = {
     const deleteBtn = makeNewEl("button", "task__delete-btn", "delete", {
       "type": "button"
     });
-    const bottomWrapper = makeNewEl("div", "task__bottom-wrapper collapsed", "", "");
+    const bottomWrapper = makeNewEl("div", "task__bottom-wrapper", "", "");
     const notes = makeNewEl("textarea", "task__notes", "", {
       "placeholder": "Notes"
     });
@@ -76,13 +77,14 @@ const taskUI = {
       console.log("CLICKD");
       const clickedBtn = e.target;
       const bottomWrapper = clickedBtn.closest(".task").querySelector(".task__bottom-wrapper");
-      if (bottomWrapper.classList.contains("expanded")) {
-        bottomWrapper.classList.add("collapsed");
-        bottomWrapper.classList.remove("expanded");
-      } else {
-        bottomWrapper.classList.add("expanded");
-        bottomWrapper.classList.remove("collapsed");
-      }
+      // if (bottomWrapper.classList.contains("expanded")) {
+      //   bottomWrapper.classList.add("collapsed");
+      //   bottomWrapper.classList.remove("expanded");
+      // } else {
+      //   bottomWrapper.classList.add("expanded");
+      //   bottomWrapper.classList.remove("collapsed");
+      // }
+      ui.expandToggle(bottomWrapper);
       taskUI.handleTaskKeyUp(e);
     }, false);
     deleteBtn.addEventListener("click", function(e) {

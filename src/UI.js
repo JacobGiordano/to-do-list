@@ -8,6 +8,32 @@ const ui = {
     while (parentElement.firstChild) {
       parentElement.removeChild(parentElement.firstChild);
     }
+  },
+  expand(element) {
+    const getHeight = () => {
+      const height = `${element.scrollHeight}px`;
+      return height;
+    };
+
+    const height = getHeight();
+    element.classList.add("expanded");
+    element.style.height = height;
+
+    window.setTimeout(() => {
+      element.style.height = "";
+    }, 100);
+  },
+  collapse(element) {
+    element.style.height = `${element.scrollHeight}px`;
+    window.setTimeout(() => {
+      element.style.height = "0";
+    }, 100);
+    window.setTimeout(() => {
+      element.classList.remove("expanded");
+    }, 100);
+  },
+  expandToggle(element) {
+    element.classList.contains("expanded") ? this.collapse(element) : this.expand(element);
   }
 }
 
