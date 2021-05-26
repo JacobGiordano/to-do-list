@@ -2,7 +2,7 @@ function Project (newProjId) {
   this.id = newProjId,
   this.title = "",
   this.tasks = [],
-  this.expanded = false,
+  this.expanded = true,
   this.visible = true,
   this.data_type = "project"
 }

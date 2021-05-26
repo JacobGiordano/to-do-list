@@ -20,6 +20,7 @@ newProjBtn.addEventListener("click", function() {
   const newProj = new Project(newProjId);
   projUI.addProjToDOM(newProj);
   data.addProjData(newProj);
+  console.log(newProj);
 }, false);
 
 clearListBtn.addEventListener("click", function() {
