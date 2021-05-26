@@ -96,6 +96,10 @@ const taskUI = {
     const foundProject = data.findProjectDataByID(projId);
     data.addTaskData(newTask, foundProject);
     this.updateCompletedTasks(projectEl);
+    console.log(projectEl.querySelector(".no-tasks-msg"));
+    if (projectEl.querySelector(".no-tasks-msg")) {
+      projectEl.querySelector(".no-tasks-msg").remove();
+    }
   },
   updateCompletedTasks(projectEl) {
     const allTasks = projectEl.querySelectorAll(".task");
@@ -176,6 +180,10 @@ const taskUI = {
       data.deleteTaskData(taskId, projectElId);
       taskEl.remove();
       this.updateCompletedTasks(projectEl);
+      if (projectEl.querySelector(".task") === null) {
+        const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
+        projectEl.appendChild(noTaskMsg);
+      }
     }
   },
   handleTaskPriorityClick(e) {

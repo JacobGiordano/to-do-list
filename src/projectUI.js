@@ -10,8 +10,13 @@ const projUI = {
     for (const project of allProjectData) {
       const newProjEl = this.addProjToDOM(project);
       project.expanded ? newProjEl.classList.add("expanded") : null;
-      for (const task of project.tasks) {
-        taskUI.addTaskToProjDOM(task, newProjEl);
+      if (project.tasks.length > 0) {
+        for (const task of project.tasks) {
+          taskUI.addTaskToProjDOM(task, newProjEl);
+        }
+      } else {
+        const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
+        newProjEl.appendChild(noTaskMsg);
       }
       newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
       newProjEl.querySelector(".project__total-task-count").textContent = project.tasks.length;
