@@ -96,7 +96,7 @@ const taskUI = {
     const foundProject = data.findProjectDataByID(projId);
     data.addTaskData(newTask, foundProject);
     this.updateCompletedTasks(projectEl);
-    console.log(projectEl.querySelector(".no-tasks-msg"));
+    // console.log(projectEl.querySelector(".no-tasks-msg"));
     if (projectEl.querySelector(".no-tasks-msg")) {
       projectEl.querySelector(".no-tasks-msg").remove();
     }
