@@ -23,6 +23,14 @@ const data = {
     storedData[projIndex].title = projectTitle;
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
   },
+  updateBasicProjState(basicInfoObj) {
+    const storedData = this.getData();
+    const projIndex = this.findIndexOfProjectData(basicInfoObj.id);
+    storedData[projIndex].title = basicInfoObj.title;
+    storedData[projIndex].expanded = basicInfoObj.expanded;
+    storedData[projIndex].visible = basicInfoObj.visible;
+    localStorage.setItem("to-do-data", JSON.stringify(storedData));
+  },
   deleteProjData(projectId){
     const storedData = this.getData();
     const projIndex = this.findIndexOfProjectData(projectId);
@@ -62,6 +70,7 @@ const data = {
     foundTask.notes = changedTask.querySelector(".task__notes").value;
     foundTask.due_date = changedTask.querySelector(".task__due-date").value;
     foundTask.checked = changedTask.querySelector(".task__checkbox").checked;
+    foundTask.expanded = changedTask.querySelector(".task__bottom-wrapper").classList.contains("expanded");
     foundTask.priority = changedTask.querySelector(".task__priority").getAttribute("data-priority");
     foundTask.status = changedTask.classList;
 

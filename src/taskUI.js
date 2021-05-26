@@ -35,7 +35,7 @@ const taskUI = {
     const deleteBtn = makeNewEl("button", "task__delete-btn", "delete", {
       "type": "button"
     });
-    const bottomWrapper = makeNewEl("div", "task__bottom-wrapper", "", "");
+    const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
     const notes = makeNewEl("textarea", "task__notes", "", {
       "placeholder": "Notes"
     });
@@ -74,11 +74,7 @@ const taskUI = {
       taskUI.handleTaskKeyUp(e);
     });
     notesBtn.addEventListener("click", function(e) {
-      console.log("CLICKD");
-      const clickedBtn = e.target;
-      const bottomWrapper = clickedBtn.closest(".task").querySelector(".task__bottom-wrapper");
-      taskUI.expandTaskNotesToggle(bottomWrapper);
-      taskUI.handleTaskKeyUp(e);
+      taskUI.handleExpandToggleClick(e);
     }, false);
     deleteBtn.addEventListener("click", function(e) {
       taskUI.handleTaskDeleteClick(e);
@@ -113,15 +109,59 @@ const taskUI = {
     // console.log(`Number of completed tasks: ${countOfCompleted}`);
     projUI.updateCompletedTaskTotals(projectEl, numOfTasks, countOfCompleted);
   },
+  updateNotesBtn(e) {
+    if (e.target.classList.contains("task__notes") && e.target.value.trim() !== "") {
+      e.target.closest(".task").querySelector(".notes-btn").classList.remove("no-notes");
+      e.target.closest(".task").querySelector(".notes-btn").classList.add("has-notes");
+    } else {
+      e.target.closest(".task").querySelector(".notes-btn").classList.remove("has-notes");
+      e.target.closest(".task").querySelector(".notes-btn").classList.add("no-notes");
+    }
+  },
+  expandTaskNotes(element) {
+    const getHeight = () => {
+      const height = `${element.scrollHeight}px`;
+      return height;
+    };
+
+    const height = getHeight();
+    element.classList.add("expanded");
+    element.style.height = height;
+
+    window.setTimeout(() => {
+      element.style.height = "";
+    }, 100);
+  },
+  collapseTaskNotes(element) {
+    element.style.height = `${element.scrollHeight}px`;
+    window.setTimeout(() => {
+      element.style.height = "0";
+    }, 100);
+    window.setTimeout(() => {
+      element.classList.remove("expanded");
+    }, 100);
+  },
+  expandTaskNotesToggle(e) {
+    const element = e.target.closest(".task").querySelector(".task__bottom-wrapper");
+    element.classList.contains("expanded") ? this.collapseTaskNotes(element) : this.expandTaskNotes(element);
+  },
+  handleExpandToggleClick(e) {
+    taskUI.expandTaskNotesToggle(e);
+    const taskEl = e.target.closest(".task");
+    const projectElId = taskEl.closest(".project").getAttribute("data-project-id");
+    timer = window.setTimeout(() => {
+      data.updateTaskData(taskEl, projectElId);
+    }, timeoutVal);
+  },
   handleTaskKeyUp(e) {
     window.clearTimeout(timer);
+    const clickedEl = e.target;
+    // console.log(clickedEl);
+    const elParentTask = e.target.closest(".task");
+    // console.log(elParentTask);
+    const parentProjectId = clickedEl.closest(".project").getAttribute("data-project-id");
+    // console.log(parentProjectId);
     timer = window.setTimeout(() => {
-      const clickedEl = e.target;
-      // console.log(clickedEl);
-      const elParentTask = e.target.closest(".task");
-      // console.log(elParentTask);
-      const parentProjectId = clickedEl.closest(".project").getAttribute("data-project-id");
-      // console.log(parentProjectId);
       data.updateTaskData(elParentTask, parentProjectId);
     }, timeoutVal);
   },
@@ -169,41 +209,6 @@ const taskUI = {
     const projectElId = projectEl.getAttribute("data-project-id");
     
     data.updateTaskData(taskEl, projectElId);
-  },
-  updateNotesBtn(e) {
-    if (e.target.classList.contains("task__notes") && e.target.value.trim() !== "") {
-      e.target.closest(".task").querySelector(".notes-btn").classList.remove("no-notes");
-      e.target.closest(".task").querySelector(".notes-btn").classList.add("has-notes");
-    } else {
-      e.target.closest(".task").querySelector(".notes-btn").classList.remove("has-notes");
-      e.target.closest(".task").querySelector(".notes-btn").classList.add("no-notes");
-    }
-  },
-  expandTaskNotes(element) {
-    const getHeight = () => {
-      const height = `${element.scrollHeight}px`;
-      return height;
-    };
-
-    const height = getHeight();
-    element.classList.add("expanded");
-    element.style.height = height;
-
-    window.setTimeout(() => {
-      element.style.height = "";
-    }, 100);
-  },
-  collapseTaskNotes(element) {
-    element.style.height = `${element.scrollHeight}px`;
-    window.setTimeout(() => {
-      element.style.height = "0";
-    }, 100);
-    window.setTimeout(() => {
-      element.classList.remove("expanded");
-    }, 100);
-  },
-  expandTaskNotesToggle(element) {
-    element.classList.contains("expanded") ? this.collapseTaskNotes(element) : this.expandTaskNotes(element);
   }
 };
 

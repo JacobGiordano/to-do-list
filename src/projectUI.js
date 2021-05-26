@@ -9,6 +9,7 @@ const projUI = {
   populateProjects(allProjectData) {
     for (const project of allProjectData) {
       const newProjEl = this.addProjToDOM(project);
+      project.expanded ? newProjEl.classList.add("expanded") : null;
       for (const task of project.tasks) {
         taskUI.addTaskToProjDOM(task, newProjEl);
       }
@@ -69,7 +70,7 @@ const projUI = {
       projUI.handleProjKeyUp(e);
     }, false);
     expandToggle.addEventListener("click", e => {
-      projUI.expandProjToggle(e.target.closest(".project"));
+      projUI.handleExpandToggleClick(e);
     })
     deleteProjectBtn.addEventListener("click", e => {
       projUI.handleProjDeleteClick(e);
@@ -83,25 +84,18 @@ const projUI = {
     completedNumEl.textContent = numOfCompletedTasks;
     totalTaslNumEl.textContent = numOfTotalTasks;
   },
-  handleProjDeleteClick(e) {
-    if (confirm("Delete project?")) {
-      const projectEl = e.target.closest(".project");
-      const projectElId = projectEl.getAttribute("data-project-id");
-      
-      data.deleteProjData(projectElId);
-      projectEl.remove();
-    }
-  },
-  handleProjKeyUp(e) {
-    window.clearTimeout(timer);
-    timer = window.setTimeout(() => {
-      const projectTitleEl = e.target;
-      // console.log(projectTitle);
-      const parentProjectId = projectTitleEl.closest(".project").getAttribute("data-project-id");
-      const projectTitle = projectTitleEl.value;
-      // console.log(parentProjectId);
-        data.updateProjectDataTitle(projectTitle, parentProjectId);
-    }, timeoutVal);
+  updateProjData(e) {
+    let basicInfoObj = {};
+    const projectEl = e.target.closest(".project");
+    const projectTitle = projectEl.querySelector(".project__title").value;
+    const parentProjectId = projectEl.getAttribute("data-project-id");
+
+    basicInfoObj.id = parentProjectId;
+    basicInfoObj.title = projectTitle;
+    basicInfoObj.expanded = projectEl.classList.contains("expanded");
+    basicInfoObj.visible = !projectEl.classList.contains("hide");
+    console.log(basicInfoObj);
+    data.updateBasicProjState(basicInfoObj);
   },
   expandProj(element) {
     const getHeight = () => {
@@ -126,8 +120,31 @@ const projUI = {
       element.classList.remove("expanded");
     }, 100);
   },
-  expandProjToggle(element) {
+  expandProjToggle(e) {
+    const element = e.target.closest(".project");
     element.classList.contains("expanded") ? this.collapseProj(element) : this.expandProj(element);
+    // projUI.updateProjData(e);
+  },
+  handleExpandToggleClick(e) {
+    projUI.expandProjToggle(e);
+    timer = window.setTimeout(() => {
+      projUI.updateProjData(e);
+    }, timeoutVal);
+  },
+  handleProjDeleteClick(e) {
+    if (confirm("Delete project?")) {
+      const projectEl = e.target.closest(".project");
+      const projectElId = projectEl.getAttribute("data-project-id");
+      
+      data.deleteProjData(projectElId);
+      projectEl.remove();
+    }
+  },
+  handleProjKeyUp(e) {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      projUI.updateProjData(e);
+    }, timeoutVal);
   }
 };
 
