@@ -9,7 +9,10 @@ const projUI = {
   populateProjects(allProjectData) {
     for (const project of allProjectData) {
       const newProjEl = this.addProjToDOM(project);
-      project.expanded ? newProjEl.classList.add("expanded") : null;
+      if (project.expanded) {
+        newProjEl.classList.add("expanded");
+        newProjEl.querySelector(".project__expand-toggle-btn").textContent = "expand_less"
+      }
       if (project.tasks.length > 0) {
         for (const task of project.tasks) {
           taskUI.addTaskToProjDOM(task, newProjEl);
@@ -49,13 +52,13 @@ const projUI = {
     const completedDivider = makeNewEl("span", "project__completed-count-divider", " of ", "");
     const completedText = makeNewEl("span", "project__completed-text", " completed", "");
     const taskTotal = makeNewEl("span", "project__total-task-count", "0", "");
-    const expandToggle = makeNewEl("button", "project__expand-toggle-btn", "Expand Toggle", {
+    const expandToggle = makeNewEl("button", "project__expand-toggle-btn material-icons", "expand_more", {
       "type": "button"
     });
-    const newTaskBtn = makeNewEl("button", "project__add-task-btn", "Add Task", {
+    const newTaskBtn = makeNewEl("button", "project__add-task-btn material-icons", "add", {
       "type": "button"
     });
-    const deleteProjectBtn = makeNewEl("button", "project__delete-project-btn", "Delete Project", {
+    const deleteProjectBtn = makeNewEl("button", "project__delete-project-btn material-icons", "delete_outline", {
       "type": "button"
     });
     projHeader.appendChild(projectTitle);
@@ -110,6 +113,7 @@ const projUI = {
 
     const height = getHeight();
     element.classList.add("expanded");
+    element.querySelector(".project__expand-toggle-btn").textContent = "expand_less";
     element.style.height = height;
 
     window.setTimeout(() => {
@@ -123,6 +127,7 @@ const projUI = {
     }, 100);
     window.setTimeout(() => {
       element.classList.remove("expanded");
+      element.querySelector(".project__expand-toggle-btn").textContent = "expand_more";
     }, 100);
   },
   expandProjToggle(e) {

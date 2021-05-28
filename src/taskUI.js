@@ -29,10 +29,10 @@ const taskUI = {
       "type": "date"
     });
     dueDate.value = newTask.due_date;
-    const notesBtn = makeNewEl("button", "notes-btn", "notes", {
+    const notesBtn = makeNewEl("button", "notes-btn material-icons", "description", {
       "type": "button"
     });
-    const deleteBtn = makeNewEl("button", "task__delete-btn", "delete", {
+    const deleteBtn = makeNewEl("button", "task__delete-btn material-icons", "delete_outline", {
       "type": "button"
     });
     const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");

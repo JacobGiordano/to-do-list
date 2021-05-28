@@ -59,12 +59,18 @@ table {
 	--light-green: #e8f5e9;
 	--orange: #f57c00;
 	--light-orange: #fbe9e7;
+	--purple: #512DA8;
+	--light-purple: #ede7f6;
 
 	--border-radius: .25rem;
 }
 
 .body {
 	margin: 0 1rem;
+}
+
+body, input, textarea, button, p, h1, h2, h3, h4, h5, h6  {
+	color: var(--dark-gray);
 }
 
 input {
@@ -99,6 +105,25 @@ input:not(input[type="checkbox"]):focus-visible {
   display: block;
 	width: 100%;
 	font-size: 16px;
+}
+
+button.material-icons {
+	background: var(--white);
+	border: none;
+	border-radius: 50%;
+	margin-right: .5rem;
+	padding: .25rem;
+	transition: all ease-in-out .1s;
+}
+
+button.material-icons:last-of-type {
+	margin-right: 0;
+}
+
+button.material-icons:hover, button.material-icons:focus {
+	background: var(--purple);
+	color: var(--white);
+	cursor: pointer;
 }
 
 .project {
@@ -187,7 +212,10 @@ input:not(input[type="checkbox"]):focus-visible {
 }
 
 .task .notes-btn.no-notes {
-	opacity: .5;
+	color: var(--light-gray);
+}
+.task .notes-btn.no-notes:hover, .task .notes-btn.no-notes:focus {
+	color: var(--white);
 }
 
 .task__priority.priority-set {
