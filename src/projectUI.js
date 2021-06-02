@@ -17,9 +17,6 @@ const projUI = {
         for (const task of project.tasks) {
           taskUI.addTaskToProjDOM(task, newProjEl);
         }
-      } else {
-        const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
-        newProjEl.appendChild(noTaskMsg);
       }
       newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
       newProjEl.querySelector(".project__total-task-count").textContent = project.tasks.length;
@@ -33,6 +30,10 @@ const projUI = {
       taskUI.addTaskToProj(newTask, e.target.closest(".project"));
       // console.log(newTask);
     }, false);
+    if (newProj.tasks.length === 0) {
+      const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
+      newProjEl.appendChild(noTaskMsg);
+    }
     return newProjEl;
   },
   createProjectEl(newProj) {
@@ -123,12 +124,22 @@ const projUI = {
 
     window.setTimeout(() => {
       element.style.height = "";
+      tabbableElements = element;
+      console.log(tabbableElements);
+      for (const element of tabbableElements) {
+        element.tabIndex = null;
+      }
     }, 100);
   },
   collapseProj(element) {
     element.style.height = `${element.scrollHeight - 32}px`;
     window.setTimeout(() => {
       document.body.clientWidth >= 660 ? element.style.height = "3rem" : element.style.height = "5rem";
+      tabbableElements = element;
+      console.log(tabbableElements);
+      for (const element of tabbableElements) {
+        element.tabIndex = "-1";
+      }
     }, 100);
     window.setTimeout(() => {
       element.classList.remove("expanded");
