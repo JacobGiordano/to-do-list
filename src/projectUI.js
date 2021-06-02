@@ -124,22 +124,12 @@ const projUI = {
 
     window.setTimeout(() => {
       element.style.height = "";
-      tabbableElements = element;
-      console.log(tabbableElements);
-      for (const element of tabbableElements) {
-        element.tabIndex = null;
-      }
     }, 100);
   },
   collapseProj(element) {
     element.style.height = `${element.scrollHeight - 32}px`;
     window.setTimeout(() => {
       document.body.clientWidth >= 660 ? element.style.height = "3rem" : element.style.height = "5rem";
-      tabbableElements = element;
-      console.log(tabbableElements);
-      for (const element of tabbableElements) {
-        element.tabIndex = "-1";
-      }
     }, 100);
     window.setTimeout(() => {
       element.classList.remove("expanded");
@@ -152,7 +142,6 @@ const projUI = {
     // projUI.updateProjData(e);
   },
   clearProjStyles() {
-    console.log("YO!");
     const projects = document.querySelectorAll(".project");
     for (const project of projects) {
       project.style = "";
