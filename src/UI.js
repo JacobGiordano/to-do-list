@@ -8,6 +8,9 @@ const ui = {
     while (parentElement.firstChild) {
       parentElement.removeChild(parentElement.firstChild);
     }
+  },
+  handleBodyResize(e) {
+    e.matches ? projUI.clearProjStyles() : projUI.clearProjStyles();
   }
 }
 
@@ -26,6 +29,10 @@ newProjBtn.addEventListener("click", function() {
 clearListBtn.addEventListener("click", function() {
   ui.clearList(content);
 }, false);
+
+const mediaQuery = window.matchMedia("(min-width: 660px)");
+mediaQuery.addEventListener("change", ui.handleBodyResize, false);
+// ui.handleBodyResize(mediaQuery);
 
 
 export default ui ;

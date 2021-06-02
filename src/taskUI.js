@@ -9,6 +9,9 @@ const taskUI = {
       "data-task-id": newTask.id
     });
     const topWrapper = makeNewEl("div", "task__top-wrapper", "", "");
+    const topWrapperLeft = makeNewEl("div", "task__top-wrapper-left", "", "");
+    const topWrapperMiddle = makeNewEl("div", "task__top-wrapper-middle", "", "");
+    const topWrapperRight = makeNewEl("div", "task__top-wrapper-right", "", "");
     const checkBox = makeNewEl("input", "task__checkbox", "", {
       "type": "checkbox"
     });
@@ -30,10 +33,12 @@ const taskUI = {
     });
     dueDate.value = newTask.due_date;
     const notesBtn = makeNewEl("button", "notes-btn material-icons", "description", {
-      "type": "button"
+      "type": "button",
+      "title": "Task notes"
     });
     const deleteBtn = makeNewEl("button", "task__delete-btn material-icons", "delete_outline", {
-      "type": "button"
+      "type": "button",
+      "title": "Delete task"
     });
     const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
     const notes = makeNewEl("textarea", "task__notes", "", {
@@ -42,13 +47,17 @@ const taskUI = {
     notes.value = newTask.notes;
     notes.value === "" ? notesBtn.classList.add("no-notes") : notesBtn.classList.add("has-notes");
   
-    topWrapper.appendChild(checkBox);
-    topWrapper.appendChild(priority);
-    topWrapper.appendChild(input);
-    topWrapper.appendChild(dueDate);
-    topWrapper.appendChild(notesBtn);
-    topWrapper.appendChild(deleteBtn);
+    topWrapperLeft.appendChild(checkBox);
+    topWrapperLeft.appendChild(input);
+    topWrapperMiddle.appendChild(priority);
+    topWrapperMiddle.appendChild(dueDate);
+    topWrapperRight.appendChild(notesBtn);
+    topWrapperRight.appendChild(deleteBtn);
+    topWrapper.appendChild(topWrapperLeft);
+    topWrapper.appendChild(topWrapperMiddle);
+    topWrapper.appendChild(topWrapperRight);
     bottomWrapper.appendChild(notes);
+    task.appendChild(topWrapper);
     task.appendChild(topWrapper);
     task.appendChild(bottomWrapper);
   

@@ -52,14 +52,18 @@ const projUI = {
     const completedDivider = makeNewEl("span", "project__completed-count-divider", " of ", "");
     const completedText = makeNewEl("span", "project__completed-text", " completed", "");
     const taskTotal = makeNewEl("span", "project__total-task-count", "0", "");
+    const projHeaderRightInner = makeNewEl("div", "project__inner-btn-wrapper", "", "");
     const expandToggle = makeNewEl("button", "project__expand-toggle-btn material-icons", "expand_more", {
-      "type": "button"
+      "type": "button",
+      "title": "Expand/collapse project"
     });
     const newTaskBtn = makeNewEl("button", "project__add-task-btn material-icons", "add", {
-      "type": "button"
+      "type": "button",
+      "title": "Add project"
     });
     const deleteProjectBtn = makeNewEl("button", "project__delete-project-btn material-icons", "delete_outline", {
-      "type": "button"
+      "type": "button",
+      "title": "Delete project"
     });
     projHeader.appendChild(projectTitle);
     completedCounter.appendChild(completedCount);
@@ -67,9 +71,10 @@ const projUI = {
     completedCounter.appendChild(taskTotal);
     completedCounter.appendChild(completedText);
     projHeaderRight.appendChild(completedCounter);
-    projHeaderRight.appendChild(expandToggle);
-    projHeaderRight.appendChild(newTaskBtn);
-    projHeaderRight.appendChild(deleteProjectBtn);
+    projHeaderRightInner.appendChild(expandToggle);
+    projHeaderRightInner.appendChild(newTaskBtn);
+    projHeaderRightInner.appendChild(deleteProjectBtn);
+    projHeaderRight.appendChild(projHeaderRightInner);
     projHeader.appendChild(projHeaderRight);
     projectEl.appendChild(projHeader);
 
@@ -107,7 +112,7 @@ const projUI = {
   },
   expandProj(element) {
     const getHeight = () => {
-      const height = `${element.scrollHeight}px`;
+      const height = `${element.clientHeight}px`;
       return height;
     };
 
@@ -121,9 +126,9 @@ const projUI = {
     }, 100);
   },
   collapseProj(element) {
-    element.style.height = `${element.scrollHeight}px`;
+    element.style.height = `${element.scrollHeight - 32}px`;
     window.setTimeout(() => {
-      element.style.height = "1.5rem";
+      document.body.clientWidth >= 660 ? element.style.height = "3rem" : element.style.height = "5rem";
     }, 100);
     window.setTimeout(() => {
       element.classList.remove("expanded");
@@ -134,6 +139,13 @@ const projUI = {
     const element = e.target.closest(".project");
     element.classList.contains("expanded") ? this.collapseProj(element) : this.expandProj(element);
     // projUI.updateProjData(e);
+  },
+  clearProjStyles() {
+    console.log("YO!");
+    const projects = document.querySelectorAll(".project");
+    for (const project of projects) {
+      project.style = "";
+    }
   },
   handleExpandToggleClick(e) {
     projUI.expandProjToggle(e);
