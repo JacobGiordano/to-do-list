@@ -16,7 +16,7 @@ const ui = {
 
 const newProjBtn = document.getElementById("new-project-btn");
 const clearListBtn = document.getElementById("clear-list-btn");
-const content = document.getElementById("content");
+const pageContent = document.getElementById("content");
 
 newProjBtn.addEventListener("click", function() {
   const newProjId = uuidv4();
@@ -27,7 +27,7 @@ newProjBtn.addEventListener("click", function() {
 }, false);
 
 clearListBtn.addEventListener("click", function() {
-  ui.clearList(content);
+  ui.clearList(pageContent);
 }, false);
 
 const mediaQuery = window.matchMedia("(min-width: 660px)");

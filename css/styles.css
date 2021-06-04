@@ -85,8 +85,13 @@ body, input, textarea, button, p, h1, h2, h3, h4, h5, h6  {
 	font-family: 'Nunito', sans-serif;
 }
 
+button, input, textarea {
+	transition: all ease-in-out .1s;
+}
+
 input {
 	padding: .25rem;
+	cursor: pointer;
 }
 
 input:not(input[type="checkbox"]):focus, input:not(input[type="checkbox"]):hover {
@@ -138,6 +143,7 @@ button.material-icons:hover {
 	background: var(--white);
 	height: 5rem;
 	border-bottom: 1px solid var(--light-gray);
+	box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
 	border-radius: var(--border-radius);
 	margin-bottom: 1rem;
 	padding: 1rem;
@@ -153,10 +159,16 @@ button.material-icons:hover {
 
 .project__header {
 	display: flex;
-	margin-bottom: .5rem;
-	justify-content: space-between;
+	border-bottom: 1px solid var(--white);
+	margin-bottom: 1rem;
 	padding: 0.5rem;
+	justify-content: space-between;
 	flex-direction: column;
+	transition: all ease-in-out .1s;
+}
+
+.project.expanded .project__header {
+	border-bottom: 1px solid var(--light-gray);
 }
 
 .project__btn-wrapper {
@@ -168,6 +180,7 @@ button.material-icons:hover {
 .project__title, .task__text-input {
 	border: none;
 	border-bottom: 1px solid var(--white);
+	overflow-x: scroll;
 }
 
 .project__title {
@@ -263,8 +276,25 @@ button.material-icons:hover {
 	font-weight: 600;
 }
 
+.task__priority:hover, .task__priority:focus {
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 15%);
+}
+
 .task__due-date {
+	border: 1px solid var(--white);
 	margin-right: .5rem;
+	max-width: 126px;
+	font-size: 1rem;
+}
+
+.task__due-date:hover, .task__due-date:focus {
+	cursor: pointer;
+	border-bottom: 1px solid var(--medium-gray);
+	outline: auto;
+}
+
+::-webkit-calendar-picker-indicator {
+	cursor: pointer;
 }
 
 .task .notes-btn.no-notes {

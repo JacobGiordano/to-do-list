@@ -28,10 +28,16 @@ const taskUI = {
       "placeholder": "New Task"
     });
     input.value = newTask.text;
-    const dueDate = makeNewEl("input", "task__due-date", "", {
-      "type": "date"
+    const dueDateText = makeNewEl("label", "task__due-date-text", "Due Date: ", "");
+    const dueDateLabel = makeNewEl("label", "task__due-date-label", "Due Date ", {
+      "for": `date-${newTask.id}`
+    })
+    const dueDateBtn = makeNewEl("input", "task__due-date", "", {
+      "type": "date",
+      "name": `date-${newTask.id}`
     });
-    dueDate.value = newTask.due_date;
+    dueDateText.value = `Due: ${newTask.due_date}`;
+    dueDateBtn.value = newTask.due_date;
     const notesBtn = makeNewEl("button", "notes-btn material-icons", "description", {
       "type": "button",
       "title": "Task notes"
@@ -39,6 +45,10 @@ const taskUI = {
     const deleteBtn = makeNewEl("button", "task__delete-btn material-icons", "delete_outline", {
       "type": "button",
       "title": "Delete task"
+    });
+    const editBtn = makeNewEl("button", "task__edit-btn material-icons", "more_vert", {
+      "type": "button",
+      "title": "Edit Task Options"
     });
     const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
     const notes = makeNewEl("textarea", "task__notes", "", {
@@ -50,7 +60,10 @@ const taskUI = {
     topWrapperLeft.appendChild(checkBox);
     topWrapperLeft.appendChild(input);
     topWrapperMiddle.appendChild(priority);
-    topWrapperMiddle.appendChild(dueDate);
+    topWrapperMiddle.appendChild(dueDateText);
+    dueDateLabel.appendChild(dueDateBtn);
+    topWrapperMiddle.appendChild(dueDateLabel);
+    topWrapperRight.appendChild(editBtn);
     topWrapperRight.appendChild(notesBtn);
     topWrapperRight.appendChild(deleteBtn);
     topWrapper.appendChild(topWrapperLeft);
@@ -62,7 +75,7 @@ const taskUI = {
     task.appendChild(bottomWrapper);
   
     // ADD TASK EVENT LISTENERS
-    const addChangeListenerArray = [dueDate];
+    const addChangeListenerArray = [dueDateBtn];
     const addKeyUpListenerArray = [input, notes];
 
     for (const element of addChangeListenerArray) {

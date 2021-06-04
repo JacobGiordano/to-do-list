@@ -5,6 +5,8 @@ import data from "./data";
 import ui from "./UI";
 import { v4 as uuidv4 } from 'uuid';
 
+const pageContent = document.getElementById("content");
+
 const projUI = {
   populateProjects(allProjectData) {
     for (const project of allProjectData) {
@@ -24,7 +26,7 @@ const projUI = {
   },
   addProjToDOM(newProj) {
     const newProjEl = this.createProjectEl(newProj);
-    content.appendChild(newProjEl);
+    pageContent.appendChild(newProjEl);
     newProjEl.querySelector(".project__add-task-btn").addEventListener("click", function(e) {
       const newTask = new Task(uuidv4());
       taskUI.addTaskToProj(newTask, e.target.closest(".project"));
