@@ -297,10 +297,10 @@ button.material-icons:hover {
 	cursor: pointer;
 }
 
-.task .notes-btn.no-notes {
+.task .task__notes-btn.no-notes {
 	color: var(--light-gray);
 }
-.task .notes-btn.no-notes:hover {
+.task .task__notes-btn.no-notes:hover {
 	color: var(--white);
 }
 

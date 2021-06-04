@@ -38,7 +38,7 @@ const taskUI = {
     });
     dueDateText.value = `Due: ${newTask.due_date}`;
     dueDateBtn.value = newTask.due_date;
-    const notesBtn = makeNewEl("button", "notes-btn material-icons", "description", {
+    const notesBtn = makeNewEl("button", "task__notes-btn material-icons", "description", {
       "type": "button",
       "title": "Task notes"
     });
@@ -137,11 +137,11 @@ const taskUI = {
   },
   updateNotesBtn(e) {
     if (e.target.classList.contains("task__notes") && e.target.value.trim() !== "") {
-      e.target.closest(".task").querySelector(".notes-btn").classList.remove("no-notes");
-      e.target.closest(".task").querySelector(".notes-btn").classList.add("has-notes");
+      e.target.closest(".task").querySelector(".task__notes-btn").classList.remove("no-notes");
+      e.target.closest(".task").querySelector(".task__notes-btn").classList.add("has-notes");
     } else {
-      e.target.closest(".task").querySelector(".notes-btn").classList.remove("has-notes");
-      e.target.closest(".task").querySelector(".notes-btn").classList.add("no-notes");
+      e.target.closest(".task").querySelector(".task__notes-btn").classList.remove("has-notes");
+      e.target.closest(".task").querySelector(".task__notes-btn").classList.add("no-notes");
     }
   },
   expandTaskNotes(element) {
