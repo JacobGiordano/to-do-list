@@ -79,7 +79,7 @@ table {
 	padding: .5rem 1rem;
 }
 
-body, input, textarea, button, p, h1, h2, h3, h4, h5, h6  {
+body, input, input:before, input:after, textarea, button, p, h1, h2, h3, h4, h5, h6  {
 	color: var(--dark-gray);
 	/* font-family: 'Poppins', sans-serif; */
 	font-family: 'Nunito', sans-serif;
@@ -208,34 +208,31 @@ button.material-icons:hover {
 	border: 1px solid var(--light-gray);
 }
 
-.task__top-wrapper, .task__bottom-wrapper {
-	display: flex;
-	justify-content: space-between;
+.task label {
+	color: var(--medium-gray);
+	font-size: .8rem;
+}
+
+.task__top-wrapper, .task__top-wrapper-right, .task__bottom-wrapper {
 	align-items: center;
 	flex-wrap: wrap;
 }
 
-.task__top-wrapper-left, .task__top-wrapper-middle, .task__top-wrapper-right {
+.task__top-wrapper {
 	display: flex;
-	align-items: center;
-	flex: 0 0 0%;
-}
-
-.task__top-wrapper-left {
-	order: 1;
-	flex: 1 1 50%;
-}
-.task__top-wrapper-middle {
-	order: 3;
-	flex: 1 1 0%;
+	flex-direction: column;
 	justify-content: space-between;
-}
-.task__top-wrapper-right {
-	order: 2;
+	align-items: flex-start;
 }
 
-.task__top-wrapper .task__top-wrapper-right {
-	justify-content: flex-end;
+.task__top-wrapper-left, .task__top-wrapper-right {
+	display: inline-flex;
+	/* flex: 1 1 0; */
+	width: 100%;
+}
+
+.task__top-wrapper-right {
+	justify-content: space-between;
 }
 
 .task__bottom-wrapper {
@@ -246,6 +243,10 @@ button.material-icons:hover {
 
 .task__bottom-wrapper.expanded {
 	height: auto;
+}
+
+.task__bottom-wrapper-left, .task__bottom-wrapper-right {
+	flex: 1 1 0;
 }
 
 .task__checkbox, .task__priority {
@@ -260,7 +261,7 @@ button.material-icons:hover {
 }
 
 .task__text-input {
-	width: 90%;
+	width: 91%;
 	padding-left: 0;
 	font-size: 1rem;
 }
@@ -276,15 +277,14 @@ button.material-icons:hover {
 	font-weight: 600;
 }
 
-.task__priority:hover, .task__priority:focus {
+.task__priority:hover {
 	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 15%);
 }
 
 .task__due-date {
 	border: 1px solid var(--white);
-	margin-right: .5rem;
-	max-width: 126px;
-	font-size: 1rem;
+	max-width: 118px;
+	font-size: .8rem;
 }
 
 .task__due-date:hover, .task__due-date:focus {
@@ -293,15 +293,59 @@ button.material-icons:hover {
 	outline: auto;
 }
 
-::-webkit-calendar-picker-indicator {
+/* datepicker styling & functionality from this post: */
+/* https://stackoverflow.com/questions/33630083/add-google-material-design-icon-in-css-pseudo-after-content/33634119 */
+input[type="date"] {
+	position: relative;
 	cursor: pointer;
+	transition: all ease-in-out .1s;
 }
 
-.task .task__notes-btn.no-notes {
+input[type="date"]:after {
+	font-family: 'Material Icons';
+  content: "event";
+  -webkit-font-feature-settings: 'liga';
+	font-size: 1.5rem;
+	padding: 2px 0 0 0;
+}
+
+/* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
+input[type="date"]::-webkit-calendar-picker-indicator {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: auto;
+	height: auto;
+	color: transparent;
+	background: transparent;
+}
+
+/* adjust increase/decrease button */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+	z-index: 1;
+}
+
+/* adjust clear button */
+input[type="date"]::-webkit-clear-button {
+	 z-index: 1;
+}
+
+.task__due-date.no-date:after {
 	color: var(--light-gray);
 }
-.task .task__notes-btn.no-notes:hover {
-	color: var(--white);
+
+.task .task__notes-icon {
+	transition: all ease-in-out .1s;
+}
+.task .task__notes-icon.no-notes {
+	color: var(--light-gray);
+}
+.task .task__notes-icon:hover {
+	cursor: pointer;
 }
 
 .task__priority.priority-set {
@@ -332,7 +376,7 @@ button.material-icons:hover {
 	margin: .5rem 0;
 	width: 100%;
 	min-width: 90%;
-	min-height: 3rem;
+	min-height: 1rem;
 	border: 1px solid var(--light-gray);
 	border-radius: calc(var(--border-radius) / 3);
 	padding: .5rem;
@@ -358,15 +402,13 @@ button.material-icons:hover {
 	.task {
 		flex-wrap: nowrap;
 	}
-	.task__top-wrapper-left {
-		order: 1;
-		flex: 1 1 0%;
-	}
-	.task__top-wrapper-middle {
-		order: 2;
-		flex: unset;
+	.task__top-wrapper {
+		flex-direction: row;
 	}
 	.task__top-wrapper-right {
-		order: 3;
+		justify-content: flex-end;
+	}
+	.task__top-wrapper-left, .task__top-wrapper-right {
+		width: auto;
 	}
 }

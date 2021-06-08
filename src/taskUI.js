@@ -10,8 +10,10 @@ const taskUI = {
     });
     const topWrapper = makeNewEl("div", "task__top-wrapper", "", "");
     const topWrapperLeft = makeNewEl("div", "task__top-wrapper-left", "", "");
-    const topWrapperMiddle = makeNewEl("div", "task__top-wrapper-middle", "", "");
     const topWrapperRight = makeNewEl("div", "task__top-wrapper-right", "", "");
+    const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
+    const bottomWrapperLeft = makeNewEl("div", "task__top-wrapper-left", "", "");
+    const bottomWrapperRight = makeNewEl("div", "task__top-wrapper-right", "", "");
     const checkBox = makeNewEl("input", "task__checkbox", "", {
       "type": "checkbox"
     });
@@ -28,19 +30,17 @@ const taskUI = {
       "placeholder": "New Task"
     });
     input.value = newTask.text;
-    const dueDateText = makeNewEl("label", "task__due-date-text", "Due Date: ", "");
-    const dueDateLabel = makeNewEl("label", "task__due-date-label", "Due Date ", {
+    const dueDateLabel = makeNewEl("label", "task__due-date-label", "Due: ", {
       "for": `date-${newTask.id}`
     })
     const dueDateBtn = makeNewEl("input", "task__due-date", "", {
       "type": "date",
       "name": `date-${newTask.id}`
     });
-    dueDateText.value = `Due: ${newTask.due_date}`;
     dueDateBtn.value = newTask.due_date;
-    const notesBtn = makeNewEl("button", "task__notes-btn material-icons", "description", {
-      "type": "button",
-      "title": "Task notes"
+    dueDateBtn.value === "" ? dueDateBtn.classList.add("no-date") : dueDateBtn.classList.remove("no-date");
+    const notesIcon = makeNewEl("div", "task__notes-icon material-icons-outlined", "description", {
+      "title": "Task notes indicator"
     });
     const deleteBtn = makeNewEl("button", "task__delete-btn material-icons", "delete_outline", {
       "type": "button",
@@ -50,27 +50,34 @@ const taskUI = {
       "type": "button",
       "title": "Edit Task Options"
     });
-    const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
+    // const notesLabel = makeNewEl("label", "task__notes-label", "Notes", {
+    //   "for": `notes-${newTask.id}`
+    // });
     const notes = makeNewEl("textarea", "task__notes", "", {
-      "placeholder": "Notes"
+      "placeholder": "Notes",
+      "name": `notes-${newTask.id}`
     });
     notes.value = newTask.notes;
-    notes.value === "" ? notesBtn.classList.add("no-notes") : notesBtn.classList.add("has-notes");
-  
+    notes.value === "" ? notesIcon.classList.add("no-notes") : notesIcon.classList.remove("no-notes");
+
     topWrapperLeft.appendChild(checkBox);
     topWrapperLeft.appendChild(input);
-    topWrapperMiddle.appendChild(priority);
-    topWrapperMiddle.appendChild(dueDateText);
+    // topWrapperRight.appendChild(dueDateText);
     dueDateLabel.appendChild(dueDateBtn);
-    topWrapperMiddle.appendChild(dueDateLabel);
+    topWrapperRight.appendChild(dueDateLabel);
+    topWrapperRight.appendChild(notesIcon);
     topWrapperRight.appendChild(editBtn);
-    topWrapperRight.appendChild(notesBtn);
-    topWrapperRight.appendChild(deleteBtn);
     topWrapper.appendChild(topWrapperLeft);
-    topWrapper.appendChild(topWrapperMiddle);
     topWrapper.appendChild(topWrapperRight);
+    bottomWrapperLeft.appendChild(priority);
+    // bottomWrapperRight.appendChild(dueDateLabel);
+    // bottomWrapper.appendChild(notesIcon);
+    bottomWrapperRight.appendChild(deleteBtn);
+    // notesLabel.appendChild(notes);
+    // bottomWrapper.appendChild(notesLabel);
+    bottomWrapper.appendChild(bottomWrapperLeft);
+    bottomWrapper.appendChild(bottomWrapperRight);
     bottomWrapper.appendChild(notes);
-    task.appendChild(topWrapper);
     task.appendChild(topWrapper);
     task.appendChild(bottomWrapper);
   
@@ -80,29 +87,44 @@ const taskUI = {
 
     for (const element of addChangeListenerArray) {
       element.addEventListener("change", function(e) {
+        if (e.target.classList.contains("task__due-date")) {
+          taskUI.updateDateIcon(e);
+        }
+
         taskUI.handleTaskKeyUp(e);
       }, false);
     }
     for (const element of addKeyUpListenerArray) {
-      element.addEventListener("keyup", function(e) {
-        e.target.classList.contains("task__notes") ? taskUI.updateNotesBtn(e) : null;
+      element.addEventListener("keyup", e => {
+        if (e.target.classList.contains("task__notes")) {
+          taskUI.updateNotesIcon(e);
+        }
+
         taskUI.handleTaskKeyUp(e);
       }, false);
     }
-    checkBox.addEventListener("click", function(e) {
+    checkBox.addEventListener("click", e => {
       const clickedCheckBox = e.target;
       taskUI.updateCompletedTasks(clickedCheckBox.closest(".project"));
       clickedCheckBox.checked ? clickedCheckBox.closest(".task").classList.add("completed") : clickedCheckBox.closest(".task").classList.remove("completed");
       taskUI.handleTaskKeyUp(e);
     });
-    notesBtn.addEventListener("click", function(e) {
+    editBtn.addEventListener("click", e => {
       taskUI.handleExpandToggleClick(e);
     }, false);
-    deleteBtn.addEventListener("click", function(e) {
+    notesIcon.addEventListener("click", e => {
+      taskUI.handleExpandToggleClick(e);
+    }, false);
+    deleteBtn.addEventListener("click", e => {
       taskUI.handleTaskDeleteClick(e);
     }, false);
-    priority.addEventListener("click", function(e) {
+    priority.addEventListener("click", e => {
       taskUI.handleTaskPriorityClick(e);
+    }, false);
+    dueDateBtn.addEventListener("click", e => {
+      console.log("In eventlistener");
+      taskUI.updateDateIcon(e);
+      taskUI.handleTaskKeyUp(e);
     }, false);
   
     return task;
@@ -135,13 +157,19 @@ const taskUI = {
     // console.log(`Number of completed tasks: ${countOfCompleted}`);
     projUI.updateCompletedTaskTotals(projectEl, numOfTasks, countOfCompleted);
   },
-  updateNotesBtn(e) {
+  updateNotesIcon(e) {
     if (e.target.classList.contains("task__notes") && e.target.value.trim() !== "") {
-      e.target.closest(".task").querySelector(".task__notes-btn").classList.remove("no-notes");
-      e.target.closest(".task").querySelector(".task__notes-btn").classList.add("has-notes");
+      e.target.closest(".task").querySelector(".task__notes-icon").classList.remove("no-notes");
     } else {
-      e.target.closest(".task").querySelector(".task__notes-btn").classList.remove("has-notes");
-      e.target.closest(".task").querySelector(".task__notes-btn").classList.add("no-notes");
+      e.target.closest(".task").querySelector(".task__notes-icon").classList.add("no-notes");
+    }
+  },
+  updateDateIcon(e) {
+    console.log(e.target.value.trim());
+    if (e.target.classList.contains("task__due-date") && e.target.value.trim() !== "") {
+      e.target.closest(".task").querySelector(".task__due-date").classList.remove("no-date");
+    } else {
+      e.target.closest(".task").querySelector(".task__due-date").classList.add("no-date");
     }
   },
   expandTaskNotes(element) {

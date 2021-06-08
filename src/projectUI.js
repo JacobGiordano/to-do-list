@@ -27,7 +27,7 @@ const projUI = {
   addProjToDOM(newProj) {
     const newProjEl = this.createProjectEl(newProj);
     pageContent.appendChild(newProjEl);
-    newProjEl.querySelector(".project__add-task-btn").addEventListener("click", function(e) {
+    newProjEl.querySelector(".project__add-task-btn").addEventListener("click", e => {
       const newTask = new Task(uuidv4());
       taskUI.addTaskToProj(newTask, e.target.closest(".project"));
       // console.log(newTask);
