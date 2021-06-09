@@ -12,8 +12,7 @@ const taskUI = {
     const topWrapperLeft = makeNewEl("div", "task__top-wrapper-left", "", "");
     const topWrapperRight = makeNewEl("div", "task__top-wrapper-right", "", "");
     const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
-    const bottomWrapperLeft = makeNewEl("div", "task__top-wrapper-left", "", "");
-    const bottomWrapperRight = makeNewEl("div", "task__top-wrapper-right", "", "");
+    const bottomBtnsWrapper = makeNewEl("div", "task__bottom-buttons-wrapper", "", "");
     const checkBox = makeNewEl("input", "task__checkbox", "", {
       "type": "checkbox"
     });
@@ -50,9 +49,6 @@ const taskUI = {
       "type": "button",
       "title": "Edit Task Options"
     });
-    // const notesLabel = makeNewEl("label", "task__notes-label", "Notes", {
-    //   "for": `notes-${newTask.id}`
-    // });
     const notes = makeNewEl("textarea", "task__notes", "", {
       "placeholder": "Notes",
       "name": `notes-${newTask.id}`
@@ -62,21 +58,15 @@ const taskUI = {
 
     topWrapperLeft.appendChild(checkBox);
     topWrapperLeft.appendChild(input);
-    // topWrapperRight.appendChild(dueDateText);
     dueDateLabel.appendChild(dueDateBtn);
     topWrapperRight.appendChild(dueDateLabel);
     topWrapperRight.appendChild(notesIcon);
     topWrapperRight.appendChild(editBtn);
     topWrapper.appendChild(topWrapperLeft);
     topWrapper.appendChild(topWrapperRight);
-    bottomWrapperLeft.appendChild(priority);
-    // bottomWrapperRight.appendChild(dueDateLabel);
-    // bottomWrapper.appendChild(notesIcon);
-    bottomWrapperRight.appendChild(deleteBtn);
-    // notesLabel.appendChild(notes);
-    // bottomWrapper.appendChild(notesLabel);
-    bottomWrapper.appendChild(bottomWrapperLeft);
-    bottomWrapper.appendChild(bottomWrapperRight);
+    bottomBtnsWrapper.appendChild(priority);
+    bottomBtnsWrapper.appendChild(deleteBtn);
+    bottomWrapper.appendChild(bottomBtnsWrapper);
     bottomWrapper.appendChild(notes);
     task.appendChild(topWrapper);
     task.appendChild(bottomWrapper);

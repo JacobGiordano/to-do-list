@@ -222,7 +222,7 @@ button.material-icons:hover {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: flex-start;
+	align-items: center;
 }
 
 .task__top-wrapper-left, .task__top-wrapper-right {
@@ -231,6 +231,8 @@ button.material-icons:hover {
 }
 
 .task__top-wrapper-left {
+	display: flex;
+	align-items: center;
 	flex: 1 1 0;
 }
 
@@ -248,7 +250,10 @@ button.material-icons:hover {
 	height: auto;
 }
 
-.task__bottom-wrapper-left, .task__bottom-wrapper-right {
+.task__bottom-buttons-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	flex: 1 1 0;
 }
 
