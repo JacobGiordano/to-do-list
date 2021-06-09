@@ -227,8 +227,11 @@ button.material-icons:hover {
 
 .task__top-wrapper-left, .task__top-wrapper-right {
 	display: inline-flex;
-	/* flex: 1 1 0; */
 	width: 100%;
+}
+
+.task__top-wrapper-left {
+	flex: 1 1 0;
 }
 
 .task__top-wrapper-right {
@@ -334,15 +337,19 @@ input[type="date"]::-webkit-clear-button {
 	 z-index: 1;
 }
 
-.task__due-date.no-date:after {
+.task__due-date:after {
 	color: var(--light-gray);
+}
+.task__due-date.has-date:after {
+	color: var(--medium-gray);
 }
 
 .task .task__notes-icon {
+	color: var(--light-gray);
 	transition: all ease-in-out .1s;
 }
-.task .task__notes-icon.no-notes {
-	color: var(--light-gray);
+.task .task__notes-icon.has-notes {
+	color: var(--medium-gray);
 }
 .task .task__notes-icon:hover {
 	cursor: pointer;

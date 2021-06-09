@@ -38,7 +38,7 @@ const taskUI = {
       "name": `date-${newTask.id}`
     });
     dueDateBtn.value = newTask.due_date;
-    dueDateBtn.value === "" ? dueDateBtn.classList.add("no-date") : dueDateBtn.classList.remove("no-date");
+    dueDateBtn.value !== "" ? dueDateBtn.classList.add("has-date") : dueDateBtn.classList.remove("has-date");
     const notesIcon = makeNewEl("div", "task__notes-icon material-icons-outlined", "description", {
       "title": "Task notes indicator"
     });
@@ -58,7 +58,7 @@ const taskUI = {
       "name": `notes-${newTask.id}`
     });
     notes.value = newTask.notes;
-    notes.value === "" ? notesIcon.classList.add("no-notes") : notesIcon.classList.remove("no-notes");
+    notes.value !== "" ? notesIcon.classList.add("has-notes") : notesIcon.classList.remove("has-notes");
 
     topWrapperLeft.appendChild(checkBox);
     topWrapperLeft.appendChild(input);
@@ -159,17 +159,17 @@ const taskUI = {
   },
   updateNotesIcon(e) {
     if (e.target.classList.contains("task__notes") && e.target.value.trim() !== "") {
-      e.target.closest(".task").querySelector(".task__notes-icon").classList.remove("no-notes");
+      e.target.closest(".task").querySelector(".task__notes-icon").classList.add("has-notes");
     } else {
-      e.target.closest(".task").querySelector(".task__notes-icon").classList.add("no-notes");
+      e.target.closest(".task").querySelector(".task__notes-icon").classList.remove("has-notes");
     }
   },
   updateDateIcon(e) {
     console.log(e.target.value.trim());
     if (e.target.classList.contains("task__due-date") && e.target.value.trim() !== "") {
-      e.target.closest(".task").querySelector(".task__due-date").classList.remove("no-date");
+      e.target.closest(".task").querySelector(".task__due-date").classList.add("has-date");
     } else {
-      e.target.closest(".task").querySelector(".task__due-date").classList.add("no-date");
+      e.target.closest(".task").querySelector(".task__due-date").classList.remove("has-date");
     }
   },
   expandTaskNotes(element) {
