@@ -72,11 +72,16 @@ table {
 	--border-radius: 1.5rem;
 }
 
-.body {
+* {
+	box-sizing: border-box;
+}
+
+body {
 	background: var(--cool-gray);
 	max-width: 768px;
 	margin: 0 auto;
 	padding: .5rem 1rem;
+	font-size: 16px;
 }
 
 body, input, input:before, input:after, textarea, button, p, h1, h2, h3, h4, h5, h6  {
@@ -141,7 +146,7 @@ button.material-icons:hover {
 .project {
 	display: flex;
 	background: var(--white);
-	height: 5rem;
+	height: 7rem;
 	border-bottom: 1px solid var(--light-gray);
 	box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
 	border-radius: var(--border-radius);
@@ -289,6 +294,10 @@ button.material-icons:hover {
 	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 15%);
 }
 
+.task__due-date-label {
+	margin-right: .25rem;
+}
+
 .task__due-date {
 	border: 1px solid var(--white);
 	max-width: 118px;
@@ -311,7 +320,7 @@ input[type="date"] {
 
 input[type="date"]:after {
 	font-family: 'Material Icons';
-  content: "event";
+  content: "";
   -webkit-font-feature-settings: 'liga';
 	font-size: 1.5rem;
 	padding: 2px 0 0 0;
@@ -400,7 +409,7 @@ input[type="date"]::-webkit-clear-button {
 
 @media screen and (min-width: 660px) {
 	.project {
-		height: 3rem;
+		height: 5rem;
 	}
 	.project__header {
 		flex-direction: row;

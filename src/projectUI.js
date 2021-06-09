@@ -131,7 +131,7 @@ const projUI = {
   collapseProj(element) {
     element.style.height = `${element.scrollHeight - 32}px`;
     window.setTimeout(() => {
-      document.body.clientWidth >= 660 ? element.style.height = "3rem" : element.style.height = "5rem";
+      document.body.clientWidth >= 660 ? element.style.height = "5rem" : element.style.height = "7rem";
     }, 100);
     window.setTimeout(() => {
       element.classList.remove("expanded");

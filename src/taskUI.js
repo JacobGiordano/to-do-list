@@ -11,6 +11,7 @@ const taskUI = {
     const topWrapper = makeNewEl("div", "task__top-wrapper", "", "");
     const topWrapperLeft = makeNewEl("div", "task__top-wrapper-left", "", "");
     const topWrapperRight = makeNewEl("div", "task__top-wrapper-right", "", "");
+    const topWrapperRightInner = makeNewEl("div", "task__top-wrapper-right__inner", "", "");
     const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
     const bottomBtnsWrapper = makeNewEl("div", "task__bottom-buttons-wrapper", "", "");
     const checkBox = makeNewEl("input", "task__checkbox", "", {
@@ -50,8 +51,7 @@ const taskUI = {
       "title": "Edit Task Options"
     });
     const notes = makeNewEl("textarea", "task__notes", "", {
-      "placeholder": "Notes",
-      "name": `notes-${newTask.id}`
+      "placeholder": "Notes"
     });
     notes.value = newTask.notes;
     notes.value !== "" ? notesIcon.classList.add("has-notes") : notesIcon.classList.remove("has-notes");
@@ -60,8 +60,9 @@ const taskUI = {
     topWrapperLeft.appendChild(input);
     dueDateLabel.appendChild(dueDateBtn);
     topWrapperRight.appendChild(dueDateLabel);
-    topWrapperRight.appendChild(notesIcon);
-    topWrapperRight.appendChild(editBtn);
+    topWrapperRightInner.appendChild(notesIcon);
+    topWrapperRightInner.appendChild(editBtn);
+    topWrapperRight.appendChild(topWrapperRightInner);
     topWrapper.appendChild(topWrapperLeft);
     topWrapper.appendChild(topWrapperRight);
     bottomBtnsWrapper.appendChild(priority);
