@@ -30,15 +30,25 @@ const taskUI = {
       "placeholder": "New Task"
     });
     input.value = newTask.text;
+    const dueDateWrapper = makeNewEl("div", "task__due-date-wrapper", "", "");
     const dueDateLabel = makeNewEl("label", "task__due-date-label", "Due: ", {
       "for": `date-${newTask.id}`
     })
-    const dueDateBtn = makeNewEl("input", "task__due-date", "", {
+    const dueDateInput = makeNewEl("input", "task__due-date", "", {
       "type": "date",
       "name": `date-${newTask.id}`
     });
-    dueDateBtn.value = newTask.due_date;
-    dueDateBtn.value !== "" ? dueDateBtn.classList.add("has-date") : dueDateBtn.classList.remove("has-date");
+    const dueDateText = makeNewEl("span", "task__due-date-text", "", "");
+    const dueDateClearBtn = makeNewEl("button", "task__due-date-clear-btn material-icons", "clear", "");
+    dueDateInput.value = newTask.due_date;
+    if (dueDateInput.value !== "") {
+      dueDateInput.classList.add("has-date");
+      dueDateText.textContent = " " + dueDateInput.value;
+    } else {
+      dueDateInput.classList.remove("has-date");
+      dueDateText.classList.add("material-icons");
+      dueDateText.textContent = "event";
+    }
     const notesIcon = makeNewEl("div", "task__notes-icon material-icons-outlined", "description", {
       "title": "Task notes indicator"
     });
@@ -58,8 +68,11 @@ const taskUI = {
 
     topWrapperLeft.appendChild(checkBox);
     topWrapperLeft.appendChild(input);
-    dueDateLabel.appendChild(dueDateBtn);
-    topWrapperRight.appendChild(dueDateLabel);
+    dueDateLabel.appendChild(dueDateInput);
+    dueDateLabel.appendChild(dueDateText);
+    dueDateWrapper.appendChild(dueDateLabel)
+    dueDateInput.value !== "" ? dueDateWrapper.appendChild(dueDateClearBtn) : null;
+    topWrapperRight.appendChild(dueDateWrapper);
     topWrapperRightInner.appendChild(notesIcon);
     topWrapperRightInner.appendChild(editBtn);
     topWrapperRight.appendChild(topWrapperRightInner);
@@ -73,13 +86,13 @@ const taskUI = {
     task.appendChild(bottomWrapper);
   
     // ADD TASK EVENT LISTENERS
-    const addChangeListenerArray = [dueDateBtn];
+    const addChangeListenerArray = [dueDateInput];
     const addKeyUpListenerArray = [input, notes];
 
     for (const element of addChangeListenerArray) {
       element.addEventListener("change", function(e) {
         if (e.target.classList.contains("task__due-date")) {
-          taskUI.updateDateIcon(e);
+          taskUI.updateDateContent(e);
         }
 
         taskUI.handleTaskKeyUp(e);
@@ -112,10 +125,8 @@ const taskUI = {
     priority.addEventListener("click", e => {
       taskUI.handleTaskPriorityClick(e);
     }, false);
-    dueDateBtn.addEventListener("click", e => {
-      console.log("In eventlistener");
-      taskUI.updateDateIcon(e);
-      taskUI.handleTaskKeyUp(e);
+    dueDateClearBtn.addEventListener("click", e => {
+      taskUI.clearDueDate(e);
     }, false);
   
     return task;
@@ -155,13 +166,37 @@ const taskUI = {
       e.target.closest(".task").querySelector(".task__notes-icon").classList.remove("has-notes");
     }
   },
-  updateDateIcon(e) {
+  updateDateContent(e) {
     console.log(e.target.value.trim());
-    if (e.target.classList.contains("task__due-date") && e.target.value.trim() !== "") {
-      e.target.closest(".task").querySelector(".task__due-date").classList.add("has-date");
+    const clickedEl = e.target;
+    if (clickedEl.classList.contains("task__due-date") && clickedEl.value.trim() !== "") {
+      const task = clickedEl.closest(".task");
+      task.querySelector(".task__due-date").classList.add("has-date");
+      const dateTextEl = task.querySelector(".task__due-date-text");
+      console.log(dateTextEl);
+      dateTextEl.textContent = " " +  clickedEl.value;
+      dateTextEl.classList.remove("material-icons");
+      if (task.querySelector(".task__due-date-clear-btn") === null) {
+        const dueDateClearBtn = makeNewEl("button", "task__due-date-clear-btn material-icons", "clear", "");
+        task.querySelector(".task__due-date-wrapper").appendChild(dueDateClearBtn);
+        dueDateClearBtn.addEventListener("click", taskUI.clearDueDate, false);
+      }
     } else {
-      e.target.closest(".task").querySelector(".task__due-date").classList.remove("has-date");
+      clickedEl.closest(".task").querySelector(".task__due-date").classList.remove("has-date");
+      taskUI.handleTaskKeyUp(e);
+      setTimeout(() => {
+        e.target.remove();
+      }, 0);
     }
+  },
+  clearDueDate(e) {
+    const task = e.target.closest(".task");
+    const dateText = task.querySelector(".task__due-date-text");
+    task.querySelector(".task__due-date").value = "";
+    dateText.classList.add("material-icons");
+    dateText.textContent = "event";
+    taskUI.updateDateContent(e);
+    taskUI.handleTaskKeyUp(e);
   },
   expandTaskNotes(element) {
     const getHeight = () => {

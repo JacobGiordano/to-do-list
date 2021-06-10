@@ -294,61 +294,42 @@ button.material-icons:hover {
 	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 15%);
 }
 
+.task__due-date-wrapper {
+	display: flex;
+	align-items: center;
+}
+
 .task__due-date-label {
+	display: flex;
+  position: relative;
 	margin-right: .25rem;
+	align-items: center;
 }
 
 .task__due-date {
+	position: absolute;
 	border: 1px solid var(--white);
-	max-width: 118px;
+  width: 100%;
 	font-size: .8rem;
+  opacity: 0;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.task__due-date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  cursor: pointer;
 }
 
 .task__due-date:hover, .task__due-date:focus {
 	cursor: pointer;
 	border-bottom: 1px solid var(--medium-gray);
 	outline: auto;
-}
-
-/* datepicker styling & functionality from this post: */
-/* https://stackoverflow.com/questions/33630083/add-google-material-design-icon-in-css-pseudo-after-content/33634119 */
-input[type="date"] {
-	position: relative;
-	cursor: pointer;
-	transition: all ease-in-out .1s;
-}
-
-input[type="date"]:after {
-	font-family: 'Material Icons';
-  content: "";
-  -webkit-font-feature-settings: 'liga';
-	font-size: 1.5rem;
-	padding: 2px 0 0 0;
-}
-
-/* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
-input[type="date"]::-webkit-calendar-picker-indicator {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: auto;
-	height: auto;
-	color: transparent;
-	background: transparent;
-}
-
-/* adjust increase/decrease button */
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-	cursor: pointer;
-	z-index: 1;
-}
-
-/* adjust clear button */
-input[type="date"]::-webkit-clear-button {
-	 z-index: 1;
 }
 
 .task__due-date:after {
@@ -358,14 +339,23 @@ input[type="date"]::-webkit-clear-button {
 	color: var(--medium-gray);
 }
 
-.task .task__notes-icon {
+.task__due-date-text {
+	margin-left: .5rem;
+	color: var(--light-gray);
+}
+
+.task__due-date.has-date + .task__due-date-text {
+	color: var(--med-gray);
+}
+
+.task__notes-icon {
 	color: var(--light-gray);
 	transition: all ease-in-out .1s;
 }
-.task .task__notes-icon.has-notes {
+.task__notes-icon.has-notes {
 	color: var(--medium-gray);
 }
-.task .task__notes-icon:hover {
+.task__notes-icon:hover {
 	cursor: pointer;
 }
 
