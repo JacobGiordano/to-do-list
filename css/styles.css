@@ -299,10 +299,15 @@ button.material-icons:hover {
 	align-items: center;
 }
 
+.task__due-date-wrapper:hover .task__due-date-text {
+	color: var(--dark-gray);
+}
+
 .task__due-date-label {
 	display: flex;
   position: relative;
 	margin-right: .25rem;
+	line-height: 2;
 	align-items: center;
 }
 
@@ -342,6 +347,7 @@ button.material-icons:hover {
 .task__due-date-text {
 	margin-left: .5rem;
 	color: var(--light-gray);
+	transition: color ease-in-out .1s;
 }
 
 .task__due-date.has-date + .task__due-date-text {
@@ -422,4 +428,11 @@ button.material-icons:hover {
 	.task__top-wrapper-left, .task__top-wrapper-right {
 		width: auto;
 	}
+	.task__due-date-clear-btn {
+		font-size: 1rem;
+	}
+}
+
+.hidden {
+	display: none;
 }

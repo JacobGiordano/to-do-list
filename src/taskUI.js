@@ -39,11 +39,12 @@ const taskUI = {
       "name": `date-${newTask.id}`
     });
     const dueDateText = makeNewEl("span", "task__due-date-text", "", "");
-    const dueDateClearBtn = makeNewEl("button", "task__due-date-clear-btn material-icons", "clear", "");
+    const dueDateClearBtn = makeNewEl("button", "task__due-date-clear-btn material-icons hidden", "clear", "");
     dueDateInput.value = newTask.due_date;
     if (dueDateInput.value !== "") {
       dueDateInput.classList.add("has-date");
       dueDateText.textContent = " " + dueDateInput.value;
+      dueDateClearBtn.classList.remove("hidden");
     } else {
       dueDateInput.classList.remove("has-date");
       dueDateText.classList.add("material-icons");
@@ -71,7 +72,8 @@ const taskUI = {
     dueDateLabel.appendChild(dueDateInput);
     dueDateLabel.appendChild(dueDateText);
     dueDateWrapper.appendChild(dueDateLabel)
-    dueDateInput.value !== "" ? dueDateWrapper.appendChild(dueDateClearBtn) : null;
+    // dueDateInput.value !== "" ? dueDateWrapper.appendChild(dueDateClearBtn) : null;
+    dueDateWrapper.appendChild(dueDateClearBtn);
     topWrapperRight.appendChild(dueDateWrapper);
     topWrapperRightInner.appendChild(notesIcon);
     topWrapperRightInner.appendChild(editBtn);
@@ -176,17 +178,11 @@ const taskUI = {
       console.log(dateTextEl);
       dateTextEl.textContent = " " +  clickedEl.value;
       dateTextEl.classList.remove("material-icons");
-      if (task.querySelector(".task__due-date-clear-btn") === null) {
-        const dueDateClearBtn = makeNewEl("button", "task__due-date-clear-btn material-icons", "clear", "");
-        task.querySelector(".task__due-date-wrapper").appendChild(dueDateClearBtn);
-        dueDateClearBtn.addEventListener("click", taskUI.clearDueDate, false);
-      }
+      task.querySelector(".task__due-date-clear-btn").classList.remove("hidden");
     } else {
       clickedEl.closest(".task").querySelector(".task__due-date").classList.remove("has-date");
       taskUI.handleTaskKeyUp(e);
-      setTimeout(() => {
-        e.target.remove();
-      }, 0);
+      e.target.classList.add("hidden");
     }
   },
   clearDueDate(e) {
