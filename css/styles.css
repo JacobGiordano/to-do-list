@@ -54,20 +54,13 @@ table {
 	--cool-gray: #eff1f9;
 	--white: #ffffff;
 	--black: #000000;
-	--red: #f44336;
-	--light-red: #ffebee;
-	--green: #00DEBD;
-	--light-green: #e8f5f3;
-	--ultra-dark-green: #003e32;
+	--teal: #00DEBD;
+	--ultra-dark-teal: #003e32;
 	--yellow: #FFCC02;
 	--ultra-dark-yellow: #4c3d00;
 	--magenta: #ff5d97;
 	--ultra-dark-magenta: #0e0307;
-	--orange: #f57c00;
-	--light-orange: #fbe9e7;
-	--purple: #512DA8;
-	--light-purple: #ede7f6;
-	--blue: #3D50E0;
+	--blue: #3d71e0;
 
 	--border-radius: 1.5rem;
 }
@@ -156,6 +149,7 @@ button.material-icons:hover {
 	justify-content: space-between;
 	overflow: hidden;
 	transition: all ease-in-out .1s;
+	cursor: pointer;
 }
 
 .project.expanded {
@@ -170,6 +164,7 @@ button.material-icons:hover {
 	justify-content: space-between;
 	flex-direction: column;
 	transition: all ease-in-out .1s;
+	cursor: default;
 }
 
 .project.expanded .project__header {
@@ -186,6 +181,7 @@ button.material-icons:hover {
 	border: none;
 	border-bottom: 1px solid var(--white);
 	overflow-x: scroll;
+	cursor: text;
 }
 
 .project__title {
@@ -290,8 +286,33 @@ button.material-icons:hover {
 	font-weight: 600;
 }
 
+.task__priority.priority-set {
+	background: var(--white);
+	border: 1px solid var(--light-gray);
+	color: var(--medium-gray);
+}
+
+
 .task__priority:hover {
-	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 15%);
+	border-color: var(--medium-gray);
+}
+
+.task__priority.priority-low {
+	background: var(--teal);
+	border: 1px solid var(--teal);
+	color: var(--ultra-dark-teal);
+}
+
+.task__priority.priority-medium {
+	background: var(--yellow);
+	border: 1px solid var(--yellow);
+	color: var(--ultra-dark-yellow);
+}
+
+.task__priority.priority-high {
+	background: var(--magenta);
+	border: 1px solid var(--magenta);
+	color: var(--ultra-dark-magenta);
 }
 
 .task__due-date-wrapper {
@@ -364,30 +385,7 @@ button.material-icons:hover {
 .task__notes-icon:hover {
 	cursor: pointer;
 }
-
-.task__priority.priority-set {
-	background: var(--white);
-	border: 1px solid var(--medium-gray);
-	color: var(--medium-gray);
-}
-
-.task__priority.priority-low {
-	background: var(--green);
-	border: 1px solid var(--green);
-	color: var(--ultra-dark-green);
-}
-
-.task__priority.priority-medium {
-	background: var(--yellow);
-	border: 1px solid var(--yellow);
-	color: var(--ultra-dark-yellow);
-}
-
-.task__priority.priority-high {
-	background: var(--magenta);
-	border: 1px solid var(--magenta);
-	color: var(--ultra-dark-magenta);
-}
+         
 
 .task__notes {
 	margin: .5rem 0;

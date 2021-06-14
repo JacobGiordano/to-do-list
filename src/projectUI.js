@@ -62,7 +62,7 @@ const projUI = {
     });
     const newTaskBtn = makeNewEl("button", "project__add-task-btn material-icons", "add", {
       "type": "button",
-      "title": "Add project"
+      "title": "Add new task"
     });
     const deleteProjectBtn = makeNewEl("button", "project__delete-project-btn material-icons", "delete_outline", {
       "type": "button",
@@ -87,7 +87,10 @@ const projUI = {
     }, false);
     expandToggle.addEventListener("click", e => {
       projUI.handleExpandToggleClick(e);
-    })
+    }, false);
+    projectEl.addEventListener("click", e => {
+      e.target !== expandToggle && e.target.classList.contains("project") ? projUI.handleExpandToggleClick(e) : null;
+    }, false);
     deleteProjectBtn.addEventListener("click", e => {
       projUI.handleProjDeleteClick(e);
     }, false);

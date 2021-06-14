@@ -20,10 +20,11 @@ const taskUI = {
     checkBox.checked = newTask.checked;
     checkBox.checked ? task.classList.add("completed") : null;
     const priorityText = newTask.priority.charAt(0).toUpperCase() + newTask.priority.slice(1);
-    const buttonText = newTask.priority === "set" ? `${priorityText} Priority` : priorityText;
-    const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, buttonText, {
+    const priorityButtonText = newTask.priority === "set" ? `${priorityText} Priority` : priorityText;
+    const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, priorityButtonText, {
       "type": "button",
-      "data-priority": newTask.priority
+      "data-priority": newTask.priority,
+      "title": "Task priority"
     });
     const input = makeNewEl("input", "task__text-input", "", {
       "type": "text",
@@ -280,8 +281,8 @@ const taskUI = {
       priorityLevel = "set";
     }
 
-    let buttonText = priorityLevel === "set" ? `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)} Priority` : `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)}`;
-    clickedEl.textContent = buttonText;
+    let priorityButtonText = priorityLevel === "set" ? `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)} Priority` : `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)}`;
+    clickedEl.textContent = priorityButtonText;
     clickedEl.setAttribute("data-priority", priorityLevel);
 
     const taskEl = e.target.closest(".task");
