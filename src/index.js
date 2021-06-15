@@ -12,7 +12,7 @@ if (JSON.parse(localStorage.getItem("to-do-data")) !== null && storedData.length
   const newProj = new Project(newProjId);
   newProj.title = "Starter Project";
 
-  const taskList = ["Update the project title", "Add a new task", "Update a task's information", "Delete a task", "Add a new project", "Delete a project"];
+  const taskList = ["Update this project's title", "Add a new task to this projet", "Change a task's title", "Click the 3 dots to the right to edit a task", "Change the priority of a task by clicking it","Add notes to a task", "Delete a task", "Add a new project by clicking the + in the upper-right", "Delete a project by clicking the trash can in the upper-right"];
   for (let i=0; i < taskList.length; i++) {
     const newTask = new Task(uuidv4());
     newTask.text = taskList[i];

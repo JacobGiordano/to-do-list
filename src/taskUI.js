@@ -305,7 +305,7 @@ const taskUI = {
     const projectEl = clickedEl.closest(".project");
     const projectElId = projectEl.getAttribute("data-project-id");
     
-    data.updateTaskData(clickedElTask, projectElId);
+    data.updateTaskData(taskEl, projectElId);
   }
 };
 
