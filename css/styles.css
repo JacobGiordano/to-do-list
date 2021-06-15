@@ -386,6 +386,7 @@ button.material-icons:hover {
 	height: 1.5rem;
 	margin-right: .25rem;
 	cursor: pointer;
+	transition: all ease-in-out .1s;
 }
 
 .task__priority-bar.priority-set {
