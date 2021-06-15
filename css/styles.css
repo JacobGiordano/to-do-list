@@ -452,6 +452,7 @@ button.material-icons:hover {
 }
 
 .task__due-date-text {
+	margin-top: 1px;
 	margin-left: .5rem;
 	color: var(--light-gray);
 	transition: color ease-in-out .1s;
@@ -471,7 +472,6 @@ button.material-icons:hover {
 .task__notes-icon:hover {
 	cursor: pointer;
 }
-         
 
 .task__notes {
 	margin: .5rem 0;
