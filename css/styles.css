@@ -49,18 +49,17 @@ table {
 
 :root {
 	--light-gray: #cecece;
-	--medium-gray: #616161;
 	--dark-gray: #424242;
 	--cool-gray: #eff1f9;
 	--white: #ffffff;
 	--black: #000000;
-	--teal: #00DEBD;
+	--teal: #0097b2;
 	--ultra-dark-teal: #003e32;
-	--yellow: #FFCC02;
+	--yellow: #ff8100;
 	--ultra-dark-yellow: #4c3d00;
-	--magenta: #ff5d97;
+	--magenta: #d92c97;
 	--ultra-dark-magenta: #0e0307;
-	--blue: #3d71e0;
+	--blue: #2756bc;
 
 	--border-radius: 1.5rem;
 }
@@ -203,6 +202,7 @@ button.material-icons:hover {
 	border: 1px solid var(--white);
 	border-radius: var(--border-radius);
 	transition: all ease-in-out .1s;
+	cursor: default;
 }
 
 .task:hover, .task:focus {
@@ -210,7 +210,7 @@ button.material-icons:hover {
 }
 
 .task label {
-	color: var(--medium-gray);
+	color: var(--dark-gray);
 	font-size: .8rem;
 }
 
@@ -256,17 +256,77 @@ button.material-icons:hover {
 	justify-content: space-between;
 	align-items: center;
 	flex: 1 1 0;
+	cursor: default;
 }
 
-.task__checkbox, .task__priority {
-	cursor: pointer;
-	margin-right: .5rem;
+/* Foundational code for custom checkbox: */
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_checkbox */
+.task__checkbox-label {
+  display: block;
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding-left: 1.75rem;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+	transition: all ease-in-out .1s;
 }
 
-.task__checkbox {
-	height: 20px;
-	width: 16px;
-	margin-left: 0;
+.task__checkbox-label .task__checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+	margin: 0;
+	padding: 0;
+	transition: all ease-in-out .1s;
+}
+
+.task__checkmark {
+  position: absolute;
+  background: var(--white);
+	border: 1px solid var(--dark-gray);
+	border-radius: var(--border-radius);
+  width: 1.5rem;
+  height: 1.5rem;
+  left: 0;
+  top: 0;
+	transition: all ease-in-out .1s;
+}
+
+.task__checkbox-label:hover input ~ .task__checkmark {
+  background: var(--light-gray);
+}
+
+.task__checkbox-label .task__checkbox:checked ~ .task__checkmark {
+  background: var(--blue);
+	border-color: var(--blue);
+}
+
+.task__checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.task__checkbox-label .task__checkbox:checked ~ .task__checkmark:after {
+  display: block;
+}
+
+.task__checkbox-label .task__checkmark:after {
+	border: solid var(--white);
+  border-width: 0 3px 3px 0;
+	width: 5px;
+	height: 11px;
+	left: 7px;
+	top: 3px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 .task__text-input {
@@ -283,36 +343,62 @@ button.material-icons:hover {
 	display: inline-block;
 	border-radius: 5rem;
 	width: 84px;
+	margin-right: .5rem;
 	font-weight: 600;
+	cursor: pointer;
 }
 
 .task__priority.priority-set {
 	background: var(--white);
 	border: 1px solid var(--light-gray);
-	color: var(--medium-gray);
-}
-
-
-.task__priority:hover {
-	border-color: var(--medium-gray);
+	color: var(--dark-gray);
 }
 
 .task__priority.priority-low {
 	background: var(--teal);
 	border: 1px solid var(--teal);
-	color: var(--ultra-dark-teal);
+	/* color: var(--ultra-dark-teal); */
+	color: var(--white);
 }
 
 .task__priority.priority-medium {
 	background: var(--yellow);
 	border: 1px solid var(--yellow);
-	color: var(--ultra-dark-yellow);
+	/* color: var(--ultra-dark-yellow); */
+	color: var(--white);
 }
 
 .task__priority.priority-high {
 	background: var(--magenta);
 	border: 1px solid var(--magenta);
-	color: var(--ultra-dark-magenta);
+	/* color: var(--ultra-dark-magenta); */
+	color: var(--white);
+}
+
+.task__priority:hover {
+	border-color: var(--dark-gray);
+}
+
+.task__priority-bar {
+	display: inline-block;
+	border-radius: var(--border-radius);
+	width: .4rem;
+	height: 1.5rem;
+	margin-right: .25rem;
+	cursor: pointer;
+}
+
+.task__priority-bar.priority-set {
+	background: var(--light-gray);
+}
+.task__priority-bar.priority-low {
+	background: var(--teal);
+}
+.task__priority-bar.priority-medium {
+	background: var(--yellow);
+}
+.task__priority-bar.priority-high {
+	background: var(--magenta);
 }
 
 .task__due-date-wrapper {
@@ -354,7 +440,7 @@ button.material-icons:hover {
 
 .task__due-date:hover, .task__due-date:focus {
 	cursor: pointer;
-	border-bottom: 1px solid var(--medium-gray);
+	border-bottom: 1px solid var(--dark-gray);
 	outline: auto;
 }
 
@@ -362,7 +448,7 @@ button.material-icons:hover {
 	color: var(--light-gray);
 }
 .task__due-date.has-date:after {
-	color: var(--medium-gray);
+	color: var(--dark-gray);
 }
 
 .task__due-date-text {
@@ -372,7 +458,7 @@ button.material-icons:hover {
 }
 
 .task__due-date.has-date + .task__due-date-text {
-	color: var(--med-gray);
+	color: var(--dark-gray);
 }
 
 .task__notes-icon {
@@ -380,7 +466,7 @@ button.material-icons:hover {
 	transition: all ease-in-out .1s;
 }
 .task__notes-icon.has-notes {
-	color: var(--medium-gray);
+	color: var(--dark-gray);
 }
 .task__notes-icon:hover {
 	cursor: pointer;
@@ -398,7 +484,7 @@ button.material-icons:hover {
 }
 
 .task__notes:hover, .task__notes:focus {
-	border: 1px solid var(--medium-gray);
+	border: 1px solid var(--dark-gray);
 }
 
 @media screen and (min-width: 660px) {

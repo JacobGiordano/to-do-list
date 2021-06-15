@@ -14,18 +14,13 @@ const taskUI = {
     const topWrapperRightInner = makeNewEl("div", "task__top-wrapper-right__inner", "", "");
     const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
     const bottomBtnsWrapper = makeNewEl("div", "task__bottom-buttons-wrapper", "", "");
+    const checkBoxLabel = makeNewEl("label", "task__checkbox-label", "", "");
     const checkBox = makeNewEl("input", "task__checkbox", "", {
       "type": "checkbox"
     });
+    const checkMark = makeNewEl("span", "task__checkmark", "", "");
     checkBox.checked = newTask.checked;
     checkBox.checked ? task.classList.add("completed") : null;
-    const priorityText = newTask.priority.charAt(0).toUpperCase() + newTask.priority.slice(1);
-    const priorityButtonText = newTask.priority === "set" ? `${priorityText} Priority` : priorityText;
-    const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, priorityButtonText, {
-      "type": "button",
-      "data-priority": newTask.priority,
-      "title": "Task priority"
-    });
     const input = makeNewEl("input", "task__text-input", "", {
       "type": "text",
       "placeholder": "New Task"
@@ -62,18 +57,28 @@ const taskUI = {
       "type": "button",
       "title": "Edit Task Options"
     });
+    const priorityBar = makeNewEl("div", `task__priority-bar priority-${newTask.priority}`, "", "");
+    const priorityText = newTask.priority.charAt(0).toUpperCase() + newTask.priority.slice(1);
+    const priorityButtonText = newTask.priority === "set" ? `${priorityText} Priority` : priorityText;
+    const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, priorityButtonText, {
+      "type": "button",
+      "data-priority": newTask.priority,
+      "title": "Task priority"
+    });
     const notes = makeNewEl("textarea", "task__notes", "", {
       "placeholder": "Notes"
     });
     notes.value = newTask.notes;
     notes.value !== "" ? notesIcon.classList.add("has-notes") : notesIcon.classList.remove("has-notes");
 
-    topWrapperLeft.appendChild(checkBox);
+    checkBoxLabel.appendChild(checkBox);
+    checkBoxLabel.appendChild(checkMark);
+    topWrapperLeft.appendChild(checkBoxLabel);
+    topWrapperLeft.appendChild(priorityBar);
     topWrapperLeft.appendChild(input);
     dueDateLabel.appendChild(dueDateInput);
     dueDateLabel.appendChild(dueDateText);
     dueDateWrapper.appendChild(dueDateLabel)
-    // dueDateInput.value !== "" ? dueDateWrapper.appendChild(dueDateClearBtn) : null;
     dueDateWrapper.appendChild(dueDateClearBtn);
     topWrapperRight.appendChild(dueDateWrapper);
     topWrapperRightInner.appendChild(notesIcon);
@@ -97,7 +102,6 @@ const taskUI = {
         if (e.target.classList.contains("task__due-date")) {
           taskUI.updateDateContent(e);
         }
-
         taskUI.handleTaskKeyUp(e);
       }, false);
     }
@@ -106,7 +110,6 @@ const taskUI = {
         if (e.target.classList.contains("task__notes")) {
           taskUI.updateNotesIcon(e);
         }
-
         taskUI.handleTaskKeyUp(e);
       }, false);
     }
@@ -126,6 +129,9 @@ const taskUI = {
       taskUI.handleTaskDeleteClick(e);
     }, false);
     priority.addEventListener("click", e => {
+      taskUI.handleTaskPriorityClick(e);
+    }, false);
+    priorityBar.addEventListener("click", e => {
       taskUI.handleTaskPriorityClick(e);
     }, false);
     dueDateClearBtn.addEventListener("click", e => {
@@ -261,35 +267,45 @@ const taskUI = {
   },
   handleTaskPriorityClick(e) {
     const clickedEl = e.target;
+    const taskEl = clickedEl.closest(".task");
     const clickedElClasses = clickedEl.classList;
+    const clickedElPriorityBtn = taskEl.querySelector(".task__priority");
+    const clickedElPriorityBar = taskEl.querySelector(".task__priority-bar");
     let priorityLevel;
     if (clickedElClasses.contains("priority-set")) {
-      clickedEl.classList.add("priority-low");
-      clickedEl.classList.remove("priority-set");
+      clickedElPriorityBtn.classList.add("priority-low");
+      clickedElPriorityBtn.classList.remove("priority-set");
+      clickedElPriorityBar.classList.add("priority-low");
+      clickedElPriorityBar.classList.remove("priority-set");
       priorityLevel = "low";
     } else if (clickedElClasses.contains("priority-low")) {
-      clickedEl.classList.add("priority-medium");
-      clickedEl.classList.remove("priority-low");
+      clickedElPriorityBtn.classList.add("priority-medium");
+      clickedElPriorityBtn.classList.remove("priority-low");
+      clickedElPriorityBar.classList.add("priority-medium");
+      clickedElPriorityBar.classList.remove("priority-low");
       priorityLevel = "medium";
     } else if (clickedElClasses.contains("priority-medium")) {
-      clickedEl.classList.add("priority-high");
-      clickedEl.classList.remove("priority-medium");
+      clickedElPriorityBtn.classList.add("priority-high");
+      clickedElPriorityBtn.classList.remove("priority-medium");
+      clickedElPriorityBar.classList.add("priority-high");
+      clickedElPriorityBar.classList.remove("priority-medium");
       priorityLevel = "high";
     } else if (clickedElClasses.contains("priority-high")) {
-      clickedEl.classList.add("priority-set");
-      clickedEl.classList.remove("priority-high");
+      clickedElPriorityBtn.classList.add("priority-set");
+      clickedElPriorityBtn.classList.remove("priority-high");
+      clickedElPriorityBar.classList.add("priority-set");
+      clickedElPriorityBar.classList.remove("priority-high");
       priorityLevel = "set";
     }
 
     let priorityButtonText = priorityLevel === "set" ? `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)} Priority` : `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)}`;
-    clickedEl.textContent = priorityButtonText;
+    clickedElPriorityBtn.textContent = priorityButtonText;
     clickedEl.setAttribute("data-priority", priorityLevel);
 
-    const taskEl = e.target.closest(".task");
     const projectEl = clickedEl.closest(".project");
     const projectElId = projectEl.getAttribute("data-project-id");
     
-    data.updateTaskData(taskEl, projectElId);
+    data.updateTaskData(clickedElTask, projectElId);
   }
 };
 
