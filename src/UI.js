@@ -30,7 +30,7 @@ clearListBtn.addEventListener("click", function() {
   ui.clearList(pageContent);
 }, false);
 
-const mediaQuery = window.matchMedia("(min-width: 660px)");
+const mediaQuery = window.matchMedia("(min-width: 480px)");
 mediaQuery.addEventListener("change", ui.handleBodyResize, false);
 // ui.handleBodyResize(mediaQuery);
 

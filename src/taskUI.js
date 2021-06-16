@@ -88,8 +88,8 @@ const taskUI = {
     topWrapper.appendChild(topWrapperRight);
     bottomBtnsWrapper.appendChild(priority);
     bottomBtnsWrapper.appendChild(deleteBtn);
-    bottomWrapper.appendChild(bottomBtnsWrapper);
     bottomWrapper.appendChild(notes);
+    bottomWrapper.appendChild(bottomBtnsWrapper);
     task.appendChild(topWrapper);
     task.appendChild(bottomWrapper);
   
@@ -201,7 +201,7 @@ const taskUI = {
     taskUI.updateDateContent(e);
     taskUI.handleTaskKeyUp(e);
   },
-  expandTaskNotes(element) {
+  expandTask(element) {
     const getHeight = () => {
       const height = `${element.scrollHeight}px`;
       return height;
@@ -213,9 +213,10 @@ const taskUI = {
 
     window.setTimeout(() => {
       element.style.height = "";
+      element.closest(".task").querySelector(".task__notes").focus();
     }, 100);
   },
-  collapseTaskNotes(element) {
+  collapseTask(element) {
     element.style.height = `${element.scrollHeight}px`;
     window.setTimeout(() => {
       element.style.height = "0";
@@ -224,12 +225,12 @@ const taskUI = {
       element.classList.remove("expanded");
     }, 100);
   },
-  expandTaskNotesToggle(e) {
+  expandTaskToggle(e) {
     const element = e.target.closest(".task").querySelector(".task__bottom-wrapper");
-    element.classList.contains("expanded") ? this.collapseTaskNotes(element) : this.expandTaskNotes(element);
+    element.classList.contains("expanded") ? this.collapseTask(element) : this.expandTask(element);
   },
   handleExpandToggleClick(e) {
-    taskUI.expandTaskNotesToggle(e);
+    taskUI.expandTaskToggle(e);
     const taskEl = e.target.closest(".task");
     const projectElId = taskEl.closest(".project").getAttribute("data-project-id");
     timer = window.setTimeout(() => {
