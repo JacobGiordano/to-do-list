@@ -7,7 +7,8 @@ function Task (newTaskId) {
   this.priority = "set",
   this.expanded = false,
   this.visible = true,
-  this.data_type = "task"
+  this.data_type = "task",
+  this.date_created = new Date()
 }
 
 export default Task;

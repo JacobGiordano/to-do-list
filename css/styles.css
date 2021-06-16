@@ -408,6 +408,7 @@ button.material-icons:hover {
 .task__due-date-wrapper {
 	display: flex;
 	align-items: center;
+	padding-left: .25rem;
 }
 
 .task__due-date-wrapper:hover .task__due-date-text {

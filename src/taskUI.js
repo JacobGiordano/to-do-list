@@ -2,6 +2,7 @@ import makeNewEl from "./makeNewEl";
 import data from "./data";
 import projUI from "./projectUI";
 import ui from "./UI";
+import { format, addDays } from "date-fns";
 
 const taskUI = {
   createTaskEl(newTask) {
@@ -39,7 +40,8 @@ const taskUI = {
     dueDateInput.value = newTask.due_date;
     if (dueDateInput.value !== "") {
       dueDateInput.classList.add("has-date");
-      dueDateText.textContent = " " + dueDateInput.value;
+      const adjustedDate = addDays(new Date(dueDateInput.value), 1);
+      dueDateText.textContent = " " + format(adjustedDate, "MM-dd-yyyy");
       dueDateClearBtn.classList.remove("hidden");
     } else {
       dueDateInput.classList.remove("has-date");
@@ -176,14 +178,17 @@ const taskUI = {
     }
   },
   updateDateContent(e) {
-    console.log(e.target.value.trim());
+    // console.log(e.target.value.trim());
     const clickedEl = e.target;
     if (clickedEl.classList.contains("task__due-date") && clickedEl.value.trim() !== "") {
       const task = clickedEl.closest(".task");
       task.querySelector(".task__due-date").classList.add("has-date");
       const dateTextEl = task.querySelector(".task__due-date-text");
-      console.log(dateTextEl);
-      dateTextEl.textContent = " " +  clickedEl.value;
+      // console.log(dateTextEl);
+      const adjustedDate = addDays(new Date(clickedEl.value), 1);
+      const date = " " + format(adjustedDate, "MM-dd-yyyy");
+
+      dateTextEl.textContent = " " +  date;
       dateTextEl.classList.remove("material-icons");
       task.querySelector(".task__due-date-clear-btn").classList.remove("hidden");
     } else {
