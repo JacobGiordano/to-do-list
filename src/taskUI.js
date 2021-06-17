@@ -142,13 +142,13 @@ const taskUI = {
   
     return task;
   },
-  addTaskToProjDOM(newTask, projectEl) {
+  addTaskToProjDOM(newTask, projectEl, autoFocusBool) {
     const newTaskEl = this.createTaskEl(newTask);
     projectEl.appendChild(newTaskEl);
-    newTaskEl.querySelector(".task__text-input").focus();
+    autoFocusBool ? newTaskEl.querySelector(".task__text-input").focus() : null;
   },
-  addTaskToProj(newTask, projectEl) {
-    this.addTaskToProjDOM(newTask, projectEl);
+  addTaskToProj(newTask, projectEl, autoFocusTaskTextBool) {
+    this.addTaskToProjDOM(newTask, projectEl, autoFocusTaskTextBool);
     const projId = projectEl.getAttribute("data-project-id");
     // console.log(`Project ID = ${projId}`);
     const foundProject = data.findProjectDataByID(projId);

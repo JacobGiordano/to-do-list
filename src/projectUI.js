@@ -10,33 +10,33 @@ const pageContent = document.getElementById("content");
 const projUI = {
   populateProjects(allProjectData) {
     for (const project of allProjectData) {
-      const newProjEl = this.addProjToDOM(project);
+      const newProjEl = this.addProjToDOM(project, false);
       if (project.expanded) {
         newProjEl.classList.add("expanded");
         newProjEl.querySelector(".project__expand-toggle-btn").textContent = "expand_less"
       }
       if (project.tasks.length > 0) {
         for (const task of project.tasks) {
-          taskUI.addTaskToProjDOM(task, newProjEl);
+          taskUI.addTaskToProjDOM(task, newProjEl, false);
         }
       }
       newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
       newProjEl.querySelector(".project__total-task-count").textContent = project.tasks.length;
     }
   },
-  addProjToDOM(newProj) {
+  addProjToDOM(newProj, autoFocusBool) {
     const newProjEl = this.createProjectEl(newProj);
     pageContent.appendChild(newProjEl);
     newProjEl.querySelector(".project__add-task-btn").addEventListener("click", e => {
       const newTask = new Task(uuidv4());
-      taskUI.addTaskToProj(newTask, e.target.closest(".project"));
+      taskUI.addTaskToProj(newTask, e.target.closest(".project"), true);
       // console.log(newTask);
     }, false);
     if (newProj.tasks.length === 0) {
       const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
       newProjEl.appendChild(noTaskMsg);
     }
-    newProjEl.querySelector(".project__title").focus();
+    autoFocusBool ? newProjEl.querySelector(".project__title").focus() : null;
     return newProjEl;
   },
   createProjectEl(newProj) {

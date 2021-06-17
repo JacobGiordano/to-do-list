@@ -21,7 +21,7 @@ const pageContent = document.getElementById("content");
 newProjBtn.addEventListener("click", function() {
   const newProjId = uuidv4();
   const newProj = new Project(newProjId);
-  projUI.addProjToDOM(newProj);
+  projUI.addProjToDOM(newProj, true);
   data.addProjData(newProj);
   console.log(newProj);
 }, false);
