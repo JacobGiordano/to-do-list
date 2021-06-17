@@ -145,6 +145,7 @@ const taskUI = {
   addTaskToProjDOM(newTask, projectEl) {
     const newTaskEl = this.createTaskEl(newTask);
     projectEl.appendChild(newTaskEl);
+    newTaskEl.querySelector(".task__text-input").focus();
   },
   addTaskToProj(newTask, projectEl) {
     this.addTaskToProjDOM(newTask, projectEl);

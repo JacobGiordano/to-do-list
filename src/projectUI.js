@@ -36,6 +36,7 @@ const projUI = {
       const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
       newProjEl.appendChild(noTaskMsg);
     }
+    newProjEl.querySelector(".project__title").focus();
     return newProjEl;
   },
   createProjectEl(newProj) {
