@@ -118,6 +118,22 @@ input:not(input[type="checkbox"]):focus-visible {
 	align-items: center;
 }
 
+.header-left {
+	display: flex;
+	align-items: center;
+}
+
+.page-title {
+	display: inline-block;
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin-right: .25rem;
+}
+
+.to-do-list-icon {
+	display: inline-block;
+}
+
 .content {
   display: block;
 	width: 100%;
