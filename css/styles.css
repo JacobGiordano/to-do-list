@@ -69,10 +69,13 @@ table {
 }
 
 body {
+	display: block;
+	position: relative;
 	background: var(--cool-gray);
 	max-width: 768px;
+	min-height: 100%;
 	margin: 0 auto;
-	padding: .5rem 1rem;
+	padding: .5rem 1rem 3rem;
 	font-size: 16px;
 }
 
@@ -121,7 +124,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	font-size: 16px;
 }
 
-button.material-icons {
+button.material-icons, .new-project-btn {
 	background: var(--white);
 	border: none;
 	border-radius: 50%;
@@ -129,10 +132,33 @@ button.material-icons {
 	transition: all ease-in-out .1s;
 }
 
-button.material-icons:hover {
+button.material-icons:hover, .new-project-btn {
 	background: var(--blue);
 	color: var(--white);
 	cursor: pointer;
+}
+
+.new-project-btn {
+	display: flex;
+	position: fixed;
+	border-radius: 100rem;
+	align-items: center;
+	bottom: 1rem;
+	right: 1rem;
+	width: 2rem;
+}
+
+.new-project-btn:hover, .new-project-btn:focus {
+	width: auto;
+}
+
+.new-project-btn-text {
+	display: none;
+	padding-right: .5rem;
+}
+
+.new-project-btn:hover .new-project-btn-text, .new-project-btn:focus .new-project-btn-text {
+	display: inline-block;
 }
 
 .project {
