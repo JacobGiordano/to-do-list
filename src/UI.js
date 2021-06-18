@@ -21,9 +21,13 @@ const pageContent = document.getElementById("content");
 newProjBtn.addEventListener("click", function() {
   const newProjId = uuidv4();
   const newProj = new Project(newProjId);
-  projUI.addProjToDOM(newProj, true);
+  const newProjEl = projUI.addProjToDOM(newProj, true);
   data.addProjData(newProj);
   console.log(newProj);
+  newProjEl.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 }, false);
 
 clearListBtn.addEventListener("click", function() {
