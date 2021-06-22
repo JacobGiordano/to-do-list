@@ -59,6 +59,14 @@ const projUI = {
     newLi.appendChild(projTitleEl);
     newLi.appendChild(visibilityIcon);
     navProjectsUl.appendChild(newLi);
+
+    projTitleEl.addEventListener("keyup", e => {
+      const refId = e.target.getAttribute("data-project-id");
+      const content = document.getElementById("content");
+      const project = content.querySelector(`[data-project-id='${refId}']`);
+      project.querySelector(".project__title").value = e.target.value;
+      projUI.updateProjDataFromNav(project);
+    }, false);
   },
   createProjectEl(newProj) {
     // console.log(newProj);
@@ -138,6 +146,18 @@ const projUI = {
     console.log(basicInfoObj);
     data.updateBasicProjState(basicInfoObj);
   },
+  updateProjDataFromNav(projectEl) {
+    let basicInfoObj = {};
+    const projectTitle = projectEl.querySelector(".project__title").value;
+    const parentProjectId = projectEl.getAttribute("data-project-id");
+
+    basicInfoObj.id = parentProjectId;
+    basicInfoObj.title = projectTitle;
+    basicInfoObj.expanded = projectEl.classList.contains("expanded");
+    basicInfoObj.visible = !projectEl.classList.contains("hide");
+    console.log(basicInfoObj);
+    data.updateBasicProjState(basicInfoObj);
+  },
   expandProj(element) {
     const getHeight = () => {
       const height = `${element.clientHeight}px`;
@@ -166,7 +186,6 @@ const projUI = {
   expandProjToggle(e) {
     const element = e.target.closest(".project");
     element.classList.contains("expanded") ? this.collapseProj(element) : this.expandProj(element);
-    // projUI.updateProjData(e);
   },
   clearProjStyles() {
     const projects = document.querySelectorAll(".project");
