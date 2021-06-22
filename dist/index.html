@@ -7,7 +7,6 @@
   <title>Document</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
@@ -21,6 +20,32 @@
     <button id="clear-list-btn" class="clear-list-btn" type="button">Clear List</button>
   </div>
 </header>
+<nav id="nav" class="nav">
+  <div class="nav__group nav__projects-wrapper">
+    <span class="nav__group-title nav__project-wrapper-title">Projects</span>
+    <ul id="nav-projects" class="nav__projects"></ul>
+  </div>
+  <div class="nav__group nav__options-wrapper">
+    <div class="nav__group-title nav__options-wrapper-title">Options</div>
+    <ul id="nav-options" class="nav__options">
+      <li class="nav__li">
+        <label for="hide-completed-projects" class="nav__label">
+          <input class="nav__checkbox" type="checkbox" name="hide-completed-projects" id="hide-completed-projects">
+          Hide completed projects
+        </label>
+      </li>
+      <li class="nav__li">
+        <label for="hide-completed-tasks" class="nav__label">
+          <input class="nav__checkbox" type="checkbox" name="hide-completed-tasks" id="hide-completed-tasks">
+          Hide completed tasks
+        </label>
+      </li>
+      <li class="nav__li">Option 3</li>
+      <li class="nav__li">Option 4</li>
+      <li class="nav__li">Option 5</li>      
+    </ul>
+  </div>  
+</nav>
 <body id="body" class="body">
   <div id="content" class="content">
   </div>

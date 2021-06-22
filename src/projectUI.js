@@ -36,8 +36,29 @@ const projUI = {
       const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
       newProjEl.appendChild(noTaskMsg);
     }
+    projUI.addProjToNav(newProj);
     autoFocusBool ? newProjEl.querySelector(".project__title").focus() : null;
     return newProjEl;
+  },
+  addProjToNav(newProj) {
+    const navProjectsUl = document.getElementById("nav-projects");
+    const newLi = makeNewEl("li", "nav__li", "", "");
+    const visibilityIcon = makeNewEl("span", "nav__visibility-icon material-icons-outlined", "visibility", "");
+    const projHiddenLabel = makeNewEl("label", "nav__project-hidden-label", "Project title", {
+      "for": `project-${newProj.id}`
+    });
+    const projTitleEl = makeNewEl("input", "nav__project-title", `${newProj.title}`, {
+      "type": "text",
+      "name": `project-${newProj.id}`,
+      "placeholder": "Project Title",
+      "data-project-id": newProj.id,
+      "data-project-title": newProj.title
+    });
+    
+    newLi.appendChild(projHiddenLabel);
+    newLi.appendChild(projTitleEl);
+    newLi.appendChild(visibilityIcon);
+    navProjectsUl.appendChild(newLi);
   },
   createProjectEl(newProj) {
     // console.log(newProj);
