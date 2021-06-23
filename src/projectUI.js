@@ -216,13 +216,11 @@ const projUI = {
     if (confirm("Delete project?")) {
       const projectEl = e.target.closest(".project");
       const projectElId = projectEl.getAttribute("data-project-id");
-      
-      data.deleteProjData(projectElId);
-
       const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__project-title");
       for (const navEl of navProjects) {
         navEl.getAttribute("data-project-id") === projectElId ? navEl.closest(".nav__li").remove() : null;
       }
+      data.deleteProjData(projectElId);
       projectEl.remove();
     }
   },
