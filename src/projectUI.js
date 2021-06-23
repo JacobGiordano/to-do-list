@@ -218,6 +218,11 @@ const projUI = {
       const projectElId = projectEl.getAttribute("data-project-id");
       
       data.deleteProjData(projectElId);
+
+      const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__project-title");
+      for (const navEl of navProjects) {
+        navEl.getAttribute("data-project-id") === projectElId ? navEl.closest(".nav__li").remove() : null;
+      }
       projectEl.remove();
     }
   },
