@@ -145,11 +145,13 @@ const taskUI = {
   addTaskToProjDOM(newTask, projectEl, autoFocusBool) {
     const newTaskEl = this.createTaskEl(newTask);
     projectEl.appendChild(newTaskEl);
-    autoFocusBool ? newTaskEl.querySelector(".task__text-input").focus() : null;
-    newTaskEl.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+    if (autoFocusBool) {
+      newTaskEl.querySelector(".task__text-input").focus();
+      newTaskEl.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
   },
   addTaskToProj(newTask, projectEl, autoFocusTaskTextBool) {
     this.addTaskToProjDOM(newTask, projectEl, autoFocusTaskTextBool);

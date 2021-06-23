@@ -29,8 +29,14 @@ const projUI = {
     pageContent.appendChild(newProjEl);
     newProjEl.querySelector(".project__add-task-btn").addEventListener("click", e => {
       const newTask = new Task(uuidv4());
-      taskUI.addTaskToProj(newTask, e.target.closest(".project"), true);
-      // console.log(newTask);
+      if (newProjEl.classList.contains("expanded")) {
+        taskUI.addTaskToProj(newTask, e.target.closest(".project"), true);
+      } else {
+        this.expandProj(newProjEl);
+        setTimeout(() => {
+          taskUI.addTaskToProj(newTask, e.target.closest(".project"), true);
+        }, 250);
+      }
     }, false);
     if (newProj.tasks.length === 0) {
       const noTaskMsg = makeNewEl("span", "no-tasks-msg", "This project is empty. Add a task to get started.", "");
@@ -114,6 +120,7 @@ const projUI = {
     // ADD PROJECT EVENT LISTENERS
     projectTitle.addEventListener("keyup", e => {
       projUI.handleProjKeyUp(e);
+      projUI.updateNavTitleOnProjTitleChange(e);
     }, false);
     expandToggle.addEventListener("click", e => {
       projUI.handleExpandToggleClick(e);
@@ -155,8 +162,14 @@ const projUI = {
     basicInfoObj.title = projectTitle;
     basicInfoObj.expanded = projectEl.classList.contains("expanded");
     basicInfoObj.visible = !projectEl.classList.contains("hide");
-    console.log(basicInfoObj);
     data.updateBasicProjState(basicInfoObj);
+  },
+  updateNavTitleOnProjTitleChange(e) {
+    const projId = e.target.closest(".project").getAttribute("data-project-id");
+    const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__project-title");
+    for (const navEl of navProjects) {
+      navEl.getAttribute("data-project-id") === projId ? navEl.value = e.target.value : null;
+    }
   },
   expandProj(element) {
     const getHeight = () => {
