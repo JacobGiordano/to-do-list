@@ -98,12 +98,18 @@ const projUI = {
     const navEl = e.target.closest(".nav__li");
     projUI.toggleNavProjVisIcon(e);
     const projectEl = projUI.getProjElFromNavEl(navEl);
-    projectEl.classList.contains("hidden") ? projectEl.classList.remove("hidden") : projectEl.classList.add("hidden");
+    if (projectEl.classList.contains("visibility-off")) {
+      projectEl.classList.remove("visibility-off");
+      projectEl.style.height = "";
+    } else { 
+      projectEl.classList.add("visibility-off");
+      projectEl.style.height = "";
+    }
     projUI.updateProjDataFromNav(navEl, projectEl);
   },
   createProjectEl(newProj) {
     // console.log(newProj);
-    let projectEl = makeNewEl("div", `project ${newProj.expanded ? "expanded" : ""}`, "", {
+    let projectEl = makeNewEl("div", `project ${newProj.expanded ? "expanded" : ""} ${!newProj.visible ? "visibility-off" : null}`, "", {
       "data-project-id": newProj.id,
       "data-project-title": newProj.title
     });
