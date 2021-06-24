@@ -48,17 +48,20 @@ const projUI = {
   },
   addProjToNav(newProj) {
     const navProjectsUl = document.getElementById("nav-projects");
-    const newLi = makeNewEl("li", "nav__li", "", "");
-    const visibilityIcon = makeNewEl("span", "nav__visibility-icon material-icons-outlined", "visibility", "");
+    const newLi = makeNewEl("li", "nav__li", "", {
+      "data-project-id": newProj.id,
+      "data-project-title": newProj.title
+    });
+    const visibilityIcon = makeNewEl("span", `nav__visibility-icon material-icons-outlined ${newProj.visible ? "visibility-on" : "visibility-off"}`, `${newProj.visible ? "visibility" : "visibility_off"}`, {
+      "title": `${newProj.visible ? "Visible" : "Hidden"}`
+    });
     const projHiddenLabel = makeNewEl("label", "nav__project-hidden-label", "Project title", {
       "for": `project-${newProj.id}`
     });
     const projTitleEl = makeNewEl("input", "nav__project-title", `${newProj.title}`, {
       "type": "text",
       "name": `project-${newProj.id}`,
-      "placeholder": "Project Title",
-      "data-project-id": newProj.id,
-      "data-project-title": newProj.title
+      "placeholder": "Project Title"
     });
     
     newLi.appendChild(projHiddenLabel);
@@ -67,12 +70,36 @@ const projUI = {
     navProjectsUl.appendChild(newLi);
 
     projTitleEl.addEventListener("keyup", e => {
-      const refId = e.target.getAttribute("data-project-id");
-      const content = document.getElementById("content");
-      const project = content.querySelector(`[data-project-id='${refId}']`);
-      project.querySelector(".project__title").value = e.target.value;
-      projUI.updateProjDataFromNav(project);
+      const navEl = e.target.closest(".nav__li");
+      const projectEl = projUI.getProjElFromNavEl(navEl);
+      projectEl.querySelector(".project__title").value = e.target.value;
+      projUI.updateProjDataFromNav(navEl, projectEl);
     }, false);
+
+    visibilityIcon.addEventListener("click", e => {
+      projUI.handleProjVisToggle(e);
+    });
+  },
+  toggleNavProjVisIcon(e) {
+    const clickedEl = e.target.closest(".nav__li").querySelector(".nav__visibility-icon");
+    if (clickedEl.classList.contains("visibility-on")) {
+      clickedEl.classList.add("visibility-off");
+      clickedEl.classList.remove("visibility-on");
+      clickedEl.setAttribute("title", "Hidden");
+      clickedEl.textContent = "visibility_off";
+    } else {
+      clickedEl.classList.add("visibility-on");
+      clickedEl.classList.remove("visibility-off");
+      clickedEl.setAttribute("title", "Visible");
+      clickedEl.textContent = "visibility";
+    }
+  },
+  handleProjVisToggle(e) {
+    const navEl = e.target.closest(".nav__li");
+    projUI.toggleNavProjVisIcon(e);
+    const projectEl = projUI.getProjElFromNavEl(navEl);
+    projectEl.classList.contains("hidden") ? projectEl.classList.remove("hidden") : projectEl.classList.add("hidden");
+    projUI.updateProjDataFromNav(navEl, projectEl);
   },
   createProjectEl(newProj) {
     // console.log(newProj);
@@ -153,7 +180,7 @@ const projUI = {
     console.log(basicInfoObj);
     data.updateBasicProjState(basicInfoObj);
   },
-  updateProjDataFromNav(projectEl) {
+  updateProjDataFromNav(navEl, projectEl) {
     let basicInfoObj = {};
     const projectTitle = projectEl.querySelector(".project__title").value;
     const parentProjectId = projectEl.getAttribute("data-project-id");
@@ -161,15 +188,26 @@ const projUI = {
     basicInfoObj.id = parentProjectId;
     basicInfoObj.title = projectTitle;
     basicInfoObj.expanded = projectEl.classList.contains("expanded");
-    basicInfoObj.visible = !projectEl.classList.contains("hide");
+    basicInfoObj.visible = navEl.querySelector(".nav__visibility-icon").classList.contains("visibility-on");
     data.updateBasicProjState(basicInfoObj);
   },
   updateNavTitleOnProjTitleChange(e) {
     const projId = e.target.closest(".project").getAttribute("data-project-id");
-    const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__project-title");
+    const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__li");
     for (const navEl of navProjects) {
-      navEl.getAttribute("data-project-id") === projId ? navEl.value = e.target.value : null;
+      navEl.getAttribute("data-project-id") === projId ? navEl.querySelector(".nav__project-title").value = e.target.value : null;
     }
+  },
+  getProjElFromNavEl(navEl) {
+    const refId = navEl.getAttribute("data-project-id");
+    const contentEl = document.getElementById("content");
+    const projectEls = contentEl.querySelectorAll(".project");
+    // console.log(projectEls);
+    let foundProjectEl;
+    for (const projectEl of projectEls) {
+      projectEl.getAttribute("data-project-id") === refId ? foundProjectEl = projectEl : null;
+    }
+    return foundProjectEl;
   },
   expandProj(element) {
     const getHeight = () => {
@@ -216,12 +254,15 @@ const projUI = {
     if (confirm("Delete project?")) {
       const projectEl = e.target.closest(".project");
       const projectElId = projectEl.getAttribute("data-project-id");
-      const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__project-title");
-      for (const navEl of navProjects) {
-        navEl.getAttribute("data-project-id") === projectElId ? navEl.closest(".nav__li").remove() : null;
-      }
+
+      const navProjects = Array.from(document.getElementById("nav-projects").querySelectorAll(".nav__li"));
+      let matchingNavEl = navProjects.filter(navEl => navEl.dataset.projectId === projectElId);
+      matchingNavEl = matchingNavEl[0];
+
       data.deleteProjData(projectElId);
+      matchingNavEl.remove();
       projectEl.remove();
+
     }
   },
   handleProjKeyUp(e) {

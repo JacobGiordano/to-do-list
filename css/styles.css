@@ -167,6 +167,29 @@ input:not(input[type="checkbox"]):focus-visible {
 	border-bottom: 1px solid var(--light-gray);
 }
 
+.nav .nav__visibility-icon {
+	position: relative;
+	cursor: pointer;
+}
+
+.nav .nav__visibility-icon.visibility-on:hover::before {
+	content: "visibility_off";
+	display: inline-block;
+	position: absolute;
+	background: var(--white);
+	left: 0;
+	top: 0;
+}
+
+.nav .nav__visibility-icon.visibility-off:hover::before {
+	content: "visibility";
+	display: inline-block;
+	position: absolute;
+	background: var(--white);
+	left: 0;
+	top: 0;
+}
+
 .nav ul {
 	list-style-type: none;
 }
