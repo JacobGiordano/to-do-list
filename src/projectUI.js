@@ -225,7 +225,7 @@ const projUI = {
     }, 100);
   },
   collapseProj(element) {
-    element.style.height = `${element.scrollHeight - 32}px`;
+    element.style.height = `${element.scrollHeight}px`;
     window.setTimeout(() => {
       document.body.clientWidth >= 480 ? element.style.height = "5rem" : element.style.height = "7rem";
     }, 100);
