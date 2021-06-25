@@ -251,16 +251,20 @@ button.material-icons:hover, .new-project-btn {
 }
 
 .new-project-btn:hover, .new-project-btn:focus {
-	width: auto;
+	width: 8rem;
+	white-space: nowrap;
 }
 
 .new-project-btn-text {
 	display: none;
+	opacity: 0;
 	padding-right: .5rem;
+	transition: all ease-in-out .1s;
 }
 
 .new-project-btn:hover .new-project-btn-text, .new-project-btn:focus .new-project-btn-text {
 	display: inline-block;
+	opacity: 1;
 }
 
 .project {
