@@ -109,7 +109,7 @@ const projUI = {
   },
   createProjectEl(newProj) {
     // console.log(newProj);
-    let projectEl = makeNewEl("div", `project ${newProj.expanded ? "expanded" : ""} ${!newProj.visible ? "visibility-off" : null}`, "", {
+    let projectEl = makeNewEl("div", `project ${newProj.expanded ? "expanded" : ""} ${!newProj.visible ? "visibility-off" : ""}`, "", {
       "data-project-id": newProj.id,
       "data-project-title": newProj.title
     });

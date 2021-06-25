@@ -293,6 +293,7 @@ button.material-icons:hover, .new-project-btn {
 	padding-top: 0;
 	padding-bottom: 0;
 	border: none;
+	opacity: 0;
 }
 
 .project__header {
