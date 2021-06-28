@@ -4,12 +4,12 @@ const data = {
     // console.log(storedData);
     return storedData;
   },
-  setData(newData) {
-    let storedData = this.getData();
-    storedData !== null ? localStorage.setItem("to-do-data", JSON.stringify(newData)) : localStorage.setItem("to-do-data", JSON.stringify([]));
-    storedData = this.getData();
-    return storedData;
-  },
+  // setData(newData) {
+  //   let storedData = this.getData();
+  //   storedData !== null ? localStorage.setItem("to-do-data", JSON.stringify(newData)) : localStorage.setItem("to-do-data", JSON.stringify([]));
+  //   storedData = this.getData();
+  //   return storedData;
+  // },
   addProjData(newData) {
     let storedData = this.getData();
     storedData !== null ? storedData.push(newData) : storedData = newData;

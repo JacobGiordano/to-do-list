@@ -1,6 +1,7 @@
 import data from "./data";
 import Project from "./Project";
 import Task from "./Task";
+import settings from "./settings";
 import projUI from "./projectUI";
 import { v4 as uuidv4 } from 'uuid';
 

@@ -3,6 +3,7 @@ import taskUI from "./taskUI";
 import Task from "./Task";
 import data from "./data";
 import ui from "./UI";
+import settings from "./settings";
 import { v4 as uuidv4 } from 'uuid';
 
 const pageContent = document.getElementById("content");
@@ -47,13 +48,14 @@ const projUI = {
     return newProjEl;
   },
   addProjToNav(newProj) {
+    const settingsData = settings.getSettings();
     const navProjectsUl = document.getElementById("nav-projects");
     const newLi = makeNewEl("li", "nav__li", "", {
       "data-project-id": newProj.id,
       "data-project-title": newProj.title
     });
-    const visibilityIcon = makeNewEl("span", `nav__visibility-icon material-icons-outlined ${newProj.visible ? "visibility-on" : "visibility-off"}`, `${newProj.visible ? "visibility" : "visibility_off"}`, {
-      "title": `${newProj.visible ? "Visible" : "Hidden"}`
+    const visibilityIcon = makeNewEl("span", `nav__visibility-icon material-icons-outlined ${newProj.visible && !settingsData.hideCompletedProjects ? "visibility-on" : "visibility-off"}`, `${newProj.visible && !settingsData.hideCompletedProjects ? "visibility" : "visibility_off"}`, {
+      "title": `${newProj.visible && !settingsData.hideCompletedProjects ? "Visible" : "Hidden"}`
     });
     const projHiddenLabel = makeNewEl("label", "nav__project-hidden-label", "Project title", {
       "for": `project-${newProj.id}`
@@ -268,7 +270,6 @@ const projUI = {
       data.deleteProjData(projectElId);
       matchingNavEl.remove();
       projectEl.remove();
-
     }
   },
   handleProjKeyUp(e) {
@@ -276,6 +277,25 @@ const projUI = {
     timer = window.setTimeout(() => {
       projUI.updateProjData(e);
     }, timeoutVal);
+  },
+  hideCompletedProjects() {
+    const allProjects = content.querySelectorAll(".project");
+    for (const proj of allProjects) {
+      if (Number(proj.querySelector(".project__total-task-count").textContent) > 0) {
+        proj.querySelector(".project__completed-count").textContent === proj.querySelector(".project__total-task-count").textContent ? proj.classList.add("visibility-off") : null;
+      
+        const projId = proj.getAttribute("data-project-id");
+        const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__li");
+        for (const navEl of navProjects) {
+          if (navEl.getAttribute("data-project-id") === projId) {
+            navEl.querySelector(".nav__visibility-icon").classList.add("visibility-off");
+            navEl.querySelector(".nav__visibility-icon").classList.remove("visibility-on");
+            navEl.querySelector(".nav__visibility-icon").textContent = "visibility_off"
+            navEl.setAttribute("title", "Hidden");
+          }
+        }
+      }
+    }
   }
 };
 
