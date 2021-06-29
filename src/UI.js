@@ -22,8 +22,6 @@ const ui = {
       const checkboxState = checkbox.checked;
       optionsObj[checkboxDataKey] = checkboxState;
     }
-    console.log("optionsObj:");
-    console.log(optionsObj);
 
     settings.setSettings(optionsObj);
   }

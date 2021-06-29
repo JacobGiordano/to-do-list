@@ -10,6 +10,7 @@ const pageContent = document.getElementById("content");
 
 const projUI = {
   populateProjects(allProjectData) {
+    const savedSettings = settings.getSettings();
     for (const project of allProjectData) {
       const newProjEl = this.addProjToDOM(project, false);
       if (project.expanded) {
@@ -23,6 +24,7 @@ const projUI = {
       }
       newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
       newProjEl.querySelector(".project__total-task-count").textContent = project.tasks.length;
+      savedSettings.hide_completed_projects ? newProjEl.classList.add("visibility-off") : null;
     }
   },
   addProjToDOM(newProj, autoFocusBool) {
