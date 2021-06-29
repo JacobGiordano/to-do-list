@@ -13,6 +13,7 @@ const projUI = {
     const savedSettings = settings.getSettings();
     for (const project of allProjectData) {
       const newProjEl = this.addProjToDOM(project, false);
+      let numOfCompletedTasks = 0;
       if (project.expanded) {
         newProjEl.classList.add("expanded");
         newProjEl.querySelector(".project__expand-toggle-btn").textContent = "expand_less"
@@ -20,11 +21,12 @@ const projUI = {
       if (project.tasks.length > 0) {
         for (const task of project.tasks) {
           taskUI.addTaskToProjDOM(task, newProjEl, false);
+          task.checked ? numOfCompletedTasks++ : null;
         }
       }
       newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
       newProjEl.querySelector(".project__total-task-count").textContent = project.tasks.length;
-      savedSettings.hide_completed_projects ? newProjEl.classList.add("visibility-off") : null;
+      savedSettings.hide_completed_projects && project.tasks.length === numOfCompletedTasks ? newProjEl.classList.add("visibility-off") : null;
     }
   },
   addProjToDOM(newProj, autoFocusBool) {
@@ -280,11 +282,11 @@ const projUI = {
       projUI.updateProjData(e);
     }, timeoutVal);
   },
-  hideCompletedProjects() {
+  hideAllCompletedProjects() {
     const allProjects = content.querySelectorAll(".project");
     for (const proj of allProjects) {
-      if (Number(proj.querySelector(".project__total-task-count").textContent) > 0) {
-        proj.querySelector(".project__completed-count").textContent === proj.querySelector(".project__total-task-count").textContent ? proj.classList.add("visibility-off") : null;
+      if (Number(proj.querySelector(".project__total-task-count").textContent) > 0 && proj.querySelector(".project__completed-count").textContent === proj.querySelector(".project__total-task-count").textContent) {
+        proj.classList.add("visibility-off");
       
         const projId = proj.getAttribute("data-project-id");
         const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__li");
@@ -294,6 +296,25 @@ const projUI = {
             navEl.querySelector(".nav__visibility-icon").classList.remove("visibility-on");
             navEl.querySelector(".nav__visibility-icon").textContent = "visibility_off"
             navEl.setAttribute("title", "Hidden");
+          }
+        }
+      }
+    }
+  },
+  showAllCompletedProjects() {
+    const allProjects = content.querySelectorAll(".project");
+    for (const proj of allProjects) {
+      if (Number(proj.querySelector(".project__total-task-count").textContent) > 0 && proj.querySelector(".project__completed-count").textContent === proj.querySelector(".project__total-task-count").textContent) {
+        proj.classList.remove("visibility-off");
+      
+        const projId = proj.getAttribute("data-project-id");
+        const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__li");
+        for (const navEl of navProjects) {
+          if (navEl.getAttribute("data-project-id") === projId) {
+            navEl.querySelector(".nav__visibility-icon").classList.remove("visibility-off");
+            navEl.querySelector(".nav__visibility-icon").classList.add("visibility-on");
+            navEl.querySelector(".nav__visibility-icon").textContent = "visibility"
+            navEl.setAttribute("title", "Visible");
           }
         }
       }

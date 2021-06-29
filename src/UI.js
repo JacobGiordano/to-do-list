@@ -56,8 +56,8 @@ for (const checkbox of optionCheckboxes) {
   }, false);
 }
 
-hideCompletedProjectsBtn.addEventListener("click", function() {
-  projUI.hideCompletedProjects();
+hideCompletedProjectsBtn.addEventListener("click", e => {
+  e.target.checked ? projUI.hideAllCompletedProjects() : projUI.showAllCompletedProjects();
 }, false);
 
 const mediaQuery = window.matchMedia("(min-width: 480px)");
