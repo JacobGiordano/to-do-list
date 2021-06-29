@@ -323,6 +323,6 @@ const taskUI = {
 };
 
 let timer;
-const timeoutVal = 750;
+const timeoutVal = 250;
 
 export default taskUI;

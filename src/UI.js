@@ -63,4 +63,4 @@ hideCompletedProjectsBtn.addEventListener("click", e => {
 const mediaQuery = window.matchMedia("(min-width: 480px)");
 mediaQuery.addEventListener("change", ui.handleBodyResize, false);
 
-export default ui ;
+export default ui;
