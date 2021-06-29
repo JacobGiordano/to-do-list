@@ -63,4 +63,16 @@ hideCompletedProjectsBtn.addEventListener("click", e => {
 const mediaQuery = window.matchMedia("(min-width: 480px)");
 mediaQuery.addEventListener("change", ui.handleBodyResize, false);
 
+document.addEventListener('DOMContentLoaded', () => {
+  const savedSettings = settings.getSettings();
+  const navOptions = document.getElementById("nav-options");
+
+  for (let setting in savedSettings) {
+    let settingVal = savedSettings[setting];
+    setting = setting.replace(/_+/g, "-");
+    console.log(`${setting} : ${settingVal}`);
+    settingVal ? document.getElementById(`${setting}`).checked = true : null;
+  }
+}, false);
+
 export default ui;
