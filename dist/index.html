@@ -11,14 +11,14 @@
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <header class="header">
-  <div id="header-left" class="header-left">
-    <button id="menu-btn" class="menu-btn material-icons-outlined">menu</button>
-    <h1 class="page-title">To-Do List</h1>
-    <span class="to-do-list-icon material-icons-outlined">inventory</span>
-  </div>
-  <div class="header-right" id="header-right">
-    <!-- <button id="new-project-btn" class="new-project-btn" type="button">New Project</button> -->
-    <!-- <button id="clear-list-btn" class="clear-list-btn" type="button">Clear List</button> -->
+  <div class="header__inner-wrapper">
+    <div id="header-left" class="header-left">
+      <button id="menu-btn" class="menu-btn material-icons-outlined">menu</button>
+      <h1 class="page-title">To-Do List</h1>
+      <span class="to-do-list-icon material-icons-outlined">inventory</span>
+    </div>
+    <div class="header-right" id="header-right">
+    </div>
   </div>
 </header>
 <nav id="nav" class="nav">
@@ -47,9 +47,11 @@
 <body id="body" class="body">
   <div id="content" class="content">
   </div>
-  <div id="new-project-btn" class="new-project-btn" tabindex="0">
-    <span id="new-project-btn-icon" class="new-project-btn-icon material-icons">add</span>
-    <span id="new-project-btn-text" class="new-project-btn-text"> New Project</span>
+  <div class="new-project-btn__wrapper">
+    <div id="new-project-btn" class="new-project-btn" tabindex="0">
+      <span id="new-project-btn-icon" class="new-project-btn-icon material-icons">add</span>
+      <span id="new-project-btn-text" class="new-project-btn-text"> New Project</span>
+    </div>
   </div>
   <script src="/dist/main.js"></script>
 </body>

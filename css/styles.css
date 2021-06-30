@@ -119,13 +119,18 @@ input:not(input[type="checkbox"]):focus-visible {
 	z-index: 2;
 }
 
+.header__inner-wrapper {
+	width: 100%;
+	margin: 0 auto;
+}
+
 .header-left {
 	display: flex;
 	align-items: center;
 }
 
 .menu-btn {
-	width: 3rem;
+	width: 2rem;
 	height: auto;
 	border: none;
 	margin-right: 1rem;
@@ -150,7 +155,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	border-radius: var(--border-radius);
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
-	min-width: 250px;
+	min-width: 100%;
 	padding: 1.5rem;
 	left: 0;
 	top: 3rem;
@@ -158,6 +163,12 @@ input:not(input[type="checkbox"]):focus-visible {
 	transform: translateX(-110%);
 	transition: all ease-in .1s;
 	z-index: 100;
+}
+
+@media screen and (min-width: 430px) {
+	.nav {
+		min-width: 250px;
+	}
 }
 
 .nav.open {
@@ -235,10 +246,13 @@ input:not(input[type="checkbox"]):focus-visible {
 .content {
 	display: block;
 	width: 100%;
-	max-width: 980px;
 	font-size: 16px;
 	margin-top: 3rem;
 	margin: 3rem auto 0;
+}
+
+.header__inner-wrapper, .content {
+	max-width: 980px;
 }
 
 button.material-icons, .new-project-btn {
@@ -255,13 +269,32 @@ button.material-icons:hover, .new-project-btn {
 	cursor: pointer;
 }
 
-.new-project-btn {
+.new-project-btn__wrapper {
 	display: flex;
 	position: fixed;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 1rem;
+	justify-content: flex-end;
+	left: 50%;
+	bottom: 1rem;
+	transform: translateX(-50%);
+	max-width: 980px;
+}
+
+@media screen and (min-width: 1000px) {
+	.new-project-btn__wrapper {
+		padding: 0;
+	}
+}
+
+.new-project-btn {
+	display: flex;
+	/* position: fixed; */
 	border-radius: 100rem;
 	align-items: center;
-	bottom: 1rem;
-	right: 1rem;
+	/* bottom: 1rem; */
+	/* right: 1rem; */
 	width: 2rem;
 }
 
