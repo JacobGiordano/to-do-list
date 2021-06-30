@@ -26,7 +26,7 @@ const projUI = {
       }
       newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
       newProjEl.querySelector(".project__total-task-count").textContent = project.tasks.length;
-      savedSettings.hide_completed_projects && project.tasks.length === numOfCompletedTasks ? newProjEl.classList.add("visibility-off") : null;
+      savedSettings.hide_completed_projects && project.tasks.length === numOfCompletedTasks && project.tasks.length > 0 ? newProjEl.classList.add("visibility-off") : null;
     }
   },
   addProjToDOM(newProj, autoFocusBool) {
