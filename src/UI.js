@@ -1,6 +1,7 @@
 import Project from "./Project";
 import data from "./data";
-import projUI from "./projectUI"
+import projUI from "./projectUI";
+import taskUI from "./taskUI";
 import settings from "./settings";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,6 +32,7 @@ const newProjBtn = document.getElementById("new-project-btn");
 const clearListBtn = document.getElementById("clear-list-btn");
 const pageContent = document.getElementById("content");
 const hideCompletedProjectsBtn = document.getElementById("hide-completed-projects");
+const hideCompletedTasksBtn = document.getElementById("hide-completed-tasks");
 
 newProjBtn.addEventListener("click", () => {
   const newProjId = uuidv4();
@@ -59,18 +61,19 @@ for (const checkbox of optionCheckboxes) {
 hideCompletedProjectsBtn.addEventListener("click", e => {
   e.target.checked ? projUI.hideAllCompletedProjects() : projUI.showAllCompletedProjects();
 }, false);
+hideCompletedTasksBtn.addEventListener("click", e => {
+  e.target.checked ? taskUI.hideAllCompletedTasks() : taskUI.showAllCompletedTasks();
+}, false);
 
 const mediaQuery = window.matchMedia("(min-width: 768px)");
 mediaQuery.addEventListener("change", ui.handleBodyResize, false);
 
 document.addEventListener('DOMContentLoaded', () => {
   const savedSettings = settings.getSettings();
-  const navOptions = document.getElementById("nav-options");
 
   for (let setting in savedSettings) {
     let settingVal = savedSettings[setting];
     setting = setting.replace(/_+/g, "-");
-    console.log(`${setting} : ${settingVal}`);
     settingVal ? document.getElementById(`${setting}`).checked = true : null;
   }
 }, false);

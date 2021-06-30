@@ -124,7 +124,9 @@ const taskUI = {
       clickedCheckBox.checked ? taskEl.classList.add("completed") : taskEl.classList.remove("completed");
       
       if (settings.getSettings().hide_completed_tasks && clickedCheckBox.checked) {
-        taskEl.classList.add("visibility-off");
+        setTimeout(() => {
+          taskEl.classList.add("visibility-off");
+        }, 500);
       }
 
       const completedTasks = projEl.querySelector(".project__completed-count").textContent;
@@ -349,6 +351,20 @@ const taskUI = {
     const projectElId = projectEl.getAttribute("data-project-id");
     
     data.updateTaskData(taskEl, projectElId);
+  },
+  hideAllCompletedTasks() {
+    const allTasks = document.querySelectorAll(".task");
+    console.log(allTasks);
+    for (const task of allTasks) {
+      task.classList.contains("completed") ? task.classList.add("visibility-off") : null;
+    }
+  },
+  showAllCompletedTasks() {
+    const allTasks = document.querySelectorAll(".task");
+    console.log(allTasks);
+    for (const task of allTasks) {
+      task.classList.contains("completed") ? task.classList.remove("visibility-off") : null;
+    }
   }
 };
 
