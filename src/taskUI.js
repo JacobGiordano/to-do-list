@@ -118,10 +118,15 @@ const taskUI = {
     }
     checkBox.addEventListener("click", e => {
       const clickedCheckBox = e.target;
-      taskUI.updateCompletedTasks(clickedCheckBox.closest(".project"));
-      clickedCheckBox.checked ? clickedCheckBox.closest(".task").classList.add("completed") : clickedCheckBox.closest(".task").classList.remove("completed");
-
+      const taskEl = clickedCheckBox.closest(".task");
       const projEl = clickedCheckBox.closest(".project");
+      taskUI.updateCompletedTasks(projEl);
+      clickedCheckBox.checked ? taskEl.classList.add("completed") : taskEl.classList.remove("completed");
+      
+      if (settings.getSettings().hide_completed_tasks && clickedCheckBox.checked) {
+        taskEl.classList.add("visibility-off");
+      }
+
       const completedTasks = projEl.querySelector(".project__completed-count").textContent;
       const totalTasks = projEl.querySelector(".project__total-task-count").textContent;
       if (settings.getSettings().hide_completed_projects && completedTasks == totalTasks) {
