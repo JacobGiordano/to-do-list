@@ -239,7 +239,7 @@ const projUI = {
   collapseProj(element) {
     element.style.height = `${element.scrollHeight}px`;
     window.setTimeout(() => {
-      document.body.clientWidth >= 480 ? element.style.height = "5rem" : element.style.height = "7rem";
+      document.body.clientWidth >= 768 ? element.style.height = "5rem" : element.style.height = "7rem";
     }, 100);
     window.setTimeout(() => {
       element.classList.remove("expanded");
@@ -272,8 +272,16 @@ const projUI = {
       matchingNavEl = matchingNavEl[0];
 
       data.deleteProjData(projectElId);
-      matchingNavEl.remove();
-      projectEl.remove();
+      matchingNavEl.style.marginBottom = 0;
+      matchingNavEl.style.overflow = "hidden";
+      matchingNavEl.style.height = 0;
+      matchingNavEl.querySelector(".nav__project-title").style.paddingTop = 0;
+      matchingNavEl.querySelector(".nav__project-title").style.paddingBottom = 0;
+      projectEl.classList.add("visibility-off");
+      setTimeout(() => {
+        matchingNavEl.remove();
+        projectEl.remove();
+      }, 250);
     }
   },
   handleProjKeyUp(e) {
@@ -296,7 +304,7 @@ const projUI = {
             navEl.querySelector(".nav__visibility-icon").classList.remove("visibility-on");
             navEl.querySelector(".nav__visibility-icon").textContent = "visibility_off"
             navEl.setAttribute("title", "Hidden");
-            
+
             data.updateBasicProjState({
               "id": proj.getAttribute("data-project-id"),
               "title": proj.getAttribute("data-project-title"),

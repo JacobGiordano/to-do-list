@@ -60,7 +60,7 @@ hideCompletedProjectsBtn.addEventListener("click", e => {
   e.target.checked ? projUI.hideAllCompletedProjects() : projUI.showAllCompletedProjects();
 }, false);
 
-const mediaQuery = window.matchMedia("(min-width: 480px)");
+const mediaQuery = window.matchMedia("(min-width: 768px)");
 mediaQuery.addEventListener("change", ui.handleBodyResize, false);
 
 document.addEventListener('DOMContentLoaded', () => {

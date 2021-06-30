@@ -199,6 +199,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	margin-bottom: .5rem;
 	justify-content: space-between;
 	align-items: center;
+	transition: all ease-in .1s;
 }
 
 .nav li label {
@@ -635,7 +636,7 @@ button.material-icons:hover, .new-project-btn {
 	border: 1px solid var(--dark-gray);
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 768px) {
 	.project {
 		height: 5rem;
 	}
