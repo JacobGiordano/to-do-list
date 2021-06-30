@@ -64,7 +64,7 @@ const data = {
     // console.log(changedTask.id);
     const taskIndex = this.findIndexOfTaskData(changedTask.getAttribute("data-task-id"), storedData[projIndex].tasks);
     const foundTask = storedData[projIndex].tasks[taskIndex];
-    console.log(foundTask);
+    // console.log(foundTask);
 
     foundTask.text = changedTask.querySelector(".task__text-input").value;
     foundTask.notes = changedTask.querySelector(".task__notes").value;

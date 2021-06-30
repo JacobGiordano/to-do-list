@@ -1,7 +1,7 @@
 const settings = {
   getSettings() {
     const storedSettings = JSON.parse(localStorage.getItem("to-do-settings") || "[]");
-    console.log(storedSettings);
+    // console.log(storedSettings);
     return storedSettings;
   },
   setSettings(settingsObj) {

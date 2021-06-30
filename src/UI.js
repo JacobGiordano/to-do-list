@@ -55,7 +55,7 @@ newProjBtn.addEventListener("click", () => {
   const newProj = new Project(newProjId);
   const newProjEl = projUI.addProjToDOM(newProj, true);
   data.addProjData(newProj);
-  console.log(newProj);
+  // console.log(newProj);
   newProjEl.scrollIntoView({
     behavior: "smooth",
     block: "center"
