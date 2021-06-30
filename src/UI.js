@@ -28,11 +28,17 @@ const ui = {
   }
 }
 
+const menuBtn = document.getElementById("menu-btn");
 const newProjBtn = document.getElementById("new-project-btn");
 const clearListBtn = document.getElementById("clear-list-btn");
 const pageContent = document.getElementById("content");
 const hideCompletedProjectsBtn = document.getElementById("hide-completed-projects");
 const hideCompletedTasksBtn = document.getElementById("hide-completed-tasks");
+
+menuBtn.addEventListener("click", () => {
+  const nav = document.getElementById("nav");
+  nav.classList.contains("open") ? nav.classList.remove("open") : nav.classList.add("open");
+});
 
 newProjBtn.addEventListener("click", () => {
   const newProjId = uuidv4();
