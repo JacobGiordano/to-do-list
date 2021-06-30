@@ -11,6 +11,15 @@ const ui = {
       parentElement.removeChild(parentElement.firstChild);
     }
   },
+  toggleNavVisibility() {
+    if (nav.classList.contains("open")) {
+      nav.classList.remove("open");
+      hiddenNavBtn.classList.remove("active");
+    } else {
+      nav.classList.add("open");
+      hiddenNavBtn.classList.add("active");
+    }
+  },
   handleBodyResize(e) {
     e.matches ? projUI.clearProjStyles() : projUI.clearProjStyles();
   },
@@ -29,16 +38,17 @@ const ui = {
 }
 
 const menuBtn = document.getElementById("menu-btn");
+const nav = document.getElementById("nav");
+const hiddenNavBtn = document.getElementById("hidden-nav-btn");
 const newProjBtn = document.getElementById("new-project-btn");
-const clearListBtn = document.getElementById("clear-list-btn");
-const pageContent = document.getElementById("content");
+// const clearListBtn = document.getElementById("clear-list-btn");
+// const pageContent = document.getElementById("content");
 const hideCompletedProjectsBtn = document.getElementById("hide-completed-projects");
 const hideCompletedTasksBtn = document.getElementById("hide-completed-tasks");
 
-menuBtn.addEventListener("click", () => {
-  const nav = document.getElementById("nav");
-  nav.classList.contains("open") ? nav.classList.remove("open") : nav.classList.add("open");
-});
+menuBtn.addEventListener("click", ui.toggleNavVisibility, false);
+
+hiddenNavBtn.addEventListener("click", ui.toggleNavVisibility, false);
 
 newProjBtn.addEventListener("click", () => {
   const newProjId = uuidv4();
