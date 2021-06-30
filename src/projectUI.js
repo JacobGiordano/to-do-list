@@ -296,6 +296,13 @@ const projUI = {
             navEl.querySelector(".nav__visibility-icon").classList.remove("visibility-on");
             navEl.querySelector(".nav__visibility-icon").textContent = "visibility_off"
             navEl.setAttribute("title", "Hidden");
+            
+            data.updateBasicProjState({
+              "id": proj.getAttribute("data-project-id"),
+              "title": proj.getAttribute("data-project-title"),
+              "expanded": proj.classList.contains("expanded") ? true : false,
+              "visible": false,
+            });
           }
         }
       }
@@ -315,6 +322,13 @@ const projUI = {
             navEl.querySelector(".nav__visibility-icon").classList.add("visibility-on");
             navEl.querySelector(".nav__visibility-icon").textContent = "visibility"
             navEl.setAttribute("title", "Visible");
+
+            data.updateBasicProjState({
+              "id": proj.getAttribute("data-project-id"),
+              "title": proj.querySelector(".project__title").value,
+              "expanded": proj.classList.contains("expanded") ? true : false,
+              "visible": true,
+            });
           }
         }
       }
