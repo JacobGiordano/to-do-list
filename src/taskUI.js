@@ -126,7 +126,7 @@ const taskUI = {
       if (settings.getSettings().hide_completed_tasks && clickedCheckBox.checked) {
         setTimeout(() => {
           taskEl.classList.add("visibility-off");
-        }, 500);
+        }, 250);
       }
 
       const completedTasks = projEl.querySelector(".project__completed-count").textContent;

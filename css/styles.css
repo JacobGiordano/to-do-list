@@ -96,7 +96,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	display: flex;
 	position: relative;
 	background: var(--cool-gray);
-	min-height: 100%;
+	height: 100vh;
 	margin: 0 auto;
 	padding: 0 1rem 3rem;
 	font-size: 16px;
@@ -251,7 +251,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	top: 2rem;
 	bottom: 0;
 	left: 0;
-	right: right;
+	right: 0;
 	width: 100%;
 	height: 100%;
 	background: var(--dark-gray);
@@ -720,7 +720,7 @@ button.material-icons:hover, .new-project-btn {
 		flex-direction: row;
 	}
 	.project__title {
-		width: 50%;
+		width: 60%;
 	}
 	.project__completed-counter {
 		margin-right: .5rem;
@@ -754,6 +754,12 @@ button.material-icons:hover, .new-project-btn {
 	}
 	.task__bottom-buttons-wrapper {
 		margin-top: .125rem;
+	}
+}
+
+@media screen and (min-width: 980px) {
+	.project__title {
+		width: 70%;
 	}
 }
 
