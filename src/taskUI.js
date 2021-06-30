@@ -2,6 +2,7 @@ import makeNewEl from "./makeNewEl";
 import data from "./data";
 import projUI from "./projectUI";
 import ui from "./UI";
+import settings from "./settings";
 import { format, addDays } from "date-fns";
 
 const taskUI = {
@@ -119,6 +120,29 @@ const taskUI = {
       const clickedCheckBox = e.target;
       taskUI.updateCompletedTasks(clickedCheckBox.closest(".project"));
       clickedCheckBox.checked ? clickedCheckBox.closest(".task").classList.add("completed") : clickedCheckBox.closest(".task").classList.remove("completed");
+
+      const projEl = clickedCheckBox.closest(".project");
+      const completedTasks = projEl.querySelector(".project__completed-count").textContent;
+      const totalTasks = projEl.querySelector(".project__total-task-count").textContent;
+      if (settings.getSettings().hide_completed_projects && completedTasks == totalTasks) {
+        const navEl = document.querySelector(`.nav__li[data-project-id="${projEl.getAttribute('data-project-id')}"]`);
+        navEl.querySelector(".nav__visibility-icon").checked = true;
+        navEl.querySelector(".nav__visibility-icon").classList.add("visibility-off");
+        navEl.querySelector(".nav__visibility-icon").classList.remove("visibility-on");
+        navEl.querySelector(".nav__visibility-icon").textContent = "visibility_off"
+        navEl.setAttribute("title", "Hidden");
+        
+        data.updateBasicProjState({
+          "id": projEl.getAttribute("data-project-id"),
+          "title": projEl.getAttribute("data-project-title"),
+          "expanded": projEl.classList.contains("expanded") ? true : false,
+          "visible": false
+        });
+
+        setTimeout(() => {
+          projEl.classList.add("visibility-off");
+        }, 250);
+      }
       taskUI.handleTaskKeyUp(e);
     });
     editBtn.addEventListener("click", e => {
