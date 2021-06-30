@@ -290,12 +290,10 @@ button.material-icons:hover, .new-project-btn {
 
 .new-project-btn {
 	display: flex;
-	/* position: fixed; */
 	border-radius: 100rem;
 	align-items: center;
-	/* bottom: 1rem; */
-	/* right: 1rem; */
 	width: 2rem;
+	overflow: hidden;
 }
 
 .new-project-btn:hover, .new-project-btn:focus {
