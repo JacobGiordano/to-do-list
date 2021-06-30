@@ -183,6 +183,7 @@ const taskUI = {
         block: "center"
       });
     }
+    return newTaskEl;
   },
   addTaskToProj(newTask, projectEl, autoFocusTaskTextBool) {
     this.addTaskToProjDOM(newTask, projectEl, autoFocusTaskTextBool);
@@ -354,14 +355,12 @@ const taskUI = {
   },
   hideAllCompletedTasks() {
     const allTasks = document.querySelectorAll(".task");
-    console.log(allTasks);
     for (const task of allTasks) {
       task.classList.contains("completed") ? task.classList.add("visibility-off") : null;
     }
   },
   showAllCompletedTasks() {
     const allTasks = document.querySelectorAll(".task");
-    console.log(allTasks);
     for (const task of allTasks) {
       task.classList.contains("completed") ? task.classList.remove("visibility-off") : null;
     }

@@ -20,8 +20,9 @@ const projUI = {
       }
       if (project.tasks.length > 0) {
         for (const task of project.tasks) {
-          taskUI.addTaskToProjDOM(task, newProjEl, false);
+          const newTaskEl = taskUI.addTaskToProjDOM(task, newProjEl, false);
           task.checked ? numOfCompletedTasks++ : null;
+          savedSettings.hide_completed_tasks && task.checked ? newTaskEl.classList.add("visibility-off") : null;
         }
       }
       newProjEl.querySelector(".project__completed-count").textContent = project.tasks.filter(task => task.checked === true).length;
