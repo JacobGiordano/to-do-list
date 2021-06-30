@@ -337,7 +337,8 @@ const taskUI = {
 
     let priorityButtonText = priorityLevel === "set" ? `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)} Priority` : `${priorityLevel.charAt(0).toUpperCase() + priorityLevel.slice(1)}`;
     clickedElPriorityBtn.textContent = priorityButtonText;
-    clickedEl.setAttribute("data-priority", priorityLevel);
+    clickedElPriorityBtn.setAttribute("data-priority", priorityLevel);
+    clickedElPriorityBar.setAttribute("data-priority", priorityLevel);
 
     const projectEl = clickedEl.closest(".project");
     const projectElId = projectEl.getAttribute("data-project-id");
