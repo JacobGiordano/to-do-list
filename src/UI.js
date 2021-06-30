@@ -44,9 +44,9 @@ newProjBtn.addEventListener("click", () => {
   });
 }, false);
 
-clearListBtn.addEventListener("click", () => {
-  ui.clearList(pageContent);
-}, false);
+// clearListBtn.addEventListener("click", () => {
+//   ui.clearList(pageContent);
+// }, false);
 
 const optionCheckboxes = document.querySelectorAll(".nav__checkbox");
 
