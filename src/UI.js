@@ -15,9 +15,11 @@ const ui = {
     if (nav.classList.contains("open")) {
       nav.classList.remove("open");
       hiddenNavBtn.classList.remove("active");
+      ui.disableTabbing(nav);
     } else {
       nav.classList.add("open");
       hiddenNavBtn.classList.add("active");
+      ui.enableTabbing(nav);
     }
   },
   handleBodyResize(e) {
@@ -34,6 +36,18 @@ const ui = {
     }
 
     settings.setSettings(optionsObj);
+  },
+  disableTabbing(parentElement) {
+    const elements = parentElement.querySelectorAll("div, input, button, a, span, label, textarea");
+    for (const el of elements) {
+      el.setAttribute("tabindex", "-1");
+    }
+  },
+  enableTabbing(parentElement) {
+    const elements = parentElement.querySelectorAll("div, input, button, a, span, label, textarea");
+    for (const el of elements) {
+      el.removeAttribute("tabindex");
+    }
   }
 }
 
