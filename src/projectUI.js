@@ -298,6 +298,7 @@ const projUI = {
     for (const proj of allProjects) {
       if (Number(proj.querySelector(".project__total-task-count").textContent) > 0 && proj.querySelector(".project__completed-count").textContent === proj.querySelector(".project__total-task-count").textContent) {
         proj.classList.add("visibility-off");
+        ui.disableTabbing(proj);
       
         const projId = proj.getAttribute("data-project-id");
         const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__li");
@@ -324,6 +325,8 @@ const projUI = {
     for (const proj of allProjects) {
       if (Number(proj.querySelector(".project__total-task-count").textContent) > 0 && proj.querySelector(".project__completed-count").textContent === proj.querySelector(".project__total-task-count").textContent) {
         proj.classList.remove("visibility-off");
+        ui.enableTabbing(proj);
+        ui.disableTabbing(proj.querySelector(".task__bottom-wrapper"));
       
         const projId = proj.getAttribute("data-project-id");
         const navProjects = document.getElementById("nav-projects").querySelectorAll(".nav__li");

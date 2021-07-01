@@ -28,6 +28,10 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+html, body {
+	min-height: 100%;
+	overflow: auto;
+}
 body {
 	line-height: 1;
 }
@@ -96,7 +100,8 @@ input:not(input[type="checkbox"]):focus-visible {
 	display: flex;
 	position: relative;
 	background: var(--cool-gray);
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	margin: 0 auto;
 	padding: 0 1rem 3rem;
 	font-size: 16px;
@@ -110,7 +115,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	width: 100%;
 	height: 2rem;
 	margin-bottom: 1rem;
-	padding: 1rem;
+	padding: 0 1rem;
 	justify-content: space-between;
 	align-items: center;
 	left: 50%;
@@ -254,7 +259,7 @@ input:not(input[type="checkbox"]):focus-visible {
 	position: absolute;
 	background: var(--dark-gray);
 	border: none;
-	top: 2rem;
+	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
@@ -323,7 +328,7 @@ button.material-icons:hover, .new-project-btn {
 }
 
 .new-project-btn:hover, .new-project-btn:focus {
-	width: 8rem;
+	width: 7rem;
 	white-space: nowrap;
 }
 
@@ -609,10 +614,12 @@ button.material-icons:hover, .new-project-btn {
 
 .task__priority-bar {
 	display: inline-block;
+	border: none;
 	border-radius: var(--border-radius);
 	width: .4rem;
 	height: 1.5rem;
 	margin-right: .25rem;
+	padding: 0;
 	cursor: pointer;
 	transition: all ease-in-out .1s;
 }
@@ -693,6 +700,9 @@ button.material-icons:hover, .new-project-btn {
 }
 
 .task__notes-icon {
+	border: none;
+	background: transparent;
+	padding: 0;
 	color: var(--light-gray);
 	transition: all ease-in-out .1s;
 }

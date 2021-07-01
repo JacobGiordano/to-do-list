@@ -42,15 +42,26 @@ const ui = {
     settings.setSettings(optionsObj);
   },
   disableTabbing(parentElement) {
-    const elements = parentElement.querySelectorAll("div, input, button, a, span, label, textarea");
+    const elements = parentElement.querySelectorAll(".project, input, button, a, label, textarea");
     for (const el of elements) {
       el.setAttribute("tabindex", "-1");
     }
   },
   enableTabbing(parentElement) {
-    const elements = parentElement.querySelectorAll("div, input, button, a, span, label, textarea");
+    const elements = parentElement.querySelectorAll(".project, input, button, a, label, textarea");
+    const tabIndexZeroExceptions = ["task__checkbox-label", "task__checkbox", "nav__project-hidden-label", "nav__label"];
+    
     for (const el of elements) {
+      let addTabIndexZero = false;
+      const elClasses = Array.from(el.classList);
+      const noFlyClassesMatch = elClasses.filter(noFlyClass => tabIndexZeroExceptions.indexOf(noFlyClass) !== -1);
+
       el.removeAttribute("tabindex");
+
+      noFlyClassesMatch.length === 0 ? addTabIndexZero = true : el.setAttribute("tabindex", "-1");
+      el.classList.contains("task__checkmark") ? addTabIndexZero = true : null;
+
+      addTabIndexZero ? el.setAttribute("tabindex", "0") : null;
     }
   }
 }

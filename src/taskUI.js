@@ -16,11 +16,16 @@ const taskUI = {
     const topWrapperRightInner = makeNewEl("div", "task__top-wrapper-right__inner", "", "");
     const bottomWrapper = makeNewEl("div", `task__bottom-wrapper ${newTask.expanded ? "expanded" : ""}`, "", "");
     const bottomBtnsWrapper = makeNewEl("div", "task__bottom-buttons-wrapper", "", "");
-    const checkBoxLabel = makeNewEl("label", "task__checkbox-label", "", "");
-    const checkBox = makeNewEl("input", "task__checkbox", "", {
-      "type": "checkbox"
+    const checkBoxLabel = makeNewEl("label", "task__checkbox-label", "", {
+      "tabindex": "-1"
     });
-    const checkMark = makeNewEl("span", "task__checkmark", "", "");
+    const checkBox = makeNewEl("input", "task__checkbox", "", {
+      "type": "checkbox",
+      "tabindex": "-1"
+    });
+    const checkMark = makeNewEl("span", "task__checkmark", "", {
+      "tabindex": "0"
+    });
     checkBox.checked = newTask.checked;
     checkBox.checked ? task.classList.add("completed") : null;
     const input = makeNewEl("input", "task__text-input", "", {
@@ -30,13 +35,17 @@ const taskUI = {
     input.value = newTask.text;
     const dueDateWrapper = makeNewEl("div", "task__due-date-wrapper", "", "");
     const dueDateLabel = makeNewEl("label", "task__due-date-label", "Due: ", {
-      "for": `date-${newTask.id}`
+      "for": `date-${newTask.id}`,
+      "tabindex": "0"
     })
     const dueDateInput = makeNewEl("input", "task__due-date", "", {
       "type": "date",
-      "name": `date-${newTask.id}`
+      "name": `date-${newTask.id}`,
+      "tabindex": "-1"
     });
-    const dueDateText = makeNewEl("span", "task__due-date-text", "", "");
+    const dueDateText = makeNewEl("span", "task__due-date-text", "", {
+      "tabindex": "-1"
+    });
     const dueDateClearBtn = makeNewEl("button", "task__due-date-clear-btn material-icons hidden", "clear", "");
     dueDateInput.value = newTask.due_date;
     if (dueDateInput.value !== "") {
@@ -49,7 +58,7 @@ const taskUI = {
       dueDateText.classList.add("material-icons");
       dueDateText.textContent = "event";
     }
-    const notesIcon = makeNewEl("div", "task__notes-icon material-icons-outlined", "description", {
+    const notesIcon = makeNewEl("button", "task__notes-icon material-icons-outlined", "description", {
       "title": "Task notes indicator"
     });
     const deleteBtn = makeNewEl("button", "task__delete-btn material-icons", "delete_outline", {
@@ -60,7 +69,7 @@ const taskUI = {
       "type": "button",
       "title": "Edit Task Options"
     });
-    const priorityBar = makeNewEl("div", `task__priority-bar priority-${newTask.priority}`, "", "");
+    const priorityBar = makeNewEl("button", `task__priority-bar priority-${newTask.priority}`, "", "");
     const priorityText = newTask.priority.charAt(0).toUpperCase() + newTask.priority.slice(1);
     const priorityButtonText = newTask.priority === "set" ? `${priorityText} Priority` : priorityText;
     const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, priorityButtonText, {
@@ -151,6 +160,15 @@ const taskUI = {
         }, 250);
       }
       taskUI.handleTaskKeyUp(e);
+    });
+    checkBoxLabel.addEventListener("keydown", e => {
+      let proceed = false;
+      e.key.toLowerCase() === "enter" || e.key.toLowerCase() === "space" || e.key.toLowerCase() === " " ? proceed = true : null;
+
+      if (proceed) {
+        e.preventDefault();
+        checkBox.click();
+      }
     });
     editBtn.addEventListener("click", e => {
       taskUI.handleExpandToggleClick(e);
