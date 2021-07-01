@@ -59,16 +59,18 @@ const projUI = {
       "data-project-id": newProj.id,
       "data-project-title": newProj.title
     });
-    const visibilityIcon = makeNewEl("span", `nav__visibility-icon material-icons-outlined ${newProj.visible && !settingsData.hideCompletedProjects ? "visibility-on" : "visibility-off"}`, `${newProj.visible && !settingsData.hideCompletedProjects ? "visibility" : "visibility_off"}`, {
+    const visibilityIcon = makeNewEl("button", `nav__visibility-icon material-icons-outlined ${newProj.visible && !settingsData.hideCompletedProjects ? "visibility-on" : "visibility-off"}`, `${newProj.visible && !settingsData.hideCompletedProjects ? "visibility" : "visibility_off"}`, {
       "title": `${newProj.visible && !settingsData.hideCompletedProjects ? "Visible" : "Hidden"}`
     });
     const projHiddenLabel = makeNewEl("label", "nav__project-hidden-label", "Project title", {
-      "for": `project-${newProj.id}`
+      "for": `project-${newProj.id}`,
+      "tabindex": "-1"
     });
     const projTitleEl = makeNewEl("input", "nav__project-title", `${newProj.title}`, {
       "type": "text",
       "name": `project-${newProj.id}`,
-      "placeholder": "Project Title"
+      "placeholder": "Project Title",
+      "tabindex": "-1"
     });
     
     newLi.appendChild(projHiddenLabel);

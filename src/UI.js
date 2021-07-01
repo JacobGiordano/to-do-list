@@ -16,10 +16,16 @@ const ui = {
       nav.classList.remove("open");
       hiddenNavBtn.classList.remove("active");
       ui.disableTabbing(nav);
+      ui.enableTabbing(content);
+      menuBtn.removeAttribute("tabindex");
+      newProjBtn.removeAttribute("tabindex");
     } else {
       nav.classList.add("open");
       hiddenNavBtn.classList.add("active");
       ui.enableTabbing(nav);
+      ui.disableTabbing(content);
+      menuBtn.setAttribute("tabindex", "-1");
+      newProjBtn.setAttribute("tabindex", "-1");
     }
   },
   handleBodyResize(e) {
@@ -55,6 +61,7 @@ const menuBtn = document.getElementById("menu-btn");
 const nav = document.getElementById("nav");
 const hiddenNavBtn = document.getElementById("hidden-nav-btn");
 const newProjBtn = document.getElementById("new-project-btn");
+const content = document.getElementById("content");
 // const clearListBtn = document.getElementById("clear-list-btn");
 // const pageContent = document.getElementById("content");
 const hideCompletedProjectsBtn = document.getElementById("hide-completed-projects");
