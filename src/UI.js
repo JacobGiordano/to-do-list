@@ -17,14 +17,12 @@ const ui = {
       hiddenNavBtn.classList.remove("active");
       ui.disableTabbing(nav);
       ui.enableTabbing(content);
-      menuBtn.removeAttribute("tabindex");
       newProjBtn.removeAttribute("tabindex");
     } else {
       nav.classList.add("open");
       hiddenNavBtn.classList.add("active");
       ui.enableTabbing(nav);
       ui.disableTabbing(content);
-      menuBtn.setAttribute("tabindex", "-1");
       newProjBtn.setAttribute("tabindex", "-1");
     }
   },
