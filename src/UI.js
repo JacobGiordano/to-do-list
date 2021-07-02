@@ -6,6 +6,15 @@ import settings from "./settings";
 import { v4 as uuidv4 } from 'uuid';
 
 const ui = {
+  a11yClick(e) {
+    let proceed = false;
+    e.key.toLowerCase() === "enter" || e.key.toLowerCase() === "space" || e.key.toLowerCase() === " " ? proceed = true : null;
+
+    if (proceed) {
+      e.preventDefault();
+      return proceed;
+    }
+  },
   clearList(parentElement) {
     while (parentElement.firstChild) {
       parentElement.removeChild(parentElement.firstChild);

@@ -667,7 +667,7 @@ button.material-icons:hover, .new-project-btn {
 }
 
 .task__due-date::-webkit-calendar-picker-indicator {
-  position: absolute;
+	position: absolute;
   top: -150%;
   left: -150%;
   width: 300%;
@@ -679,6 +679,12 @@ button.material-icons:hover, .new-project-btn {
 	cursor: pointer;
 	border-bottom: 1px solid var(--dark-gray);
 	outline: auto;
+}
+
+.task__due-date:focus {
+	position: relative;
+	width: auto;
+	opacity: 1;
 }
 
 .task__due-date:after {
@@ -697,6 +703,10 @@ button.material-icons:hover, .new-project-btn {
 
 .task__due-date.has-date + .task__due-date-text {
 	color: var(--dark-gray);
+}
+
+.task__due-date:focus ~ .task__due-date-text {
+	display: none;
 }
 
 .task__notes-icon {

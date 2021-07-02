@@ -36,12 +36,11 @@ const taskUI = {
     const dueDateWrapper = makeNewEl("div", "task__due-date-wrapper", "", "");
     const dueDateLabel = makeNewEl("label", "task__due-date-label", "Due: ", {
       "for": `date-${newTask.id}`,
-      "tabindex": "0"
+      "tabindex": "-1"
     })
     const dueDateInput = makeNewEl("input", "task__due-date", "", {
       "type": "date",
-      "name": `date-${newTask.id}`,
-      "tabindex": "-1"
+      "name": `date-${newTask.id}`
     });
     const dueDateText = makeNewEl("span", "task__due-date-text", "", {
       "tabindex": "-1"
@@ -162,14 +161,14 @@ const taskUI = {
       taskUI.handleTaskKeyUp(e);
     });
     checkBoxLabel.addEventListener("keydown", e => {
-      let proceed = false;
-      e.key.toLowerCase() === "enter" || e.key.toLowerCase() === "space" || e.key.toLowerCase() === " " ? proceed = true : null;
-
-      if (proceed) {
-        e.preventDefault();
-        checkBox.click();
-      }
+      ui.a11yClick(e) ? checkBox.click() : null;
     });
+    // dueDateLabel.addEventListener("keydown", e => {
+    //   if (ui.a11yClick(e)) {
+    //     // This still isn't working. Need to dig into this more or
+    //     // consider either changing this element's look or behavior
+    //   }
+    // });
     editBtn.addEventListener("click", e => {
       taskUI.handleExpandToggleClick(e);
     }, false);
