@@ -62,7 +62,8 @@ const taskUI = {
     });
     const deleteBtn = makeNewEl("button", "task__delete-btn material-icons", "delete_outline", {
       "type": "button",
-      "title": "Delete task"
+      "title": "Delete task",
+      "tabindex": "-1"
     });
     const editBtn = makeNewEl("button", "task__edit-btn material-icons", "more_vert", {
       "type": "button",
@@ -74,13 +75,24 @@ const taskUI = {
     const priority = makeNewEl("button", `task__priority priority-${newTask.priority}`, priorityButtonText, {
       "type": "button",
       "data-priority": newTask.priority,
-      "title": "Task priority"
+      "title": "Task priority",
+      "tabindex": "-1"
     });
     const notes = makeNewEl("textarea", "task__notes", "", {
-      "placeholder": "Notes"
+      "placeholder": "Notes",
+      "tabindex": "-1"
     });
     notes.value = newTask.notes;
     notes.value !== "" ? notesIcon.classList.add("has-notes") : notesIcon.classList.remove("has-notes");
+
+
+
+    // DON'T THINK I ADDED SOMETHING THAT STORES THE STATE OF A TASKS' BOTTOM WRAPPER, AND THAT SEEMS TO BE WHAT I'D NEED TO EITHER ENABLE OR DISABLE TABINDEX FOR EVERYTHING INSIDE OF IT ON PAGE LOAD AND DISABLE ENABLE TOGGLE <_<
+    newTask.expanded ? notes.removeAttribute("tabindex") : null;
+    newTask.expanded ? priority.removeAttribute("tabindex") : null;
+    newTask.expanded ? deleteBtn.removeAttribute("tabindex") : null;
+
+
 
     checkBoxLabel.appendChild(checkBox);
     checkBoxLabel.appendChild(checkMark);
@@ -163,17 +175,21 @@ const taskUI = {
     checkBoxLabel.addEventListener("keydown", e => {
       ui.a11yClick(e) ? checkBox.click() : null;
     });
-    // dueDateLabel.addEventListener("keydown", e => {
-    //   if (ui.a11yClick(e)) {
-    //     // This still isn't working. Need to dig into this more or
-    //     // consider either changing this element's look or behavior
-    //   }
-    // });
     editBtn.addEventListener("click", e => {
       taskUI.handleExpandToggleClick(e);
+      const bottomWrapper = e.target.closest(".task").querySelector(".task__bottom-wrapper");
+      setTimeout(() => {
+        bottomWrapper.classList.contains("expanded") ? 
+        ui.enableTabbing(bottomWrapper) : ui.disableTabbing(bottomWrapper);
+      }, 100);
     }, false);
     notesIcon.addEventListener("click", e => {
       taskUI.handleExpandToggleClick(e);
+      const bottomWrapper = e.target.closest(".task").querySelector(".task__bottom-wrapper");
+      setTimeout(() => {
+        bottomWrapper.classList.contains("expanded") ? 
+        ui.enableTabbing(bottomWrapper) : ui.disableTabbing(bottomWrapper);
+      }, 100);
     }, false);
     deleteBtn.addEventListener("click", e => {
       taskUI.handleTaskDeleteClick(e);

@@ -58,7 +58,7 @@ const ui = {
   },
   enableTabbing(parentElement) {
     const elements = parentElement.querySelectorAll(".project, input, button, a, label, textarea");
-    const tabIndexZeroExceptions = ["task__checkbox-label", "task__checkbox", "nav__project-hidden-label", "nav__label"];
+    const tabIndexZeroExceptions = ["task__checkbox-label", "task__checkbox", "nav__project-hidden-label", "nav__label", "task__due-date-label"];
     
     for (const el of elements) {
       let addTabIndexZero = false;
@@ -70,7 +70,8 @@ const ui = {
       noFlyClassesMatch.length === 0 ? addTabIndexZero = true : el.setAttribute("tabindex", "-1");
       el.classList.contains("task__checkmark") ? addTabIndexZero = true : null;
 
-      addTabIndexZero ? el.setAttribute("tabindex", "0") : null;
+      // addTabIndexZero ? el.setAttribute("tabindex", "0") : null;
+      addTabIndexZero ? el.removeAttribute("tabindex") : null;
     }
   }
 }
