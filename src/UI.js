@@ -41,8 +41,10 @@ const ui = {
       hiddenNavBtn.classList.remove("active");
       ui.disableTabbing(nav);
       ui.enableMainContentTabbing();
+      document.getElementById("menu-btn").focus();
     } else {
       nav.classList.add("open");
+      nav.classList.contains("initial") ? nav.classList.remove("intial") : null;
       hiddenNavBtn.classList.add("active");
       ui.enableTabbing(nav);
       ui.disableTabbing(content);

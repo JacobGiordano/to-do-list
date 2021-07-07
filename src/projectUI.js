@@ -192,7 +192,7 @@ const projUI = {
     basicInfoObj.title = projectTitle;
     basicInfoObj.expanded = projectEl.classList.contains("expanded");
     basicInfoObj.visible = !projectEl.classList.contains("hide");
-    console.log(basicInfoObj);
+    // console.log(basicInfoObj);
     data.updateBasicProjState(basicInfoObj);
   },
   updateProjDataFromNav(navEl, projectEl) {
