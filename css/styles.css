@@ -274,6 +274,10 @@ input:not(input[type="checkbox"]):focus-visible {
 	display: block;
 }
 
+.hidden-nav-btn.active:focus {
+	opacity: .45;
+}
+
 .content {
 	display: block;
 	width: 100%;

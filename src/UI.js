@@ -20,21 +20,6 @@ const ui = {
       parentElement.removeChild(parentElement.firstChild);
     }
   },
-  toggleNavVisibility() {
-    if (nav.classList.contains("open")) {
-      nav.classList.remove("open");
-      hiddenNavBtn.classList.remove("active");
-      ui.disableTabbing(nav);
-      ui.enableTabbing(content);
-      newProjBtn.removeAttribute("tabindex");
-    } else {
-      nav.classList.add("open");
-      hiddenNavBtn.classList.add("active");
-      ui.enableTabbing(nav);
-      ui.disableTabbing(content);
-      newProjBtn.setAttribute("tabindex", "-1");
-    }
-  },
   handleBodyResize(e) {
     e.matches ? projUI.clearProjStyles() : projUI.clearProjStyles();
   },
@@ -50,14 +35,28 @@ const ui = {
 
     settings.setSettings(optionsObj);
   },
+  toggleNavVisibility() {
+    if (nav.classList.contains("open")) {
+      nav.classList.remove("open");
+      hiddenNavBtn.classList.remove("active");
+      ui.disableTabbing(nav);
+      ui.enableMainContentTabbing();
+    } else {
+      nav.classList.add("open");
+      hiddenNavBtn.classList.add("active");
+      ui.enableTabbing(nav);
+      ui.disableTabbing(content);
+      newProjBtn.setAttribute("tabindex", "-1");
+    }
+  },
   disableTabbing(parentElement) {
-    const elements = parentElement.querySelectorAll(".project, input, button, a, label, textarea");
+    const elements = parentElement.querySelectorAll(".task__checkmark, input, button, a, label, textarea");
     for (const el of elements) {
       el.setAttribute("tabindex", "-1");
     }
   },
   enableTabbing(parentElement) {
-    const elements = parentElement.querySelectorAll(".project, input, button, a, label, textarea");
+    const elements = parentElement.querySelectorAll(".task__checkmark, input, button, a, label, textarea");
     const tabIndexZeroExceptions = ["task__checkbox-label", "task__checkbox", "nav__project-hidden-label", "nav__label", "task__due-date-label"];
     
     for (const el of elements) {
@@ -70,9 +69,39 @@ const ui = {
       noFlyClassesMatch.length === 0 ? addTabIndexZero = true : el.setAttribute("tabindex", "-1");
       el.classList.contains("task__checkmark") ? addTabIndexZero = true : null;
 
-      // addTabIndexZero ? el.setAttribute("tabindex", "0") : null;
       addTabIndexZero ? el.removeAttribute("tabindex") : null;
+      addTabIndexZero && el.classList.contains("task__checkmark") ? el.setAttribute("tabindex", "0") : null;
     }
+  },
+  enableMainContentTabbing() {
+    const menuBtn = document.getElementById("menu-btn");
+    const newProjBtn = document.getElementById("new-project-btn");
+
+    menuBtn.tabindex = "0";
+    newProjBtn.tabindex = "0";
+
+    const projectEls = content.querySelectorAll(".project");
+    for (const proj of projectEls) {
+      if (!proj.classList.contains("visibility-off")) {
+        ui.enableTabbing(proj.querySelector(".project__header"));
+        if (proj.classList.contains("expanded")) {
+          const taskList = proj.querySelectorAll(".task");
+          if (taskList.length) {
+            for (const task of taskList) {
+              if (!task.classList.contains("visibility-off")) {
+                ui.enableTabbing(task.querySelector(".task__top-wrapper"));
+              }
+              const bottomBtnsWrapper = task.querySelector(".task__bottom-wrapper");
+              if (bottomBtnsWrapper.classList.contains("expanded")) {
+                ui.enableTabbing(bottomBtnsWrapper);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    newProjBtn.removeAttribute("tabindex");
   }
 }
 
@@ -132,6 +161,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setting = setting.replace(/_+/g, "-");
     settingVal ? document.getElementById(`${setting}`).checked = true : null;
   }
+
+  ui.enableTabbing(nav);
+  ui.disableTabbing(content);
+  setTimeout(() => {
+    ui.disableTabbing(nav);
+    ui.enableMainContentTabbing();
+  }, 100);
+
 }, false);
 
 export default ui;
