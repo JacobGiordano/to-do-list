@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<header class="header">
+  <div class="header__inner-wrapper">
+    <div id="header-left" class="header-left">
+      <button id="menu-btn" class="menu-btn material-icons-outlined">menu</button>
+      <h1 class="page-title">To-Do List</h1>
+      <span class="to-do-list-icon material-icons-outlined">inventory</span>
+    </div>
+    <div class="header-right" id="header-right">
+    </div>
+  </div>
+</header>
+<nav id="nav" class="nav initial">
+  <div class="nav__group nav__projects-wrapper">
+    <span class="nav__group-title nav__project-wrapper-title">Projects</span>
+    <ul id="nav-projects" class="nav__projects"></ul>
+  </div>
+  <div class="nav__group nav__options-wrapper">
+    <div class="nav__group-title nav__options-wrapper-title">Options</div>
+    <ul id="nav-options" class="nav__options">
+      <li class="nav__li">
+        <label for="hide-completed-projects" class="nav__label" tabindex="-1">
+          <input class="nav__checkbox" type="checkbox" name="hide-completed-projects" id="hide-completed-projects" tabindex="-1">
+          Hide completed projects
+        </label>
+      </li>
+      <li class="nav__li">
+        <label for="hide-completed-tasks" class="nav__label" tabindex="-1">
+          <input class="nav__checkbox" type="checkbox" name="hide-completed-tasks" id="hide-completed-tasks" tabindex="-1">
+          Hide completed tasks
+        </label>
+      </li>
+    </ul>
+  </div>  
+</nav>
+<body id="body" class="body">
+  <div id="content" class="content">
+  </div>
+  <div class="new-project-btn__wrapper">
+    <button id="new-project-btn" class="new-project-btn" tabindex="0">
+      <span id="new-project-btn-icon" class="new-project-btn-icon material-icons">add</span>
+      <span id="new-project-btn-text" class="new-project-btn-text"> New Project</span>
+    </button>
+  </div>
+  <button id="hidden-nav-btn" class="hidden-nav-btn" tabindex-="-1"></button>
+  <script src="/dist/main.js"></script>
+</body>
+</html>
