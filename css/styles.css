@@ -258,6 +258,33 @@ input:not(input[type="checkbox"]):focus-visible {
 	margin-right: .5rem;
 }
 
+.nav .delete-all-data-btn {
+	display: flex;
+	background: transparent;
+	border: 1px solid var(--dark-gray);
+	border-radius: var(--border-radius);
+	font-size: 1rem;
+	justify-content: center;
+	align-items: center;
+	padding: 0 .75rem;
+	cursor: pointer;
+	transition: all ease-in-out .1s;
+}
+
+.nav .delete-all-data-btn .material-icons-outlined.delete-btn-icon {
+	color: var(--dark-gray);
+	width: 1.25rem;
+}
+
+.nav .delete-all-data-btn:hover {
+	background: var(--blue);
+	color: var(--white);
+}
+
+.nav .delete-all-data-btn:hover .material-icons-outlined.delete-btn-icon {
+	color: var(--white);
+}
+
 .hidden-nav-btn {
 	display: none;
 	position: absolute;
