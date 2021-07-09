@@ -104,6 +104,15 @@ const ui = {
     }
 
     newProjBtn.removeAttribute("tabindex");
+  },
+  handleDeleteAllDataBtnClick() {
+    if (confirm("Delete all stored project data?")) {
+      if (confirm("Are you SURE you want to delete all stored project data? This CANNOT be undone.")) {
+        data.deleteAllData();
+        alert("All project data deleted. The page will now reload.");
+        location.reload();
+      }
+    }
   }
 }
 
@@ -116,6 +125,9 @@ const content = document.getElementById("content");
 // const pageContent = document.getElementById("content");
 const hideCompletedProjectsBtn = document.getElementById("hide-completed-projects");
 const hideCompletedTasksBtn = document.getElementById("hide-completed-tasks");
+const deleteAllDataBtn = document.getElementById("delete-all-data-btn");
+
+deleteAllDataBtn.addEventListener("click", ui.handleDeleteAllDataBtnClick, false);
 
 menuBtn.addEventListener("click", ui.toggleNavVisibility, false);
 

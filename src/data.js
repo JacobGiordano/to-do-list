@@ -82,6 +82,9 @@ const data = {
     const taskIndex = this.findIndexOfTaskData(taskId, storedData[projIndex].tasks);
     storedData[projIndex].tasks.splice(taskIndex, 1);
     localStorage.setItem("to-do-data", JSON.stringify(storedData));
+  },
+  deleteAllData() {
+    localStorage.removeItem("to-do-data");
   }
 }
 export default data;
